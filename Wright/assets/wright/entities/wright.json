@@ -1,0 +1,86 @@
+{
+	code: "wright",
+	class: "EntityWright",
+	tags: ["inanimate", "vehicle"],
+	weight: 120,
+	attributes: {
+		shouldSwivelFromMotion: false,
+		speedMultiplier: 1,
+		// Flymodell — fart i blokker per 1/60 s (0.28 = ~17 blokker/s). Se EntityWright.cs
+		flight: {
+			maxSpeed: 0.28,
+			stallSpeed: 0.15,
+			accel: 0.15,
+			throttleRate: 0.4,
+			brakeRate: 0.6,
+			climbRate: 0.05,
+			diveRate: 0.08,
+			maxSinkRate: 0.2,
+			climbCost: 0.2,
+			verticalResponse: 3
+		},
+		swimmingOffsetY: 0.45,
+		requiresPaddlingTool: false,
+		rightClickPickup: true,
+		// Placeholder: pilot bare sitter på gulvet til vi har egen modell
+		mountAnimations: {
+			idle: "sitflooridle",
+			ready: "sitflooridle",
+			forwards: "sitflooridle",
+			backwards: "sitflooridle"
+		}
+	},
+	hitboxSize: { x: 2, y: 0.6, z: 2 },
+	behaviorConfigs: {
+		passivephysicsmultibox: {
+			collisionBoxes: [
+				{ x1: -0.75, y1: 0, z1: 0, x2: 0.75, y2: 0.6, z2: 1.5 },
+				{ x1: -0.75, y1: 0, z1: -1.5, x2: 0.75, y2: 0.6, z2: 0 }
+			],
+			groundDragFactor: 0,
+			airDragFallingFactor: 0,
+			gravityFactor: 1.0
+		},
+		creaturecarrier: {
+			seats: [
+				{ apName: "BackSeatAP", controllable: true, bodyYawLimit: null, eyeHeight: 1 }
+			]
+		},
+		selectionboxes: {
+			selectionBoxes: ["BackSeatAP"]
+		}
+	},
+	client: {
+		size: 1,
+		renderer: "Shape",
+		// Placeholder-modell: vanilla-flåten
+		shape: { base: "game:entity/nonliving/boat/raft" },
+		textures: {
+			"material": { base: "game:block/wood/debarked/aged" },
+			"oak": { base: "game:block/wood/debarked/aged" },
+			"oak1": { base: "game:block/wood/planks/aged*" },
+			"birch1": { base: "game:block/wood/planks/aged*" },
+			"plainoak": { base: "game:block/wood/debarked/aged" }
+		},
+		animations: [
+			{ code: "turnLeft", animation: "turnLeft", animationSpeed: 1, easeInSpeed: 2, easeOutSpeed: 2 },
+			{ code: "turnRight", animation: "turnRight", animationSpeed: 1, easeInSpeed: 2, easeOutSpeed: 2 }
+		],
+		behaviors: [
+			{ code: "repulseagents" },
+			{ code: "passivephysicsmultibox" },
+			{ code: "interpolateposition" },
+			{ code: "selectionboxes" },
+			{ code: "creaturecarrier" }
+		]
+	},
+	server: {
+		behaviors: [
+			{ code: "repulseagents" },
+			{ code: "passivephysicsmultibox" },
+			{ code: "selectionboxes" },
+			{ code: "creaturecarrier" }
+		]
+	},
+	sounds: { }
+}
