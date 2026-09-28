@@ -1,0 +1,19 @@
+{
+	ingredient: { type: "item", code: "game:ingot-*", name: "metal", allowedVariants: ["iron", "meteoriciron", "steel"] },
+	name: "crankshaft",
+	pattern: [[
+		"___####_________",
+		"___#__#_________",
+		"####__####__####",
+		"_________#__#___",
+		"_________####___",
+	],[
+		"___####_________",
+		"___#__#_________",
+		"####__####__####",
+		"_________#__#___",
+		"_________####___",
+	]],
+	code: "crankshaft-{metal}",
+	output: { type: "item", code: "wright:crankshaft-{metal}" }
+}

@@ -8,5 +8,7 @@
     "item-wing": "Biplane wing",
     "itemdesc-wing": "A full wing: spar, stick ribs lashed with twine, and doped fabric stretched over it all. A biplane needs two.",
     "item-cylinder-*": "Engine cylinder",
-    "itemdesc-cylinder-*": "A finned cylinder hammered from two ingots. The ribs shed heat so the engine does not seize. An engine needs two."
+    "itemdesc-cylinder-*": "A finned cylinder hammered from two ingots. The ribs shed heat so the engine does not seize. An engine needs two.",
+    "item-crankshaft-*": "Crankshaft",
+    "itemdesc-crankshaft-*": "A shaft forged from two ingots with a pair of throws bent opposite ways. It turns the pistons' push into the spin of a propeller."
 }
