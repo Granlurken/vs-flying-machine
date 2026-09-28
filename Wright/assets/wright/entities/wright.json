@@ -6,14 +6,14 @@
 	attributes: {
 		shouldSwivelFromMotion: false,
 		speedMultiplier: 1,
-		// Flymodell — fart i blokker per 1/60 s (0.28 = ~17 blokker/s). Se EntityWright.cs
+		// Flymodell — fart i blokker per 1/60 s (0.34 = ~20 blokker/s). Se EntityWright.cs
 		flight: {
-			maxSpeed: 0.28,
+			maxSpeed: 0.34,
 			stallSpeed: 0.15,
-			accel: 0.15,
+			accel: 0.3,
 			throttleRate: 0.4,
 			brakeRate: 0.6,
-			gravityAlongPath: 0.12,
+			gravityAlongPath: 0.06,
 			maxSinkRate: 0.2,
 			verticalResponse: 3,
 			// Nesevinkel (radianer): Space/Ctrl endrer, blir liggende
