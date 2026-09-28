@@ -1,0 +1,32 @@
+{
+	code: "wingspar",
+	shape: { base: "game:item/plank" },
+	textures: {
+		"wood": { base: "game:block/wood/planks/oak1" }
+	},
+	creativeinventory: { "general": ["*"], "items": ["*"] },
+	maxstacksize: 8,
+	materialDensity: 600,
+	combustibleProps: {
+		burnTemperature: 700,
+		burnDuration: 18
+	},
+	guiTransform: {
+		translation: { x: 0, y: 2, z: 0 },
+		rotation: { x: -55, y: 94, z: 27 },
+		origin: { x: 0.5, y: 0, z: 0.45 },
+		scale: 1.86
+	},
+	groundTransform: {
+		translation: { x: 0, y: 0, z: 0 },
+		rotation: { x: 0, y: 0, z: 0 },
+		origin: { x: 0.5, y: 0, z: 0.5 },
+		scale: 3.25
+	},
+	tpHandTransform: {
+		translation: { x: -0.6, y: -0.06, z: -0.44 },
+		rotation: { x: 109, y: 51, z: 1 },
+		origin: { x: 0.5, y: 0.1, z: 0.5 },
+		scale: 0.86
+	}
+}
