@@ -1,0 +1,35 @@
+{
+	code: "cylinder",
+	variantgroups: [
+		{ code: "metal", states: ["iron", "meteoriciron", "steel"] },
+	],
+	shape: { base: "game:item/hoop" },
+	textures: {
+		"metal": { base: "game:block/metal/ingot/{metal}" },
+	},
+	attributes: {
+		handbook: {
+			groupBy: ["cylinder-*"]
+		}
+	},
+	creativeinventory: { "general": ["*"], "items": ["*"] },
+	maxstacksize: 4,
+	guiTransform: {
+		translation: { x: 0, y: 0, z: 0 },
+		rotation: { x: 9, y: -35, z: -159 },
+		origin: { x: -0.0201, y: 0.08, z: 0.35 },
+		scale: 1.77
+	},
+	groundTransform: {
+		translation: { x: 0, y: -0.22, z: 0 },
+		rotation: { x: 90, y: 0, z: 0 },
+		origin: { x: 0.5, y: 0, z: 0.5 },
+		scale: 4.31
+	},
+	tpHandTransform: {
+		translation: { x: -1.0299, y: -0.37, z: -0.86 },
+		rotation: { x: 0, y: 0, z: -1 },
+		origin: { x: 0.5, y: 0, z: 0.5 },
+		scale: 0.89
+	}
+}

@@ -6,5 +6,7 @@
     "item-wingspar": "Wing spar",
     "itemdesc-wingspar": "Planks glued end to end with resin into one long, light beam. The backbone of a wing.",
     "item-wing": "Biplane wing",
-    "itemdesc-wing": "A full wing: spar, stick ribs lashed with twine, and doped fabric stretched over it all. A biplane needs two."
+    "itemdesc-wing": "A full wing: spar, stick ribs lashed with twine, and doped fabric stretched over it all. A biplane needs two.",
+    "item-cylinder-*": "Engine cylinder",
+    "itemdesc-cylinder-*": "A finned cylinder hammered from two ingots. The ribs shed heat so the engine does not seize. An engine needs two."
 }
