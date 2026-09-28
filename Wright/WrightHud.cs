@@ -25,9 +25,10 @@ public class WrightHud : HudElement
         if (!IsOpened()) TryOpen();
 
         double blocksPerSecond = plane.ForwardSpeed * 60;
-        string state = plane.Flying ? "AIRBORNE" : (plane.LiftRatio >= 1 ? "READY - hold Space" : "ground");
+        string state = plane.Stalling ? "STALL" : plane.Flying ? "AIRBORNE" : (plane.LiftRatio >= 0.8 ? "ROTATE - hold Space" : "ground");
+        double pitchDeg = plane.PitchAngle * 180 / System.Math.PI;
         SingleComposer.GetDynamicText("status").SetNewText(
-            $"Throttle {plane.Throttle * 100:0}%   Speed {blocksPerSecond:0.0} b/s   Lift {plane.LiftRatio * 100:0}%   Alt {plane.Pos.Y:0}   {state}");
+            $"Throttle {plane.Throttle * 100:0}%   Speed {blocksPerSecond:0.0} b/s   Lift {plane.LiftRatio * 100:0}%   Pitch {pitchDeg:+0;-0;0}°   Alt {plane.Pos.Y:0}   {state}");
     }
 
     public override bool Focusable => false;
