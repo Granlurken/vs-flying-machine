@@ -27,6 +27,7 @@ public class WrightModSystem : ModSystem
             if (action != EnumEntityAction.InWorldRightMouseDown || !on) return;
             var player = api.World.Player;
             if (player.CurrentEntitySelection?.Entity is not EntityWright plane) return;
+            if (!plane.IsFuelBox(player.CurrentEntitySelection.SelectionBoxIndex)) return;
             if (player.Entity.MountedOn == plane || player.Entity.Controls.ShiftKey) return;
             if (player.InventoryManager.ActiveHotbarSlot?.Itemstack?.Collectible is not ILiquidSource) return;
 

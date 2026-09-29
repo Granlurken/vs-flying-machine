@@ -50,14 +50,18 @@
 	client: {
 		size: 1,
 		renderer: "Shape",
-		// Grå-kloss-placeholder (tools/greybox_construction.js). Den ekte modellen må ha de samme gruppenavnene.
+		// Generert av tools/wright_model.js sammen med flyet (samme deler, pluss S0Site)
 		shape: { base: "wright:entity/construction" },
 		textures: {
+			"wood": { base: "game:block/wood/debarked/oak" },
 			"planks": { base: "game:block/wood/planks/oak1" },
-			"debarked": { base: "game:block/wood/debarked/oak" },
+			"aged": { base: "game:block/wood/debarked/aged" },
+			"fabric": { base: "game:block/cloth/linen/plain" },
 			"rope": { base: "game:block/cloth/reedrope" },
-			"metal": { base: "game:block/metal/sheet/iron1" },
-			"cloth": { base: "game:block/cloth/linen/white" }
+			"iron": { base: "game:block/metal/sheet/iron1" },
+			"chain": { base: "game:block/metal/sheet/iron3" },
+			"copper": { base: "game:block/metal/sheet/copper1" },
+			"leather": { base: "game:block/cloth/leather/normal" }
 		},
 		behaviors: [
 			{ code: "interpolateposition" }

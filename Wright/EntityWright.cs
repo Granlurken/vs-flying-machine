@@ -184,12 +184,21 @@ public class EntityWright : EntityBoat
     public override void OnInteract(EntityAgent byEntity, ItemSlot itemslot, Vec3d hitPosition, EnumInteractMode mode)
     {
         if (mode == EnumInteractMode.Interact && !byEntity.Controls.ShiftKey
-            && itemslot?.Itemstack?.Collectible is ILiquidSource)
+            && itemslot?.Itemstack?.Collectible is ILiquidSource
+            && byEntity is EntityPlayer ep && IsFuelBox(ep.EntitySelection?.SelectionBoxIndex ?? -1))
         {
             if (Api is ICoreClientAPI capi && byEntity == capi.World.Player.Entity) OpenFuelDialog(capi);
             return; // ikke sett deg inn
         }
         base.OnInteract(byEntity, itemslot, hitPosition, mode);
+    }
+
+    /// <summary>Sant når klikkboksen er tanklokket (FuelAP). Indeks 0 = hovedhitboksen, AP-boksene starter på 1.</summary>
+    public bool IsFuelBox(int selectionBoxIndex)
+    {
+        var boxes = GetBehavior<EntityBehaviorSelectionBoxes>()?.selectionBoxes;
+        int i = selectionBoxIndex - 1;
+        return boxes != null && i >= 0 && i < boxes.Length && boxes[i].AttachPoint.Code == "FuelAP";
     }
 
     public void OpenFuelDialog(ICoreClientAPI capi)
@@ -238,7 +247,7 @@ public class EntityWright : EntityBoat
     public override WorldInteraction[] GetInteractionHelp(IClientWorldAccessor world, EntitySelection es, IClientPlayer player)
     {
         var help = base.GetInteractionHelp(world, es, player);
-        if (player.Entity.MountedOn == this) return help;
+        if (player.Entity.MountedOn == this || !IsFuelBox(es.SelectionBoxIndex)) return help;
 
         fuelHelp ??= new[]
         {

@@ -42,20 +42,20 @@
 		swimmingOffsetY: 0.45,
 		requiresPaddlingTool: false,
 		rightClickPickup: true,
-		// Placeholder: pilot bare sitter på gulvet til vi har egen modell
 		mountAnimations: {
-			idle: "sitflooridle",
-			ready: "sitflooridle",
-			forwards: "sitflooridle",
-			backwards: "sitflooridle"
+			idle: "sitidle",
+			ready: "sitidle",
+			forwards: "sitidle",
+			backwards: "sitidle"
 		}
 	},
-	hitboxSize: { x: 2, y: 0.6, z: 2 },
+	hitboxSize: { x: 2, y: 1.2, z: 2 },
 	behaviorConfigs: {
 		passivephysicsmultibox: {
 			collisionBoxes: [
-				{ x1: -0.75, y1: 0, z1: 0, x2: 0.75, y2: 0.6, z2: 1.5 },
-				{ x1: -0.75, y1: 0, z1: -1.5, x2: 0.75, y2: 0.6, z2: 0 }
+				// Bare skroget kolliderer (vingene ville satt seg fast overalt). Nesa = +Z her
+				{ x1: -0.6, y1: 0, z1: 0, x2: 0.6, y2: 1.4, z2: 3 },
+				{ x1: -0.6, y1: 0, z1: -4, x2: 0.6, y2: 1.4, z2: 0 }
 			],
 			groundDragFactor: 0,
 			airDragFallingFactor: 0,
@@ -63,25 +63,30 @@
 		},
 		creaturecarrier: {
 			seats: [
-				{ apName: "BackSeatAP", controllable: true, bodyYawLimit: null, eyeHeight: 1 }
+				{ apName: "PilotAP", controllable: true, bodyYawLimit: 0.5, eyeHeight: 1 },
+				{ apName: "PassengerAP", bodyYawLimit: 0.8, eyeHeight: 1 }
 			]
 		},
 		selectionboxes: {
-			// Plassholder: alle 3 AP-ene i flåte-shapen, så hele flåten kan klikkes. Ekte modell får egen FuelAP ved tanklokket
-			selectionBoxes: ["BackSeatAP", "FrontSeatAP", "OarAP"]
+			// Klikk setet = sett deg, klikk tanklokket med en beholder = fyll drivstoff. CargoAP venter på kista
+			selectionBoxes: ["PilotAP", "PassengerAP", "FuelAP"]
 		}
 	},
 	client: {
 		size: 1,
 		renderer: "Shape",
-		// Placeholder-modell: vanilla-flåten
-		shape: { base: "game:entity/nonliving/boat/raft" },
+		// Generert av tools/wright_model.js — rediger skriptet, ikke JSON-en
+		shape: { base: "wright:entity/wright" },
 		textures: {
-			"material": { base: "game:block/wood/debarked/aged" },
-			"oak": { base: "game:block/wood/debarked/aged" },
-			"oak1": { base: "game:block/wood/planks/aged*" },
-			"birch1": { base: "game:block/wood/planks/aged*" },
-			"plainoak": { base: "game:block/wood/debarked/aged" }
+			"wood": { base: "game:block/wood/debarked/oak" },
+			"planks": { base: "game:block/wood/planks/oak1" },
+			"aged": { base: "game:block/wood/debarked/aged" },
+			"fabric": { base: "game:block/cloth/linen/plain" },
+			"rope": { base: "game:block/cloth/reedrope" },
+			"iron": { base: "game:block/metal/sheet/iron1" },
+			"chain": { base: "game:block/metal/sheet/iron3" },
+			"copper": { base: "game:block/metal/sheet/copper1" },
+			"leather": { base: "game:block/cloth/leather/normal" }
 		},
 		animations: [
 			{ code: "turnLeft", animation: "turnLeft", animationSpeed: 1, easeInSpeed: 2, easeOutSpeed: 2 },
