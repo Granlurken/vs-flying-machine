@@ -10,5 +10,7 @@
     "item-cylinder-*": "Engine cylinder",
     "itemdesc-cylinder-*": "A finned cylinder hammered from two ingots. The ribs shed heat so the engine does not seize. An engine needs two.",
     "item-crankshaft-*": "Crankshaft",
-    "itemdesc-crankshaft-*": "A shaft forged from two ingots with a pair of throws bent opposite ways. It turns the pistons' push into the spin of a propeller."
+    "itemdesc-crankshaft-*": "A shaft forged from two ingots with a pair of throws bent opposite ways. It turns the pistons' push into the spin of a propeller.",
+    "item-engine": "Flying machine engine",
+    "itemdesc-engine": "Two cylinders bolted over a crankshaft in a riveted iron crankcase, packed with rendered fat so it does not grind itself apart. The heart of a flying machine."
 }

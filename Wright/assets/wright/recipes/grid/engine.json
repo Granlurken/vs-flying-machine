@@ -1,0 +1,15 @@
+[
+	{
+		ingredientPattern: "CNC,PKP,_F_",
+		ingredients: {
+			"C": { type: "item", code: "wright:cylinder-*", quantity: 1 },
+			"N": { type: "item", code: "game:metalnailsandstrips-*", name: "nailmetal", allowedVariants: ["iron", "meteoriciron", "steel"], quantity: 1 },
+			"P": { type: "item", code: "game:metalplate-*", name: "platemetal", allowedVariants: ["iron", "meteoriciron", "steel"], quantity: 1 },
+			"K": { type: "item", code: "wright:crankshaft-*", quantity: 1 },
+			"F": { type: "item", code: "game:fat-rendered", quantity: 1 }
+		},
+		width: 3,
+		height: 3,
+		output: { type: "item", code: "wright:engine", quantity: 1 }
+	}
+]
