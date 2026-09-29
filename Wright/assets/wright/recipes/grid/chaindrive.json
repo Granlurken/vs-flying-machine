@@ -1,0 +1,48 @@
+[
+	{
+		ingredientPattern: "GCG,_F_",
+		ingredients: {
+			"G": { type: "item", code: "game:gear-rusty", quantity: 1 },
+			"C": { type: "item", code: "game:metalchain-*", name: "chainmetal", allowedVariants: ["iron", "meteoriciron", "steel"], quantity: 1 },
+			"F": { type: "item", code: "game:fat-rendered", quantity: 1 }
+		},
+		width: 3,
+		height: 2,
+		output: { type: "item", code: "wright:chaindrive", quantity: 1 }
+	},
+	{
+		ingredientPattern: "GCG,_J_",
+		ingredients: {
+			"G": { type: "item", code: "game:gear-rusty", quantity: 1 },
+			"C": { type: "item", code: "game:metalchain-*", name: "chainmetal", allowedVariants: ["iron", "meteoriciron", "steel"], quantity: 1 },
+			"J": { type: "block", code: "game:jug-*-fired", quantity: 1 }
+		},
+		width: 3,
+		height: 2,
+		attributes: {
+			liquidContainerProps: {
+				requiresContent: { type: "item", code: "game:oilportion-flax" },
+				requiresLitres: 0.25
+			}
+		},
+		output: { type: "item", code: "wright:chaindrive", quantity: 1 }
+	}
+	,
+	{
+		ingredientPattern: "GCG,_J_",
+		ingredients: {
+			"G": { type: "item", code: "game:gear-rusty", quantity: 1 },
+			"C": { type: "item", code: "game:metalchain-*", name: "chainmetal", allowedVariants: ["iron", "meteoriciron", "steel"], quantity: 1 },
+			"J": { type: "block", code: "game:jug-*-fired", quantity: 1 }
+		},
+		width: 3,
+		height: 2,
+		attributes: {
+			liquidContainerProps: {
+				requiresContent: { type: "item", code: "game:oilportion-olive" },
+				requiresLitres: 0.25
+			}
+		},
+		output: { type: "item", code: "wright:chaindrive", quantity: 1 }
+	}
+]

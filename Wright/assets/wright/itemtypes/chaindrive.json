@@ -1,0 +1,10 @@
+{
+	code: "chaindrive",
+	shape: { base: "game:item/chain" },
+	textures: {
+		"metal": { base: "game:entity/humanoid/serapharmor/chain/iron" },
+		"material": { base: "game:entity/humanoid/serapharmor/chain/iron" }
+	},
+	creativeinventory: { "general": ["*"], "items": ["*"] },
+	maxstacksize: 1
+}

@@ -14,5 +14,7 @@
     "item-engine": "Flying machine engine",
     "itemdesc-engine": "Two cylinders bolted over a crankshaft in a riveted iron crankcase, packed with rendered fat so it does not grind itself apart. The heart of a flying machine.",
     "item-propeller": "Propeller",
-    "itemdesc-propeller": "Four planks laminated with a jug of hot pitch glue and carved into two twisted blades. It bites the air the way an oar bites water."
+    "itemdesc-propeller": "Four planks laminated with a jug of hot pitch glue and carved into two twisted blades. It bites the air the way an oar bites water.",
+    "item-chaindrive": "Chain drive",
+    "itemdesc-chaindrive": "Two gears salvaged from the ruins and a length of iron chain, greased so it runs smooth. Carries the engine's turn back to the propeller."
 }
