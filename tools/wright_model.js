@@ -57,6 +57,12 @@ function beam(name, p1, p2, t, tex, tw = t, rotX = 0) {
   return e;
 }
 
+// Slitasje: fast frø, så modellen blir lik hver gang skriptet kjøres
+let seed = 1903;
+const rnd = () => { seed = (seed + 0x6D2B79F5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+const rr = (a, b) => a + (b - a) * rnd();
+const pick = arr => arr[Math.floor(rnd() * arr.length)];
+
 const group = (name, children, extra = {}) => ({ name, from: [0, 0, 0], to: [0, 0, 0], faces: {}, ...extra, children });
 
 // Usynlig kloss som bærer et festepunkt. Klikkboksen = klossen, lagt ut fra festepunktet.
@@ -106,6 +112,20 @@ function wing(prefix, y, x0, x1, span, ribStep) {
     out.push(box(`${prefix}Rib${i}`, [xa, y - 0.05, z - 0.025], [xb, y + 0.05, z + 0.025], "wood"));
     if (i < n) {
       out.push(box(`${prefix}Panel${i}`, [x0, y - 0.03, z + 0.025], [x1, y + 0.03, z + step - 0.025], "fabric"));
+      const za = z + 0.025, zb = z + step - 0.025;
+      // Lapp sydd over et hull i duken
+      if (rnd() < 0.3) {
+        const lw = rr(0.22, 0.42), ld = rr(0.18, Math.min(0.4, zb - za - 0.06));
+        const lx = rr(x0 + 0.08, x1 - 0.08 - lw), lz = rr(za + 0.03, zb - 0.03 - ld);
+        out.push(box(`${prefix}Patch${i}`, [lx, y + 0.03, lz], [lx + lw, y + 0.037, lz + ld], pick(["patch", "patch2", "patch3"]),
+          { rot: [0, r3(rr(-8, 8)), 0] }));
+      }
+      // Krysstråder: hyssing strammet på skrå over feltet (duken holdt ikke formen alene)
+      if (rnd() < 0.35) {
+        const yy = y + 0.035;
+        out.push(beam(`${prefix}ThreadA${i}`, [x0 + 0.06, yy, za + 0.03], [x1 - 0.06, yy, zb - 0.03], 0.012, "twine", 0.012));
+        out.push(beam(`${prefix}ThreadB${i}`, [x0 + 0.06, yy, zb - 0.03], [x1 - 0.06, yy, za + 0.03], 0.012, "twine", 0.012));
+      }
     }
   }
   // Tippbuen: to korte trinn så enden ikke er helt firkantet
@@ -212,8 +232,9 @@ const frame = [];
 const gear = [];
 {
   const wx = 1.3, wy = 0.4, wz = 0.98, r = 0.38;
-  gear.push(...wheel("WheelL", wx, wy, -wz, r, 0.13));
-  gear.push(...wheel("WheelR", wx, wy, wz, r, 0.13));
+  // Hvert hjul er en egen gruppe med origo i navet — animasjonen «wheelspin» dreier dem om Z
+  gear.push(group("WheelL", wheel("WheelL", wx, wy, -wz, r, 0.13), { rotationOrigin: [wx, wy, -wz].map(px) }));
+  gear.push(group("WheelR", wheel("WheelR", wx, wy, wz, r, 0.13), { rotationOrigin: [wx, wy, wz].map(px) }));
   gear.push(box("Axle", [wx - 0.035, wy - 0.035, -wz - 0.1], [wx + 0.035, wy + 0.035, wz + 0.1], "iron"));
   for (const s of [-1, 1]) {
     const side = s < 0 ? "L" : "R";
@@ -240,8 +261,13 @@ const upperWing = wing("Upper", UPPER_Y, -0.15, 1.15, 4.3, 0.65);
   for (const s of [-1, 1]) {
     const side = s < 0 ? "L" : "R";
     bays.forEach((z, i) => {
-      upperWing.push(box(`Strut${side}${i}F`, [front + 0.05 - 0.045, LOWER_Y, s * z - 0.045], [front + 0.05 + 0.045, UPPER_Y, s * z + 0.045], "wood"));
-      upperWing.push(box(`Strut${side}${i}R`, [rear - 0.045, LOWER_Y, s * z - 0.045], [rear + 0.045, UPPER_Y, s * z + 0.045], "wood"));
+      [["F", front + 0.05], ["R", rear]].forEach(([k, x]) => {
+        upperWing.push(box(`Strut${side}${i}${k}`, [x - 0.045, LOWER_Y, s * z - 0.045], [x + 0.045, UPPER_Y, s * z + 0.045], pick(["wood", "wood", "aged"]),
+          { rot: [r3(rr(-1.5, 1.5)), 0, r3(rr(-2, 2))] }));
+        // Tausurring der staget møter vingene
+        [LOWER_Y + 0.07, UPPER_Y - 0.12].forEach((yy, j) =>
+          upperWing.push(box(`Lash${side}${i}${k}${j}`, [x - 0.06, yy, s * z - 0.06], [x + 0.06, yy + 0.07, s * z + 0.06], "rope")));
+      });
     });
     upperWing.push(beam(`Cabane${side}F`, [0.95, TOP, s * W], [0.9, UPPER_Y - 0.05, s * 0.5], 0.07, "wood"));
     upperWing.push(beam(`Cabane${side}R`, [0.2, TOP, s * W], [0.15, UPPER_Y - 0.05, s * 0.5], 0.07, "wood"));
@@ -277,7 +303,7 @@ const FUEL_CAP = [1.62, TOP + 0.47, 0];
     engine.push(box(`ExhaustOut${i}`, [cx - 0.03, 1.6, 0.11], [cx + 0.03, 1.66, 0.34], "iron"));
     engine.push(box(`ExhaustUp${i}`, [cx - 0.035, 1.6, 0.3], [cx + 0.035, 1.95, 0.37], "iron"));
   });
-  // Tank i kobber på dekket foran passasjeren, festet med jernbånd
+  // Tank i kobber på dekket foran piloten, festet med jernbånd
   const tx0 = 1.2, tx1 = 2.05, ty0 = TOP + 0.05, ty1 = TOP + 0.4;
   engine.push(box("Tank", [tx0, ty0 + 0.05, -0.25], [tx1, ty1 - 0.05, 0.25], "copper"));
   engine.push(box("TankRound", [tx0 + 0.02, ty0, -0.18], [tx1 - 0.02, ty1, 0.18], "copper"));
@@ -286,15 +312,14 @@ const FUEL_CAP = [1.62, TOP + 0.47, 0];
   engine.push(box("FuelCapNeck", [FUEL_CAP[0] - 0.05, ty1, -0.05], [FUEL_CAP[0] + 0.05, FUEL_CAP[1] - 0.03, 0.05], "copper"));
   engine.push(box("FuelCap", [FUEL_CAP[0] - 0.08, FUEL_CAP[1] - 0.03, -0.08], [FUEL_CAP[0] + 0.08, FUEL_CAP[1] + 0.02, 0.08], "iron"));
   engine.push(beam("FuelLine", [tx1 - 0.05, ty0 + 0.05, -0.2], [ex0 + 0.1, 1.2, -0.27], 0.03, "copper"));
-  // Klikkboks for påfylling (FuelAP) rundt tanklokket
   // Påfyllingstrakt på venstre side av motoren (lett å nå fra bakken), rør inn i veivhuset
   const fx = ex0 + 0.3, fz = -0.46;
   engine.push(box("FillerPipe", [fx - 0.04, 1.08, -0.4], [fx + 0.04, 1.16, -0.26], "copper"));
   engine.push(box("FillerNeck", [fx - 0.05, 1.08, fz - 0.05], [fx + 0.05, 1.3, fz + 0.05], "copper"));
   engine.push(box("FillerFunnel", [fx - 0.1, 1.3, fz - 0.1], [fx + 0.1, 1.4, fz + 0.1], "copper"));
   engine.push(box("FillerCap", [fx - 0.08, 1.4, fz - 0.08], [fx + 0.08, 1.44, fz + 0.08], "iron"));
-  // Klikkboks for påfylling (FuelAP): hele motoren + trakta, så den er lett å treffe
-  engine.push(apBox("FuelBox", "FuelAP", [(ex0 + ex1) / 2, 1.35, -0.05], [0.85, 1.1, 1.0]));
+  // Klikkboks for påfylling (FuelAP): kobbertanken + hele motoren + trakta — alt foran cockpiten er «drivstoff»
+  engine.push(apBox("FuelBox", "FuelAP", [(tx0 - 0.05 + ex1 + 0.1) / 2, 1.4, -0.05], [ex1 + 0.1 - (tx0 - 0.05), 1.1, 1.0]));
 }
 
 // ---------------------------------------------------------------- S6: drivkjede + propell
@@ -314,6 +339,7 @@ const drive = [];
   drive.push(box("Shaft", [sx, shaftY - 0.035, -0.035], [sx + 0.3, shaftY + 0.035, 0.035], "iron"));
   // Propell: to tre-blader som smalner mot tuppen, dreid litt ut av loddrett
   const hubX = sx + 0.22;
+  const propStart = drive.length;
   drive.push(box("PropHub", [hubX, shaftY - 0.1, -0.1], [hubX + 0.12, shaftY + 0.1, 0.1], "planks"));
   drive.push(box("Spinner", [hubX + 0.12, shaftY - 0.05, -0.05], [hubX + 0.18, shaftY + 0.05, 0.05], "iron"));
   const bladeTilt = 20;
@@ -332,6 +358,8 @@ const drive = [];
       e.faces = faces("planks", 0.05, r1 - r0, w);
     });
   });
+  // Nav, spinner og blader flyttes inn i gruppa «Propeller» (animasjonen «propspin» dreier den om X)
+  drive.push(group("Propeller", drive.splice(propStart), { rotationOrigin: [hubX + 0.06, shaftY, 0].map(px) }));
 }
 
 // ---------------------------------------------------------------- S7: hale + ror
@@ -357,51 +385,99 @@ const tail = [];
   // Styrekabler fra førerplassen til halen
   for (const s of [-1, 1]) {
     const side = s < 0 ? "L" : "R";
-    tail.push(beam(`Cable${side}`, [-1.2, BOT + 0.25, s * (W + 0.07)], [TAIL + 0.05, y - 0.02, s * 0.2], 0.022, "rope"));
+    tail.push(beam(`Cable${side}`, [0.3, BOT + 0.25, s * (W + 0.07)], [TAIL + 0.05, y - 0.02, s * 0.2], 0.022, "rope"));
   }
 }
 
 // ---------------------------------------------------------------- S8: seter
 const seats = [];
-const PILOT = [-0.9, BOT + 0.3, 0], PASSENGER = [0.4, BOT + 0.3, 0];
+// Piloten sitter foran (spak + styrekabler), passasjeren bak ved lastehylla
+const PILOT = [0.4, BOT + 0.3, 0], PASSENGER = [-0.9, BOT + 0.3, 0];
 {
-  const chair = (name, [x, y, z]) => {
+  const chair = (name, [x, y, z], cushion) => {
     seats.push(box(`${name}Pan`, [x - 0.25, y - 0.06, z - 0.25], [x + 0.25, y, z + 0.25], "planks"));
-    seats.push(box(`${name}Cushion`, [x - 0.22, y, z - 0.22], [x + 0.2, y + 0.05, z + 0.22], "leather"));
+    seats.push(box(`${name}Cushion`, [x - 0.22, y, z - 0.22], [x + 0.2, y + 0.05, z + 0.22], cushion));
     seats.push(box(`${name}Back`, [x - 0.3, y - 0.06, z - 0.25], [x - 0.24, y + 0.55, z + 0.25], "planks"));
     seats.push(box(`${name}BackPad`, [x - 0.24, y + 0.12, z - 0.2], [x - 0.2, y + 0.48, z + 0.2], "leather"));
     [-1, 1].forEach((s, i) => seats.push(box(`${name}Leg${i}`, [x - 0.04, BOT + 0.07, z + s * 0.18 - 0.03], [x + 0.04, y - 0.06, z + s * 0.18 + 0.03], "wood")));
   };
-  chair("Pilot", PILOT);
-  chair("Passenger", PASSENGER);
+  chair("Pilot", PILOT, "pelt");
+  chair("Passenger", PASSENGER, "leather");
+  // Sammenbrettet ullteppe hengt over ryggen på passasjersetet
+  {
+    const [x, y] = PASSENGER;
+    seats.push(box("BlanketBack", [x - 0.33, y + 0.3, -0.21], [x - 0.3, y + 0.58, 0.21], "blanket"));
+    seats.push(box("BlanketTop", [x - 0.34, y + 0.58, -0.21], [x - 0.19, y + 0.62, 0.21], "blanket"));
+    seats.push(box("BlanketFront", [x - 0.22, y + 0.34, -0.21], [x - 0.19, y + 0.58, 0.21], "blanket"));
+  }
   seats.push(beam("Stick", [PILOT[0] + 0.45, BOT + 0.07, 0], [PILOT[0] + 0.4, BOT + 0.65, 0], 0.04, "wood", 0.04));
-  seats.push(box("StickGrip", [PILOT[0] + 0.36, BOT + 0.62, -0.035], [PILOT[0] + 0.44, BOT + 0.72, 0.035], "leather"));
+  seats.push(box("StickGrip", [PILOT[0] + 0.36, BOT + 0.62, -0.035], [PILOT[0] + 0.44, BOT + 0.72, 0.035], "twine"));
   // Setene: rytteren sitter på AP-et (midt på putene), med ansiktet framover (+X)
   seats.push(apBox("PilotSeat", "PilotAP", [PILOT[0], PILOT[1] + 0.05 + 0.3, 0], [0.5, 0.6, 0.5], "seat"));
   seats.push(apBox("PassengerSeat", "PassengerAP", [PASSENGER[0], PASSENGER[1] + 0.05 + 0.3, 0], [0.5, 0.6, 0.5], "seat"));
 }
 // Seteklossen skal starte på puta, ikke midt i den
 for (const e of seats) if (e.attachmentpoints) { e.from[1] = px(PILOT[1] + 0.05); e.to[1] = px(PILOT[1] + 0.65); }
-// Lasten (kiste kobles på senere) står på hylla bak piloten
-frame.push(apBox("CargoBox", "CargoAP", [-1.95, botY(-1.95) + 0.1 + 0.3, 0], [0.7, 0.6, 0.6], "seat"));
+// Lasteplass på hylla bak piloten: Ctrl+høyreklikk med kiste/trunk fester den (vanilla rideableaccessories).
+// Kista henges inn i denne klossen (stepParentTo) fra hjørnet, så klossen er én blokk bred og står på hylla
+const SHELF_TOP = botY(-1.55) + 0.1;
+frame.push(apBox("CargoBox", "CargoAP", [-1.9, SHELF_TOP + 0.01 + 0.3, 0], [1.0, 0.6, 1.0]));
+
+// ---------------------------------------------------------------- slitasje / hjemmesnekret
+{
+  // Nyere reparasjonsplanke spikret skjevt over motordekselet (venstre), og en blikkplate på høyre side
+  frame.push(box("RepairPlank", [1.3, BOT + 0.2, -W - 0.08], [2.05, BOT + 0.33, -W - 0.05], "planks2", { rot: [0, 0, -4] }));
+  frame.push(box("TinPatch", [-0.5, BOT + 0.08, W + 0.05], [-0.15, BOT + 0.3, W + 0.065], "rust", { rot: [0, 0, 3] }));
+  // Nagler i blikkplata
+  [[-0.47, 0.11], [-0.18, 0.11], [-0.47, 0.27], [-0.18, 0.27]].forEach(([x, y], i) =>
+    frame.push(box(`TinRivet${i}`, [x - 0.012, BOT + y - 0.012, W + 0.065], [x + 0.012, BOT + y + 0.012, W + 0.075], "iron")));
+  // Ekstra tausurring på skjøtene fremst i skroget
+  for (const s of [-1, 1]) [1.2, COCKPIT_BACK].forEach((x, i) =>
+    frame.push(box(`FrameLash${s < 0 ? "L" : "R"}${i}`, [x - 0.07, TOP - 0.07, s * W - 0.07], [x + 0.07, TOP + 0.07, s * W + 0.07], "rope")));
+  // Rustne eksosrør og sotstriper nedover dekselet
+  for (const e of engine) if (/^Exhaust|^Head/.test(e.name)) for (const fc of Object.values(e.faces)) fc.texture = "#rust";
+  engine.push(box("SootStreak", [NOSE - 0.5, TOP - 0.25, W + 0.05], [NOSE - 0.04, TOP - 0.1, W + 0.06], "soot", { rot: [0, 0, 6] }));
+  // Tanken er lappet med et jernbånd og en tøyfille rundt lokket
+  engine.push(box("CapRag", [FUEL_CAP[0] - 0.07, FUEL_CAP[1] - 0.12, -0.07], [FUEL_CAP[0] + 0.07, FUEL_CAP[1] - 0.05, 0.07], "patch2"));
+  // Haleflata har også fått en lapp
+  tail.push(box("StabPatch", [TAIL + 0.1, TOP_T + 0.055, 0.35], [TAIL + 0.45, TOP_T + 0.062, 0.7], "patch", { rot: [0, 6, 0] }));
+}
 
 // ---------------------------------------------------------------- utdata
+// Må speiles i entities/wright.json og wrightconstruction.json (client.textures)
 const textures = {
   wood: "game:block/wood/debarked/oak",
-  planks: "game:block/wood/planks/oak1",
+  planks: "game:block/wood/planks/aged1",
+  planks2: "game:block/wood/planks/birch1",
   aged: "game:block/wood/debarked/aged",
-  fabric: "game:block/cloth/linen/plain",
+  fabric: "game:block/cloth/linen/normal1",
+  patch: "game:block/cloth/linen/brown",
+  patch2: "game:block/cloth/burlap/sides",
+  patch3: "game:block/cloth/linen/village/darkbrown",
   rope: "game:block/cloth/reedrope",
+  twine: "game:block/cloth/reedrope",
   iron: "game:block/metal/sheet/iron1",
-  chain: "game:block/metal/sheet/iron3",
-  copper: "game:block/metal/sheet/copper1",
-  leather: "game:block/cloth/leather/normal"
+  rust: "game:block/metal/corroded/rusty1",
+  soot: "game:block/metal/sheet/lead1",
+  chain: "game:block/metal/tarnished/chain-rust",
+  copper: "game:block/metal/sheet/copper3",
+  leather: "game:block/cloth/leather/smallstiches",
+  pelt: "game:block/cloth/pelt",
+  blanket: "game:block/cloth/wool/green2"
 };
 
 const steps = [
   ["S1Frame", frame], ["S2Gear", gear], ["S3LowerWing", lowerWing], ["S4UpperWing", upperWing],
   ["S5Engine", engine], ["S6Drive", drive], ["S7Tail", tail], ["S8Seat", seats]
 ];
+
+const spin = (code, el, axis) => ({
+  name: code, code, quantityframes: 31, onActivityStopped: "Stop", onAnimationEnd: "Repeat",
+  // VS krever alle tre rotasjonsaksene i en rotasjons-keyframe (Animation.lerpKeyFrameElement leser .Value på X/Y/Z)
+  keyframes: [0, 30].map(frame => ({ frame, elements: { [el]: { rotationX: 0, rotationY: 0, rotationZ: 0, ["rotation" + axis]: frame * 12 } } }))
+});
+const wheelSpin = { ...spin("wheelspin", "WheelL", "Z") };
+wheelSpin.keyframes.forEach(k => { k.elements.WheelR = { ...k.elements.WheelL }; });
 
 function shapeWith(includeSite) {
   const children = [];
@@ -410,6 +486,7 @@ function shapeWith(includeSite) {
   return {
     textureWidth: 16, textureHeight: 16,
     textures,
+    ...(includeSite ? {} : { animations: [spin("propspin", "Propeller", "X"), wheelSpin] }),
     elements: [{
       name: "Root", from: [8, 0, 8], to: [8, 0, 8], rotationOrigin: [8, 0, 8], rotationY: 180,
       faces: {}, children
@@ -455,5 +532,20 @@ const write = (file, obj) => {
   console.log(`Skrev ${file} (${n} synlige elementer)`);
 };
 write("wright.json", shapeWith(false));
+const entDir = path.join(__dirname, "..", "Wright", "assets", "wright", "entities");
+for (const ef of ["wright.json", "wrightconstruction.json"]) {
+  const p = path.join(entDir, ef), src = fs.readFileSync(p, "utf8");
+  // Finn client.textures-blokka og erstatt den (klammer telles, JSON-en har kommentarer)
+  const start = src.indexOf("textures: {");
+  if (start < 0) throw new Error("fant ikke textures-blokka i " + ef);
+  let depth = 0, end = start;
+  for (let k = src.indexOf("{", start); k < src.length; k++) {
+    if (src[k] === "{") depth++;
+    else if (src[k] === "}" && --depth === 0) { end = k + 1; break; }
+  }
+  const NL = String.fromCharCode(10), TAB = String.fromCharCode(9);
+  const block = "textures: {" + NL + Object.entries(textures).map(([k, v]) => TAB.repeat(3) + `"${k}": { base: "${v}" }`).join("," + NL) + NL + TAB.repeat(2) + "}";
+  fs.writeFileSync(p, src.slice(0, start) + block + src.slice(end));
+}
 write("construction.json", shapeWith(true));
 module.exports = { shapeWith };

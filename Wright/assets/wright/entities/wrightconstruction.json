@@ -42,7 +42,7 @@
 				{ type: "item", code: "game:rope", quantity: 2 }
 			], addElements: ["Root/S7Tail"] },
 			{ requireStacks: [
-				{ type: "block", code: "game:chair-*", name: "wright:ingredient-chair", quantity: 1 }
+				{ type: "block", code: "game:chair-*", name: "wright:ingredient-chair", quantity: 2 }
 			], addElements: ["Root/S8Seat"] },
 			{ requireStacks: [], actionLangCode: "wright:rollout" }
 		]
@@ -54,14 +54,23 @@
 		shape: { base: "wright:entity/construction" },
 		textures: {
 			"wood": { base: "game:block/wood/debarked/oak" },
-			"planks": { base: "game:block/wood/planks/oak1" },
+			"planks": { base: "game:block/wood/planks/aged1" },
+			"planks2": { base: "game:block/wood/planks/birch1" },
 			"aged": { base: "game:block/wood/debarked/aged" },
-			"fabric": { base: "game:block/cloth/linen/plain" },
+			"fabric": { base: "game:block/cloth/linen/normal1" },
+			"patch": { base: "game:block/cloth/linen/brown" },
+			"patch2": { base: "game:block/cloth/burlap/sides" },
+			"patch3": { base: "game:block/cloth/linen/village/darkbrown" },
 			"rope": { base: "game:block/cloth/reedrope" },
+			"twine": { base: "game:block/cloth/reedrope" },
 			"iron": { base: "game:block/metal/sheet/iron1" },
-			"chain": { base: "game:block/metal/sheet/iron3" },
-			"copper": { base: "game:block/metal/sheet/copper1" },
-			"leather": { base: "game:block/cloth/leather/normal" }
+			"rust": { base: "game:block/metal/corroded/rusty1" },
+			"soot": { base: "game:block/metal/sheet/lead1" },
+			"chain": { base: "game:block/metal/tarnished/chain-rust" },
+			"copper": { base: "game:block/metal/sheet/copper3" },
+			"leather": { base: "game:block/cloth/leather/smallstiches" },
+			"pelt": { base: "game:block/cloth/pelt" },
+			"blanket": { base: "game:block/cloth/wool/green2" }
 		},
 		behaviors: [
 			{ code: "interpolateposition" }

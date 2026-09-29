@@ -66,6 +66,27 @@ public class EntityWright : EntityBoat
     }
 
     public double Throttle;
+
+    // Visuelt: propell, hjul og eksos (attributes.visuals i JSON)
+    double propMaxRevs = 6;       // omdreininger/s ved full gass (holdes lavt, ellers «står» propellen på skjermen)
+    double propIdleRevs = 1.5;    // tomgang når motoren går
+    float propSpinSign = 1, wheelSpinSign = -1;
+    double wheelRadius = 0.38;
+    Vec3d[] exhausts = { new(2.38, 1.95, 0.335), new(2.84, 1.95, 0.335) }; // design-ramme: +X nese, +Y opp, +Z høyre
+    double propAngle, wheelAngle, wheelRate, propRevs;
+    Vec3d? lastRenderPos;
+    SimpleParticleProperties? smoke;
+
+    /// <summary>Gass slik alle klienter ser den: egen verdi for piloten, ellers synket fra serveren.</summary>
+    public double EngineThrottle
+    {
+        get
+        {
+            if (Api is ICoreClientAPI capi && capi.World.Player.Entity.MountedOn is IMountableSeat seat
+                && seat.MountSupplier == this && seat.CanControl) return Throttle;
+            return WatchedAttributes.GetFloat("throttle", 0);
+        }
+    }
     public bool Flying { get; private set; }
     /// <summary>Nesevinkel, positiv = nesa opp.</summary>
     public double PitchAngle { get; private set; }
@@ -86,6 +107,18 @@ public class EntityWright : EntityBoat
             fuelCode = fuel["code"].AsString(fuelCode);
             fuelCapacity = fuel["capacityLitres"].AsDouble(fuelCapacity);
             fuelBurnRate = fuel["litresPerMinuteFullThrottle"].AsDouble(fuelBurnRate * 60) / 60;
+        }
+
+        var vis = properties.Attributes["visuals"];
+        if (vis.Exists)
+        {
+            propMaxRevs = vis["propMaxRevsPerSec"].AsDouble(propMaxRevs);
+            propIdleRevs = vis["propIdleRevsPerSec"].AsDouble(propIdleRevs);
+            propSpinSign = vis["propSpinSign"].AsFloat(propSpinSign);
+            wheelSpinSign = vis["wheelSpinSign"].AsFloat(wheelSpinSign);
+            wheelRadius = vis["wheelRadius"].AsDouble(wheelRadius);
+            var ex = vis["exhausts"].AsArray<double[]>(null);
+            if (ex != null) exhausts = Array.ConvertAll(ex, e => new Vec3d(e[0], e[1], e[2]));
         }
 
         var f = properties.Attributes["flight"];
@@ -178,7 +211,14 @@ public class EntityWright : EntityBoat
     public override void OnGameTick(float dt)
     {
         base.OnGameTick(dt);
-        if (Api.Side == EnumAppSide.Server && fuelInv != null) PourTick(dt);
+        if (Api.Side != EnumAppSide.Server) return;
+        if (fuelInv != null) PourTick(dt);
+        // Gassen synkes til klientene (propell + røyk hos tilskuere og passasjerer)
+        float synced = WatchedAttributes.GetFloat("throttle", 0);
+        if (Math.Abs(synced - Throttle) > 0.02 || (Throttle <= 0) != (synced <= 0))
+        {
+            WatchedAttributes.SetFloat("throttle", (float)Throttle);
+        }
     }
 
     public override void OnInteract(EntityAgent byEntity, ItemSlot itemslot, Vec3d hitPosition, EnumInteractMode mode)
@@ -449,5 +489,86 @@ public class EntityWright : EntityBoat
         renderer.xangle = visualRollSign * (float)BankAngle + shake;
         renderer.yangle = 0;
         renderer.zangle = visualPitchSign * (float)PitchAngle + shake * 0.5f;
+
+        UpdateSpinAnimations(dt);
+    }
+
+    /// <summary>
+    /// Propell og hjul: shape-animasjonene «propspin»/«wheelspin» er én omdreining over 30 rammer.
+    /// Vi setter rammen direkte hver frame (samme grep som vanilla-værhanen på seilbåten).
+    /// </summary>
+    void UpdateSpinAnimations(float dt)
+    {
+        var anim = AnimManager;
+        if (anim?.Animator == null) return;
+
+        // Propell: tomgang når motoren går, opp mot maks med gassen. Tom tank = står stille
+        double throttle = EngineThrottle;
+        double targetRevs = throttle > 0 ? propIdleRevs + (propMaxRevs - propIdleRevs) * throttle : 0;
+        propRevs += (targetRevs - propRevs) * Math.Min(1, 2 * dt); // spinner opp og ned mykt
+        propAngle = GameMath.Mod(propAngle + propSpinSign * propRevs * 360 * dt, 360);
+
+        // Hjul: ruller med faktisk bakkefart (posisjonsendring — virker også hos tilskuere)
+        var p = Pos.XYZ;
+        if (lastRenderPos != null && dt > 0)
+        {
+            double dist = Math.Sqrt(Math.Pow(p.X - lastRenderPos.X, 2) + Math.Pow(p.Z - lastRenderPos.Z, 2));
+            double rate = dist < 2 ? dist / dt / wheelRadius * GameMath.RAD2DEG : 0; // grader/s (teleport = 0)
+            wheelRate = OnGround ? rate : wheelRate * Math.Max(0, 1 - 0.5 * dt); // i lufta spinner de ut
+        }
+        lastRenderPos = p;
+        wheelAngle = GameMath.Mod(wheelAngle + wheelSpinSign * wheelRate * dt, 360);
+
+        SetSpinFrame(anim, "propspin", propAngle);
+        SetSpinFrame(anim, "wheelspin", wheelAngle);
+    }
+
+    static void SetSpinFrame(IAnimationManager anim, string code, double angle)
+    {
+        if (!anim.IsAnimationActive(code)) anim.StartAnimation(code);
+        var state = anim.GetAnimationState(code);
+        if (state == null) return;
+        state.CurrentFrame = (float)(angle / 360 * 30);
+        state.BlendedWeight = 1;
+        state.EasingFactor = 1;
+    }
+
+    /// <summary>
+    /// Ingen vannsprut fra båt-klassen. I stedet: sot og røyk fra eksosrørene når motoren går.
+    /// </summary>
+    public override void OnAsyncParticleTick(float dt, IAsyncParticleManager manager)
+    {
+        double throttle = EngineThrottle;
+        if (throttle <= 0) return;
+
+        smoke ??= new SimpleParticleProperties(
+            1, 1, ColorUtil.ToRgba(120, 40, 38, 36), new Vec3d(), new Vec3d(0.08, 0.05, 0.08),
+            new Vec3f(-0.15f, 0.4f, -0.15f), new Vec3f(0.15f, 0.9f, 0.15f), 2.5f, -0.02f, 0.4f, 0.9f, EnumParticleModel.Quad)
+        {
+            SelfPropelled = true,
+            WindAffectednes = 0.6f,
+            OpacityEvolve = EvolvingNatFloat.create(EnumTransformFunction.LINEAR, -100),
+            SizeEvolve = EvolvingNatFloat.create(EnumTransformFunction.LINEAR, 1.2f)
+        };
+
+        // Forover = motsatt synsvektoren (flyet kjører pos.GetViewVector() * -fart). Høyre = forover dreid 90°
+        var view = Pos.GetViewVector();
+        double fx = -view.X, fz = -view.Z, len = Math.Sqrt(fx * fx + fz * fz);
+        if (len < 1e-6) return;
+        fx /= len; fz /= len;
+        double rx = -fz, rz = fx;
+
+        // Mer gass = tettere og mørkere røyk. Fartsvinden tar røyken bakover
+        float qty = (float)(0.3 + 1.2 * throttle);
+        smoke.MinQuantity = qty;
+        smoke.AddQuantity = qty;
+        smoke.Color = ColorUtil.ToRgba((int)(80 + 90 * throttle), 35, 33, 31);
+        var drift = Pos.Motion;
+        foreach (var e in exhausts)
+        {
+            smoke.MinPos.Set(Pos.X + fx * e.X + rx * e.Z - 0.04, Pos.Y + e.Y, Pos.Z + fz * e.X + rz * e.Z - 0.04);
+            smoke.MinVelocity.Set((float)(drift.X * 20) - 0.15f, 0.4f, (float)(drift.Z * 20) - 0.15f);
+            manager.Spawn(smoke);
+        }
     }
 }

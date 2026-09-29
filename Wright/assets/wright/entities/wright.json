@@ -39,14 +39,24 @@
 			visualPitchSign: -1,
 			visualRollSign: 1
 		},
+		// Propell, hjul og eksosrøyk. Snu fortegnet hvis noe spinner feil vei
+		visuals: {
+			propMaxRevsPerSec: 6,
+			propIdleRevsPerSec: 1.5,
+			propSpinSign: 1,
+			wheelSpinSign: -1,
+			wheelRadius: 0.38,
+			// Eksosrørtoppene i modellens ramme (blokker): +X = nese, +Y = opp, +Z = høyre
+			exhausts: [[2.38, 1.95, 0.335], [2.84, 1.95, 0.335]]
+		},
 		swimmingOffsetY: 0.45,
 		requiresPaddlingTool: false,
 		rightClickPickup: true,
 		mountAnimations: {
-			idle: "sitidle",
-			ready: "sitidle",
-			forwards: "sitidle",
-			backwards: "sitidle"
+			idle: "sitboatidle",
+			ready: "sitboatidle",
+			forwards: "sitboatidle",
+			backwards: "sitboatidle"
 		}
 	},
 	hitboxSize: { x: 2, y: 1.2, z: 2 },
@@ -67,9 +77,21 @@
 				{ apName: "PassengerAP", bodyYawLimit: 0.8, eyeHeight: 1 }
 			]
 		},
+		rideableaccessories: {
+			dropContentsOnDeath: true,
+			// Samme rekkefølge som selectionBoxes under (vanilla-krav). Seter/tank slipper klikket videre
+			wearableSlots: [
+				{ code: "Pilot Seat", forCategoryCodes: [], attachmentPointCode: "PilotAP", emptyInteractPassThrough: true },
+				{ code: "Passenger Seat", forCategoryCodes: [], attachmentPointCode: "PassengerAP", emptyInteractPassThrough: true },
+				{ code: "Fuel", forCategoryCodes: [], attachmentPointCode: "FuelAP", emptyInteractPassThrough: true },
+				// Kiste eller trunk på hylla bak piloten: Ctrl + høyreklikk med kista i hånda
+				{ code: "Cargo", forCategoryCodes: ["chest", "basket", "crate"], attachmentPointCode: "CargoAP",
+					stepParentTo: { "": { elementName: "CargoBox" } } }
+			]
+		},
 		selectionboxes: {
-			// Klikk setet = sett deg, klikk tanklokket med en beholder = fyll drivstoff. CargoAP venter på kista
-			selectionBoxes: ["PilotAP", "PassengerAP", "FuelAP"]
+			// Klikk setet = sett deg, klikk tank/motor med en beholder = fyll drivstoff, hylla = last
+			selectionBoxes: ["PilotAP", "PassengerAP", "FuelAP", "CargoAP"]
 		}
 	},
 	client: {
@@ -79,24 +101,37 @@
 		shape: { base: "wright:entity/wright" },
 		textures: {
 			"wood": { base: "game:block/wood/debarked/oak" },
-			"planks": { base: "game:block/wood/planks/oak1" },
+			"planks": { base: "game:block/wood/planks/aged1" },
+			"planks2": { base: "game:block/wood/planks/birch1" },
 			"aged": { base: "game:block/wood/debarked/aged" },
-			"fabric": { base: "game:block/cloth/linen/plain" },
+			"fabric": { base: "game:block/cloth/linen/normal1" },
+			"patch": { base: "game:block/cloth/linen/brown" },
+			"patch2": { base: "game:block/cloth/burlap/sides" },
+			"patch3": { base: "game:block/cloth/linen/village/darkbrown" },
 			"rope": { base: "game:block/cloth/reedrope" },
+			"twine": { base: "game:block/cloth/reedrope" },
 			"iron": { base: "game:block/metal/sheet/iron1" },
-			"chain": { base: "game:block/metal/sheet/iron3" },
-			"copper": { base: "game:block/metal/sheet/copper1" },
-			"leather": { base: "game:block/cloth/leather/normal" }
+			"rust": { base: "game:block/metal/corroded/rusty1" },
+			"soot": { base: "game:block/metal/sheet/lead1" },
+			"chain": { base: "game:block/metal/tarnished/chain-rust" },
+			"copper": { base: "game:block/metal/sheet/copper3" },
+			"leather": { base: "game:block/cloth/leather/smallstiches" },
+			"pelt": { base: "game:block/cloth/pelt" },
+			"blanket": { base: "game:block/cloth/wool/green2" }
 		},
 		animations: [
 			{ code: "turnLeft", animation: "turnLeft", animationSpeed: 1, easeInSpeed: 2, easeOutSpeed: 2 },
-			{ code: "turnRight", animation: "turnRight", animationSpeed: 1, easeInSpeed: 2, easeOutSpeed: 2 }
+			{ code: "turnRight", animation: "turnRight", animationSpeed: 1, easeInSpeed: 2, easeOutSpeed: 2 },
+			// Rammen settes fra koden (EntityWright.UpdateSpinAnimations), derfor fart 0
+			{ code: "propspin", animation: "propspin", animationSpeed: 0, weight: 1, blendMode: "Add" },
+			{ code: "wheelspin", animation: "wheelspin", animationSpeed: 0, weight: 1, blendMode: "Add" }
 		],
 		behaviors: [
 			{ code: "repulseagents" },
 			{ code: "passivephysicsmultibox" },
 			{ code: "interpolateposition" },
 			{ code: "selectionboxes" },
+			{ code: "rideableaccessories" },
 			{ code: "creaturecarrier" }
 		]
 	},
@@ -105,6 +140,7 @@
 			{ code: "repulseagents" },
 			{ code: "passivephysicsmultibox" },
 			{ code: "selectionboxes" },
+			{ code: "rideableaccessories" },
 			{ code: "creaturecarrier" }
 		]
 	},
