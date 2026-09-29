@@ -2,13 +2,13 @@ using Vintagestory.API.Client;
 
 namespace Wright;
 
-/// <summary>Enkel instrumentlinje mens du sitter i flyet: gass, fart, høyde, løft.</summary>
+/// <summary>Enkel instrumentlinje mens du sitter i flyet: gass, fart, høyde, løft, drivstoff.</summary>
 public class WrightHud : HudElement
 {
     public WrightHud(ICoreClientAPI capi) : base(capi)
     {
-        var bounds = ElementBounds.Fixed(EnumDialogArea.CenterBottom, 0, -110, 520, 30);
-        var textBounds = ElementBounds.Fixed(0, 0, 520, 30);
+        var bounds = ElementBounds.Fixed(EnumDialogArea.CenterBottom, 0, -110, 700, 30);
+        var textBounds = ElementBounds.Fixed(0, 0, 700, 30);
         SingleComposer = capi.Gui.CreateCompo("wright-hud", bounds)
             .AddDynamicText("", CairoFont.WhiteSmallText().WithOrientation(EnumTextOrientation.Center), textBounds, "status")
             .Compose();
@@ -28,7 +28,7 @@ public class WrightHud : HudElement
         string state = plane.Stalling ? "STALL" : plane.Flying ? "AIRBORNE" : (plane.LiftRatio >= 0.8 ? "ROTATE - hold Space" : "ground");
         double pitchDeg = plane.PitchAngle * 180 / System.Math.PI;
         SingleComposer.GetDynamicText("status").SetNewText(
-            $"Throttle {plane.Throttle * 100:0}%   Speed {blocksPerSecond:0.0} b/s   Lift {plane.LiftRatio * 100:0}%   Pitch {pitchDeg:+0;-0;0}°   Alt {plane.Pos.Y:0}   {state}");
+            $"Throttle {plane.Throttle * 100:0}%   Speed {blocksPerSecond:0.0} b/s   Lift {plane.LiftRatio * 100:0}%   Pitch {pitchDeg:+0;-0;0}°   Alt {plane.Pos.Y:0}   Fuel {plane.FuelLitres:0.0}/{plane.FuelCapacity:0} L{(plane.FuelLitres <= 0 ? " EMPTY" : "")}   {state}");
     }
 
     public override bool Focusable => false;

@@ -30,5 +30,12 @@
     "ingredient-supportbeams": "support beams",
     "ingredient-planks": "planks",
     "ingredient-nails": "iron nails and strips",
-    "ingredient-chair": "chair"
+    "ingredient-chair": "chair",
+    "fillfuel": "Fill with fuel",
+    "fuel-title": "Fuel tank",
+    "fuel-insert": "Put in a container of Aqua Vitae",
+    "fuel-empty": "The container is empty",
+    "fuel-wrong": "Too weak to burn. The engine runs on Aqua Vitae",
+    "fuel-full": "The fuel tank is full",
+    "fuel-pouring": "Pouring..."
 }

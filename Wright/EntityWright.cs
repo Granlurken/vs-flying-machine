@@ -4,6 +4,8 @@ using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Config;
 using Vintagestory.API.MathTools;
+using Vintagestory.API.Server;
+using Vintagestory.API.Util;
 using Vintagestory.GameContent;
 
 namespace Wright;
@@ -51,6 +53,18 @@ public class EntityWright : EntityBoat
     float visualPitchSign = -1;
     float visualRollSign = 1;
 
+    // Drivstoff — Aqua Vitae (vanilla alcoholportion). Mengden bor i WatchedAttributes (server → klient, lagres med flyet)
+    string fuelCode = "game:alcoholportion";
+    double fuelCapacity = 10;     // liter
+    double fuelBurnRate = 1.0 / 60; // liter per sekund ved full gass (1 L/min)
+
+    public double FuelCapacity => fuelCapacity;
+    public double FuelLitres
+    {
+        get => WatchedAttributes.GetDouble("fuelLitres", 0);
+        set => WatchedAttributes.SetDouble("fuelLitres", GameMath.Clamp(value, 0, fuelCapacity));
+    }
+
     public double Throttle;
     public bool Flying { get; private set; }
     /// <summary>Nesevinkel, positiv = nesa opp.</summary>
@@ -64,6 +78,15 @@ public class EntityWright : EntityBoat
     public override void Initialize(EntityProperties properties, ICoreAPI api, long InChunkIndex3d)
     {
         base.Initialize(properties, api, InChunkIndex3d);
+        InitFuelInventory(api);
+
+        var fuel = properties.Attributes["fuel"];
+        if (fuel.Exists)
+        {
+            fuelCode = fuel["code"].AsString(fuelCode);
+            fuelCapacity = fuel["capacityLitres"].AsDouble(fuelCapacity);
+            fuelBurnRate = fuel["litresPerMinuteFullThrottle"].AsDouble(fuelBurnRate * 60) / 60;
+        }
 
         var f = properties.Attributes["flight"];
         if (!f.Exists) return;
@@ -88,6 +111,159 @@ public class EntityWright : EntityBoat
         turnResponse = f["turnResponse"].AsDouble(turnResponse);
         visualPitchSign = f["visualPitchSign"].AsFloat(visualPitchSign);
         visualRollSign = f["visualRollSign"].AsFloat(visualRollSign);
+    }
+
+    // --- Fylling: høyreklikk med væskebeholder åpner fylle-vinduet (slot → pil → tank) ---
+    const int PacketOpenFuel = 1001;
+    const double PourLitresPerSecond = 1;
+    InventoryGeneric? fuelInv;
+    GuiDialogWrightFuel? fuelDialog;
+    double pourCarry; // brøkdel av væske-item som ikke er helt ennå
+
+    public InventoryGeneric FuelInventory => fuelInv!;
+
+    void InitFuelInventory(ICoreAPI api)
+    {
+        fuelInv = new InventoryGeneric(1, "wrightfuel-" + EntityId, api, (_, inv) => new ItemSlotWrightFuel(inv));
+        if (api.Side == EnumAppSide.Server)
+        {
+            // Lukker du vinduet, får du beholderen tilbake (sloten lagres ikke med flyet)
+            fuelInv.OnInventoryClosed += player => ReturnFuelSlot(player);
+        }
+    }
+
+    void ReturnFuelSlot(IPlayer? player)
+    {
+        var slot = fuelInv![0];
+        if (slot.Empty) return;
+        var stack = slot.TakeOutWhole();
+        if (player == null || !player.InventoryManager.TryGiveItemstack(stack, true))
+        {
+            World.SpawnItemEntity(stack, (player?.Entity?.Pos ?? Pos).XYZ);
+        }
+        slot.MarkDirty();
+    }
+
+    /// <summary>Tilstanden til fylle-sloten, som lang-nøkkel (uten «wright:»).</summary>
+    public string FuelSlotState()
+    {
+        var stack = fuelInv?[0].Itemstack;
+        if (stack?.Collectible is not ILiquidSource source) return "fuel-insert";
+        var content = source.GetContent(stack);
+        if (content == null || source.GetContentProps(stack) == null) return "fuel-empty";
+        if (!content.Collectible.Code.Equals(new AssetLocation(fuelCode))) return "fuel-wrong";
+        if (FuelLitres >= fuelCapacity - 0.01) return "fuel-full";
+        return "fuel-pouring";
+    }
+
+    void PourTick(float dt)
+    {
+        if (FuelSlotState() != "fuel-pouring") { pourCarry = 0; return; }
+        var slot = fuelInv![0];
+        var source = (ILiquidSource)slot.Itemstack!.Collectible;
+        var props = source.GetContentProps(slot.Itemstack)!;
+
+        pourCarry += PourLitresPerSecond * dt * props.ItemsPerLitre;
+        double room = (fuelCapacity - FuelLitres) * props.ItemsPerLitre;
+        int items = (int)Math.Min(Math.Floor(pourCarry), Math.Ceiling(room));
+        if (items <= 0) return;
+        pourCarry -= items;
+
+        var taken = source.TryTakeContent(slot.Itemstack, items);
+        if (taken == null || taken.StackSize <= 0) return;
+        FuelLitres += taken.StackSize / (double)props.ItemsPerLitre;
+        slot.MarkDirty();
+    }
+
+    public override void OnGameTick(float dt)
+    {
+        base.OnGameTick(dt);
+        if (Api.Side == EnumAppSide.Server && fuelInv != null) PourTick(dt);
+    }
+
+    public override void OnInteract(EntityAgent byEntity, ItemSlot itemslot, Vec3d hitPosition, EnumInteractMode mode)
+    {
+        if (mode == EnumInteractMode.Interact && !byEntity.Controls.ShiftKey
+            && itemslot?.Itemstack?.Collectible is ILiquidSource)
+        {
+            if (Api is ICoreClientAPI capi && byEntity == capi.World.Player.Entity) OpenFuelDialog(capi);
+            return; // ikke sett deg inn
+        }
+        base.OnInteract(byEntity, itemslot, hitPosition, mode);
+    }
+
+    public void OpenFuelDialog(ICoreClientAPI capi)
+    {
+        if (fuelDialog?.IsOpened() == true) return;
+        capi.Network.SendEntityPacket(EntityId, PacketOpenFuel, null);
+        fuelDialog = new GuiDialogWrightFuel(capi, this);
+        fuelDialog.OnClosed += () => fuelDialog = null;
+        fuelDialog.TryOpen();
+    }
+
+    public override void OnReceivedClientPacket(IServerPlayer player, int packetid, byte[] data)
+    {
+        base.OnReceivedClientPacket(player, packetid, data);
+        if (fuelInv == null) return;
+        if (packetid < 1000)
+        {
+            fuelInv.InvNetworkUtil.HandleClientPacket(player, packetid, data);
+            return;
+        }
+        if (packetid == PacketOpenFuel)
+        {
+            player.InventoryManager.OpenInventory(fuelInv);
+            // Beholderen i hånda hoppper rett i sloten
+            var held = player.InventoryManager.ActiveHotbarSlot;
+            if (held?.Itemstack?.Collectible is ILiquidSource && fuelInv[0].Empty)
+            {
+                held.TryPutInto(World, fuelInv[0], 1);
+                held.MarkDirty();
+            }
+        }
+    }
+
+    public override void OnEntityDespawn(EntityDespawnData despawn)
+    {
+        if (Api.Side == EnumAppSide.Server && fuelInv != null && !fuelInv[0].Empty)
+        {
+            World.SpawnItemEntity(fuelInv[0].TakeOutWhole(), Pos.XYZ);
+        }
+        fuelDialog?.TryClose();
+        base.OnEntityDespawn(despawn);
+    }
+
+    static WorldInteraction[]? fuelHelp;
+
+    public override WorldInteraction[] GetInteractionHelp(IClientWorldAccessor world, EntitySelection es, IClientPlayer player)
+    {
+        var help = base.GetInteractionHelp(world, es, player);
+        if (player.Entity.MountedOn == this) return help;
+
+        fuelHelp ??= new[]
+        {
+            new WorldInteraction
+            {
+                ActionLangCode = "wright:fillfuel",
+                MouseButton = EnumMouseButton.Right,
+                Itemstacks = FuelHelpStacks(world)
+            }
+        };
+        return help == null ? fuelHelp : help.Append(fuelHelp);
+    }
+
+    ItemStack[] FuelHelpStacks(IWorldAccessor world)
+    {
+        var fuel = world.GetItem(new AssetLocation(fuelCode));
+        var list = new System.Collections.Generic.List<ItemStack>();
+        foreach (var code in new[] { "game:woodbucket", "game:jug-blue-fired" })
+        {
+            if (fuel == null || world.GetBlock(new AssetLocation(code)) is not BlockLiquidContainerBase block) continue;
+            var stack = new ItemStack(block);
+            block.SetContent(stack, new ItemStack(fuel, (int)(block.CapacityLitres * 100)));
+            list.Add(stack);
+        }
+        return list.ToArray();
     }
 
     /// <summary>Kontrollene til den som sitter i førersetet, eller null.</summary>
@@ -133,6 +309,14 @@ public class EntityWright : EntityBoat
             Throttle = 0; // ingen pilot = motoren går ikke
         }
         Throttle = GameMath.Clamp(Throttle, 0, 1);
+
+        // --- Drivstoff --- tom tank = motoren stopper, flyet glir
+        if (Throttle > 0)
+        {
+            double fuel = FuelLitres;
+            if (fuel <= 0) Throttle = 0;
+            else if (Api.Side == EnumAppSide.Server) FuelLitres = fuel - Throttle * fuelBurnRate * dt;
+        }
 
         double lift = LiftRatio;
 
