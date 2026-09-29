@@ -416,6 +416,71 @@ const PILOT = [0.4, BOT + 0.3, 0], PASSENGER = [-0.9, BOT + 0.3, 0];
   seats.push(apBox("PilotSeat", "PilotAP", [PILOT[0], PILOT[1] + 0.05 + 0.3, 0], [0.5, 0.6, 0.5], "seat"));
   seats.push(apBox("PassengerSeat", "PassengerAP", [PASSENGER[0], PASSENGER[1] + 0.05 + 0.3, 0], [0.5, 0.6, 0.5], "seat"));
 }
+// ---------------------------------------------------------------- instrumentbord (del av S8, bygget inn)
+// Et plankebord på tverrbjelken foran piloten, lent litt bakover mot tanken. Seks plasser (3×2):
+// fart / kompass / høyde øverst, drivstoff + to tomme plasser nederst (til senere instrumenter).
+// Hver viser er en gruppe med origo i skivas sentrum; animasjonene dreier den om lokal X (skivas normal).
+const needleAnims = [];
+const lampAnims = []; // [kode, element, forskyvning i X (voksler)]
+{
+  const dash = [];
+  const x1 = 1.14, x0 = x1 - 0.05, y0 = TOP - 0.02, y1 = TOP + 0.44, hz = 0.43;
+  dash.push(box("DashBoard", [x0, y0, -hz], [x1, y1, hz], "planks"));
+  dash.push(box("DashTrim", [x0 - 0.012, y1 - 0.02, -hz - 0.012], [x1 + 0.01, y1 + 0.015, hz + 0.012], "wood"));
+  // Lag-avstander holdes ≥ 0.008 blokk (tettere flimrer på pilotavstand): ramme-front x0−0.008, skive-front x0−0.016.
+  // Rammekanten M er smal nok til at rammene i øvre og nedre rad (0.21 fra hverandre) ikke overlapper.
+  const D = 0.2, M = 0.004, fx = x0 - 0.016; // skivediameter, rammekant, skivas framside
+  const rows = [y0 + 0.33, y0 + 0.12], cols = [-0.27, 0, 0.27];
+  const dial = (name, tex, cy, cz) => ({
+    name, from: [px(fx), px(cy - D / 2), px(cz - D / 2)], to: [px(x0), px(cy + D / 2), px(cz + D / 2)],
+    faces: { west: { texture: "#" + tex, uv: [0, 0, 16, 16] } }
+  });
+  // Viser: peker rett opp i hvile (ramme 0), liten hale bak navet. depth = hvor langt foran skiva
+  const needle = (name, cy, cz, len, w, depth, tex = "needle") =>
+    box(name, [fx - depth - 0.004, cy - 0.024, cz - w / 2], [fx - depth, cy + len, cz + w / 2], tex);
+  const hub = (name, cy, cz) => box(name, [fx - 0.026, cy - 0.013, cz - 0.013], [fx - 0.002, cy + 0.013, cz + 0.013], "brass");
+  const pivot = (cy, cz) => [fx, cy, cz].map(px);
+  const gauge = (key, tex, cy, cz, needles) => {
+    dash.push(box(key + "Mount", [x0 - 0.008, cy - D / 2 - M, cz - D / 2 - M], [x0 + 0.001, cy + D / 2 + M, cz + D / 2 + M], "brass"));
+    dash.push(dial(key + "Dial", tex, cy, cz));
+    for (const [code, len, w, depth] of needles) {
+      dash.push(group("Needle" + code, [needle("Needle" + code + "Bar", cy, cz, len, w, depth)], { rotationOrigin: pivot(cy, cz) }));
+      needleAnims.push(["needle" + code.toLowerCase(), "Needle" + code]);
+    }
+    if (needles.length) dash.push(hub(key + "Hub", cy, cz));
+  };
+  gauge("Speed", "dialspeed", rows[0], cols[0], [["Speed", 0.078, 0.007, 0.004]]);
+  gauge("Alt", "dialalt", rows[0], cols[2], [["AltShort", 0.048, 0.011, 0.004], ["AltLong", 0.08, 0.006, 0.013]]);
+  gauge("Fuel", "dialfuel", rows[1], cols[0], [["Fuel", 0.075, 0.007, 0.004]]);
+  // Varsellamper (STALL rød, FUEL gul): mørkt glass foran, et selvlysende glass gjemt inni bordet.
+  // Animasjonene lamp* skyver det lysende glasset fram over det mørke (ramme 30 = på, 0 = av)
+  {
+    const cy = rows[1], cz = cols[1], L = 0.044, ly = cy + 0.02;
+    dash.push(box("LampMount", [x0 - 0.008, cy - D / 2 - M, cz - D / 2 - M], [x0 + 0.001, cy + D / 2 + M, cz + D / 2 + M], "brass"));
+    dash.push(dial("LampDial", "diallamps", cy, cz));
+    [["Stall", -0.045, "lampred"], ["Fuel", 0.045, "lampamber"]].forEach(([key, dz, tex]) => {
+      const lz = cz + dz;
+      dash.push(box(`Lamp${key}Rim`, [fx - 0.008, ly - 0.031, lz - 0.031], [fx, ly + 0.031, lz + 0.031], "brass"));
+      dash.push(box(`Lamp${key}Off`, [fx - 0.016, ly - L / 2, lz - L / 2], [fx - 0.008, ly + L / 2, lz + L / 2], tex + "off"));
+      const lit = box(`Lamp${key}On`, [x0 + 0.01, ly - L / 2 - 0.005, lz - L / 2 - 0.005], [x0 + 0.028, ly + L / 2 + 0.005, lz + L / 2 + 0.005], tex + "on");
+      for (const fc of Object.values(lit.faces)) fc.glow = 255;
+      dash.push(lit);
+      lampAnims.push(["lamp" + key.toLowerCase(), `Lamp${key}On`, px((fx - 0.026) - (x0 + 0.01))]);
+    });
+  }
+  gauge("Blank1", "dialblank", rows[1], cols[2], []);
+  // Kompass: selve skiva (kortet) dreier så N peker nord; en fast rød strek øverst viser kursen
+  {
+    const cy = rows[0], cz = cols[1];
+    dash.push(box("CompassMount", [x0 - 0.008, cy - D / 2 - M, cz - D / 2 - M], [x0 + 0.001, cy + D / 2 + M, cz + D / 2 + M], "brass"));
+    dash.push(group("CompassCard", [dial("CompassDial", "dialcompass", cy, cz)], { rotationOrigin: pivot(cy, cz) }));
+    needleAnims.push(["compasscard", "CompassCard"]);
+    dash.push(box("CompassLubber", [fx - 0.014, cy + 0.058, cz - 0.004], [fx - 0.006, cy + 0.098, cz + 0.004], "needlered"));
+  }
+  // Lent bakover (toppen bort fra piloten) så skivene vender mot pilotens øyne
+  seats.push(group("Dashboard", dash, { rotationOrigin: [x1, y0, 0].map(px), rotationZ: -15 }));
+}
+
 // Seteklossen skal starte på puta, ikke midt i den
 for (const e of seats) if (e.attachmentpoints) { e.from[1] = px(PILOT[1] + 0.05); e.to[1] = px(PILOT[1] + 0.65); }
 // Lasteplass på hylla bak piloten: Ctrl+høyreklikk med kiste/trunk fester den (vanilla rideableaccessories).
@@ -463,7 +528,21 @@ const textures = {
   copper: "game:block/metal/sheet/copper3",
   leather: "game:block/cloth/leather/smallstiches",
   pelt: "game:block/cloth/pelt",
-  blanket: "game:block/cloth/wool/green2"
+  blanket: "game:block/cloth/wool/green2",
+  // Instrumentbordet (skivene tegnes av tools/dash_textures.js)
+  brass: "game:block/metal/sheet/brass1",
+  needle: "wright:dash/needle",
+  needlered: "wright:dash/needlered",
+  dialspeed: "wright:dash/speed",
+  dialalt: "wright:dash/altimeter",
+  dialfuel: "wright:dash/fuel",
+  dialcompass: "wright:dash/compass",
+  dialblank: "wright:dash/blank",
+  diallamps: "wright:dash/lamps",
+  lampredoff: "wright:dash/lampredoff",
+  lampredon: "wright:dash/lampredon",
+  lampamberoff: "wright:dash/lampamberoff",
+  lampamberon: "wright:dash/lampamberon"
 };
 
 const steps = [
@@ -476,17 +555,24 @@ const spin = (code, el, axis) => ({
   // VS krever alle tre rotasjonsaksene i en rotasjons-keyframe (Animation.lerpKeyFrameElement leser .Value på X/Y/Z)
   keyframes: [0, 30].map(frame => ({ frame, elements: { [el]: { rotationX: 0, rotationY: 0, rotationZ: 0, ["rotation" + axis]: frame * 12 } } }))
 });
+// Lampe: glasset skyves fram langs lokal X. Alle tre offset-aksene må være med (samme felle som rotasjon)
+const slide = (code, el, dx) => ({
+  name: code, code, quantityframes: 31, onActivityStopped: "Stop", onAnimationEnd: "Repeat",
+  keyframes: [0, 30].map(frame => ({ frame, elements: { [el]: { offsetX: frame ? dx : 0, offsetY: 0, offsetZ: 0 } } }))
+});
 const wheelSpin = { ...spin("wheelspin", "WheelL", "Z") };
 wheelSpin.keyframes.forEach(k => { k.elements.WheelR = { ...k.elements.WheelL }; });
 
-function shapeWith(includeSite) {
+// skipDash: instrumentbordet har bevisst tette lag (skive/viser/nav med 0.004 blokks mellomrom) og holdes
+// utenfor Z-fighting-rettingen — den ville skjøvet delene 0.012 om gangen og ødelagt dem
+function shapeWith(includeSite, skipDash = false) {
   const children = [];
   if (includeSite) children.push(group("S0Site", site));
-  for (const [name, els] of steps) children.push(group(name, els));
+  for (const [name, els] of steps) children.push(group(name, skipDash ? els.filter(e => e.name !== "Dashboard") : els));
   return {
     textureWidth: 16, textureHeight: 16,
     textures,
-    ...(includeSite ? {} : { animations: [spin("propspin", "Propeller", "X"), wheelSpin] }),
+    ...(includeSite ? {} : { animations: [spin("propspin", "Propeller", "X"), wheelSpin, ...needleAnims.map(([code, el]) => spin(code, el, "X")), ...lampAnims.map(([code, el, dx]) => slide(code, el, dx))] }),
     elements: [{
       name: "Root", from: [8, 0, 8], to: [8, 0, 8], rotationOrigin: [8, 0, 8], rotationY: 180,
       faces: {}, children
@@ -519,7 +605,7 @@ function resolveZFighting(shape) {
   }
   throw new Error("Z-fighting ble ikke løst på 60 runder: " + findCoplanar(shape).hits.slice(0, 5).map(h => h.a.name + " ↔ " + h.b.name).join(", "));
 }
-const rounds = resolveZFighting(shapeWith(true));
+const rounds = resolveZFighting(shapeWith(true, true));
 const worst = [...pushed].sort((x, y) => y[1] - x[1]);
 console.log(`Z-fighting løst på ${rounds} runder: ${pushed.size} elementer justert, mest ${worst.slice(0, 6).map(([e, n]) => e.name + "×" + n).join(", ")}`);
 

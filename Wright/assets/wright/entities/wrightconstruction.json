@@ -70,7 +70,20 @@
 			"copper": { base: "game:block/metal/sheet/copper3" },
 			"leather": { base: "game:block/cloth/leather/smallstiches" },
 			"pelt": { base: "game:block/cloth/pelt" },
-			"blanket": { base: "game:block/cloth/wool/green2" }
+			"blanket": { base: "game:block/cloth/wool/green2" },
+			"brass": { base: "game:block/metal/sheet/brass1" },
+			"needle": { base: "wright:dash/needle" },
+			"needlered": { base: "wright:dash/needlered" },
+			"dialspeed": { base: "wright:dash/speed" },
+			"dialalt": { base: "wright:dash/altimeter" },
+			"dialfuel": { base: "wright:dash/fuel" },
+			"dialcompass": { base: "wright:dash/compass" },
+			"dialblank": { base: "wright:dash/blank" },
+			"diallamps": { base: "wright:dash/lamps" },
+			"lampredoff": { base: "wright:dash/lampredoff" },
+			"lampredon": { base: "wright:dash/lampredon" },
+			"lampamberoff": { base: "wright:dash/lampamberoff" },
+			"lampamberon": { base: "wright:dash/lampamberon" }
 		},
 		behaviors: [
 			{ code: "interpolateposition" }

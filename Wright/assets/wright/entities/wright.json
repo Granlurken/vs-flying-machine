@@ -15,6 +15,7 @@
 		// Flymodell — fart i blokker per 1/60 s (0.34 = ~20 blokker/s). Se EntityWright.cs
 		flight: {
 			maxSpeed: 0.34,
+			engineStartSeconds: 2, // sveiv før motoren tar (matcher sounds/engine/start.ogg), flyet står stille så lenge
 			stallSpeed: 0.15,
 			accel: 0.3,
 			throttleRate: 0.4,
@@ -48,6 +49,29 @@
 			wheelRadius: 0.38,
 			// Eksosrørtoppene i modellens ramme (blokker): +X = nese, +Y = opp, +Z = høyre
 			exhausts: [[2.38, 1.95, 0.335], [2.84, 1.95, 0.335]]
+		},
+		// Instrumentbordet: needleSign snur alle visere + kompasskortet hvis de går feil vei i spillet
+		instruments: {
+			needleSign: 1,
+			speedDialMax: 25,
+			lowFuelFraction: 0.15,
+			altLongPerTurn: 100,
+			altShortPerTurn: 1000
+		},
+		// Motorlyd (WrightEngineSound). Tonehøyde/volum går fra idle til full med gassen.
+		// Hosting starter under instruments.lowFuelFraction, mellomrom (s) fra coughIntervalLow ned mot coughIntervalEmpty
+		sound: {
+			pitchIdle: 1.0,
+			pitchFull: 1.5,
+			volumeIdle: 0.5,
+			volumeFull: 1.0,
+			volumeStart: 1.0,
+			volumeCough: 1.0,
+			range: 64,
+			startBlendSeconds: 1.5,
+			spinDownSeconds: 1.2,
+			coughIntervalLow: 7,
+			coughIntervalEmpty: 1.5
 		},
 		swimmingOffsetY: 0.45,
 		requiresPaddlingTool: false,
@@ -117,14 +141,35 @@
 			"copper": { base: "game:block/metal/sheet/copper3" },
 			"leather": { base: "game:block/cloth/leather/smallstiches" },
 			"pelt": { base: "game:block/cloth/pelt" },
-			"blanket": { base: "game:block/cloth/wool/green2" }
+			"blanket": { base: "game:block/cloth/wool/green2" },
+			"brass": { base: "game:block/metal/sheet/brass1" },
+			"needle": { base: "wright:dash/needle" },
+			"needlered": { base: "wright:dash/needlered" },
+			"dialspeed": { base: "wright:dash/speed" },
+			"dialalt": { base: "wright:dash/altimeter" },
+			"dialfuel": { base: "wright:dash/fuel" },
+			"dialcompass": { base: "wright:dash/compass" },
+			"dialblank": { base: "wright:dash/blank" },
+			"diallamps": { base: "wright:dash/lamps" },
+			"lampredoff": { base: "wright:dash/lampredoff" },
+			"lampredon": { base: "wright:dash/lampredon" },
+			"lampamberoff": { base: "wright:dash/lampamberoff" },
+			"lampamberon": { base: "wright:dash/lampamberon" }
 		},
 		animations: [
 			{ code: "turnLeft", animation: "turnLeft", animationSpeed: 1, easeInSpeed: 2, easeOutSpeed: 2 },
 			{ code: "turnRight", animation: "turnRight", animationSpeed: 1, easeInSpeed: 2, easeOutSpeed: 2 },
 			// Rammen settes fra koden (EntityWright.UpdateSpinAnimations), derfor fart 0
 			{ code: "propspin", animation: "propspin", animationSpeed: 0, weight: 1, blendMode: "Add" },
-			{ code: "wheelspin", animation: "wheelspin", animationSpeed: 0, weight: 1, blendMode: "Add" }
+			{ code: "wheelspin", animation: "wheelspin", animationSpeed: 0, weight: 1, blendMode: "Add" },
+			// Instrumentbordet (EntityWright.UpdateInstruments). StartAnimation(kode) finner BARE koder som står her
+			{ code: "needlespeed", animation: "needlespeed", animationSpeed: 0, weight: 1, blendMode: "Add" },
+			{ code: "needlealtshort", animation: "needlealtshort", animationSpeed: 0, weight: 1, blendMode: "Add" },
+			{ code: "needlealtlong", animation: "needlealtlong", animationSpeed: 0, weight: 1, blendMode: "Add" },
+			{ code: "needlefuel", animation: "needlefuel", animationSpeed: 0, weight: 1, blendMode: "Add" },
+			{ code: "compasscard", animation: "compasscard", animationSpeed: 0, weight: 1, blendMode: "Add" },
+			{ code: "lampstall", animation: "lampstall", animationSpeed: 0, weight: 1, blendMode: "Add" },
+			{ code: "lampfuel", animation: "lampfuel", animationSpeed: 0, weight: 1, blendMode: "Add" }
 		],
 		behaviors: [
 			{ code: "repulseagents" },

@@ -19,7 +19,20 @@
 		"copper": "game:block/metal/sheet/copper3",
 		"leather": "game:block/cloth/leather/smallstiches",
 		"pelt": "game:block/cloth/pelt",
-		"blanket": "game:block/cloth/wool/green2"
+		"blanket": "game:block/cloth/wool/green2",
+		"brass": "game:block/metal/sheet/brass1",
+		"needle": "wright:dash/needle",
+		"needlered": "wright:dash/needlered",
+		"dialspeed": "wright:dash/speed",
+		"dialalt": "wright:dash/altimeter",
+		"dialfuel": "wright:dash/fuel",
+		"dialcompass": "wright:dash/compass",
+		"dialblank": "wright:dash/blank",
+		"diallamps": "wright:dash/lamps",
+		"lampredoff": "wright:dash/lampredoff",
+		"lampredon": "wright:dash/lampredon",
+		"lampamberoff": "wright:dash/lampamberoff",
+		"lampamberon": "wright:dash/lampamberon"
 	},
 	"elements": [
 		{
@@ -25717,6 +25730,1807 @@
 									"rotationX": "0",
 									"rotationY": "0",
 									"rotationZ": "0"
+								}
+							]
+						},
+						{
+							"name": "Dashboard",
+							"from": [
+								0,
+								0,
+								0
+							],
+							"to": [
+								0,
+								0,
+								0
+							],
+							"faces": {},
+							"rotationOrigin": [
+								18.24,
+								22.88,
+								0
+							],
+							"rotationZ": -15,
+							"children": [
+								{
+									"name": "DashBoard",
+									"from": [
+										17.44,
+										22.88,
+										-6.88
+									],
+									"to": [
+										18.24,
+										30.24,
+										6.88
+									],
+									"faces": {
+										"north": {
+											"texture": "#planks",
+											"uv": [
+												0,
+												0,
+												0.8,
+												7.36
+											]
+										},
+										"east": {
+											"texture": "#planks",
+											"uv": [
+												0,
+												0,
+												13.76,
+												7.36
+											]
+										},
+										"south": {
+											"texture": "#planks",
+											"uv": [
+												0,
+												0,
+												0.8,
+												7.36
+											]
+										},
+										"west": {
+											"texture": "#planks",
+											"uv": [
+												0,
+												0,
+												13.76,
+												7.36
+											]
+										},
+										"up": {
+											"texture": "#planks",
+											"uv": [
+												0,
+												0,
+												0.8,
+												13.76
+											]
+										},
+										"down": {
+											"texture": "#planks",
+											"uv": [
+												0,
+												0,
+												0.8,
+												13.76
+											]
+										}
+									}
+								},
+								{
+									"name": "DashTrim",
+									"from": [
+										17.248,
+										29.92,
+										-7.072
+									],
+									"to": [
+										18.4,
+										30.48,
+										7.072
+									],
+									"faces": {
+										"north": {
+											"texture": "#wood",
+											"uv": [
+												0,
+												0,
+												1.152,
+												0.56
+											]
+										},
+										"east": {
+											"texture": "#wood",
+											"uv": [
+												0,
+												0,
+												14.144,
+												0.56
+											]
+										},
+										"south": {
+											"texture": "#wood",
+											"uv": [
+												0,
+												0,
+												1.152,
+												0.56
+											]
+										},
+										"west": {
+											"texture": "#wood",
+											"uv": [
+												0,
+												0,
+												14.144,
+												0.56
+											]
+										},
+										"up": {
+											"texture": "#wood",
+											"uv": [
+												0,
+												0,
+												1.152,
+												14.144
+											]
+										},
+										"down": {
+											"texture": "#wood",
+											"uv": [
+												0,
+												0,
+												1.152,
+												14.144
+											]
+										}
+									}
+								},
+								{
+									"name": "SpeedMount",
+									"from": [
+										17.312,
+										26.496,
+										-5.984
+									],
+									"to": [
+										17.456,
+										29.824,
+										-2.656
+									],
+									"faces": {
+										"north": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												3.328
+											]
+										},
+										"east": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												3.328,
+												3.328
+											]
+										},
+										"south": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												3.328
+											]
+										},
+										"west": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												3.328,
+												3.328
+											]
+										},
+										"up": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												3.328
+											]
+										},
+										"down": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												3.328
+											]
+										}
+									}
+								},
+								{
+									"name": "SpeedDial",
+									"from": [
+										17.184,
+										26.56,
+										-5.92
+									],
+									"to": [
+										17.44,
+										29.76,
+										-2.72
+									],
+									"faces": {
+										"west": {
+											"texture": "#dialspeed",
+											"uv": [
+												0,
+												0,
+												16,
+												16
+											]
+										}
+									}
+								},
+								{
+									"name": "NeedleSpeed",
+									"from": [
+										0,
+										0,
+										0
+									],
+									"to": [
+										0,
+										0,
+										0
+									],
+									"faces": {},
+									"rotationOrigin": [
+										17.184,
+										28.16,
+										-4.32
+									],
+									"children": [
+										{
+											"name": "NeedleSpeedBar",
+											"from": [
+												17.056,
+												27.776,
+												-4.376
+											],
+											"to": [
+												17.12,
+												29.408,
+												-4.264
+											],
+											"faces": {
+												"north": {
+													"texture": "#needle",
+													"uv": [
+														0,
+														0,
+														0.5,
+														1.632
+													]
+												},
+												"east": {
+													"texture": "#needle",
+													"uv": [
+														0,
+														0,
+														0.5,
+														1.632
+													]
+												},
+												"south": {
+													"texture": "#needle",
+													"uv": [
+														0,
+														0,
+														0.5,
+														1.632
+													]
+												},
+												"west": {
+													"texture": "#needle",
+													"uv": [
+														0,
+														0,
+														0.5,
+														1.632
+													]
+												},
+												"up": {
+													"texture": "#needle",
+													"uv": [
+														0,
+														0,
+														0.5,
+														0.5
+													]
+												},
+												"down": {
+													"texture": "#needle",
+													"uv": [
+														0,
+														0,
+														0.5,
+														0.5
+													]
+												}
+											}
+										}
+									]
+								},
+								{
+									"name": "SpeedHub",
+									"from": [
+										16.768,
+										27.952,
+										-4.528
+									],
+									"to": [
+										17.152,
+										28.368,
+										-4.112
+									],
+									"faces": {
+										"north": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.5
+											]
+										},
+										"east": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.5
+											]
+										},
+										"south": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.5
+											]
+										},
+										"west": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.5
+											]
+										},
+										"up": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.5
+											]
+										},
+										"down": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.5
+											]
+										}
+									}
+								},
+								{
+									"name": "AltMount",
+									"from": [
+										17.312,
+										26.496,
+										2.656
+									],
+									"to": [
+										17.456,
+										29.824,
+										5.984
+									],
+									"faces": {
+										"north": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												3.328
+											]
+										},
+										"east": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												3.328,
+												3.328
+											]
+										},
+										"south": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												3.328
+											]
+										},
+										"west": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												3.328,
+												3.328
+											]
+										},
+										"up": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												3.328
+											]
+										},
+										"down": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												3.328
+											]
+										}
+									}
+								},
+								{
+									"name": "AltDial",
+									"from": [
+										17.184,
+										26.56,
+										2.72
+									],
+									"to": [
+										17.44,
+										29.76,
+										5.92
+									],
+									"faces": {
+										"west": {
+											"texture": "#dialalt",
+											"uv": [
+												0,
+												0,
+												16,
+												16
+											]
+										}
+									}
+								},
+								{
+									"name": "NeedleAltShort",
+									"from": [
+										0,
+										0,
+										0
+									],
+									"to": [
+										0,
+										0,
+										0
+									],
+									"faces": {},
+									"rotationOrigin": [
+										17.184,
+										28.16,
+										4.32
+									],
+									"children": [
+										{
+											"name": "NeedleAltShortBar",
+											"from": [
+												17.056,
+												27.776,
+												4.232
+											],
+											"to": [
+												17.12,
+												28.928,
+												4.408
+											],
+											"faces": {
+												"north": {
+													"texture": "#needle",
+													"uv": [
+														0,
+														0,
+														0.5,
+														1.152
+													]
+												},
+												"east": {
+													"texture": "#needle",
+													"uv": [
+														0,
+														0,
+														0.5,
+														1.152
+													]
+												},
+												"south": {
+													"texture": "#needle",
+													"uv": [
+														0,
+														0,
+														0.5,
+														1.152
+													]
+												},
+												"west": {
+													"texture": "#needle",
+													"uv": [
+														0,
+														0,
+														0.5,
+														1.152
+													]
+												},
+												"up": {
+													"texture": "#needle",
+													"uv": [
+														0,
+														0,
+														0.5,
+														0.5
+													]
+												},
+												"down": {
+													"texture": "#needle",
+													"uv": [
+														0,
+														0,
+														0.5,
+														0.5
+													]
+												}
+											}
+										}
+									]
+								},
+								{
+									"name": "NeedleAltLong",
+									"from": [
+										0,
+										0,
+										0
+									],
+									"to": [
+										0,
+										0,
+										0
+									],
+									"faces": {},
+									"rotationOrigin": [
+										17.184,
+										28.16,
+										4.32
+									],
+									"children": [
+										{
+											"name": "NeedleAltLongBar",
+											"from": [
+												16.912,
+												27.776,
+												4.272
+											],
+											"to": [
+												16.976,
+												29.44,
+												4.368
+											],
+											"faces": {
+												"north": {
+													"texture": "#needle",
+													"uv": [
+														0,
+														0,
+														0.5,
+														1.664
+													]
+												},
+												"east": {
+													"texture": "#needle",
+													"uv": [
+														0,
+														0,
+														0.5,
+														1.664
+													]
+												},
+												"south": {
+													"texture": "#needle",
+													"uv": [
+														0,
+														0,
+														0.5,
+														1.664
+													]
+												},
+												"west": {
+													"texture": "#needle",
+													"uv": [
+														0,
+														0,
+														0.5,
+														1.664
+													]
+												},
+												"up": {
+													"texture": "#needle",
+													"uv": [
+														0,
+														0,
+														0.5,
+														0.5
+													]
+												},
+												"down": {
+													"texture": "#needle",
+													"uv": [
+														0,
+														0,
+														0.5,
+														0.5
+													]
+												}
+											}
+										}
+									]
+								},
+								{
+									"name": "AltHub",
+									"from": [
+										16.768,
+										27.952,
+										4.112
+									],
+									"to": [
+										17.152,
+										28.368,
+										4.528
+									],
+									"faces": {
+										"north": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.5
+											]
+										},
+										"east": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.5
+											]
+										},
+										"south": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.5
+											]
+										},
+										"west": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.5
+											]
+										},
+										"up": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.5
+											]
+										},
+										"down": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.5
+											]
+										}
+									}
+								},
+								{
+									"name": "FuelMount",
+									"from": [
+										17.312,
+										23.136,
+										-5.984
+									],
+									"to": [
+										17.456,
+										26.464,
+										-2.656
+									],
+									"faces": {
+										"north": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												3.328
+											]
+										},
+										"east": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												3.328,
+												3.328
+											]
+										},
+										"south": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												3.328
+											]
+										},
+										"west": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												3.328,
+												3.328
+											]
+										},
+										"up": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												3.328
+											]
+										},
+										"down": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												3.328
+											]
+										}
+									}
+								},
+								{
+									"name": "FuelDial",
+									"from": [
+										17.184,
+										23.2,
+										-5.92
+									],
+									"to": [
+										17.44,
+										26.4,
+										-2.72
+									],
+									"faces": {
+										"west": {
+											"texture": "#dialfuel",
+											"uv": [
+												0,
+												0,
+												16,
+												16
+											]
+										}
+									}
+								},
+								{
+									"name": "NeedleFuel",
+									"from": [
+										0,
+										0,
+										0
+									],
+									"to": [
+										0,
+										0,
+										0
+									],
+									"faces": {},
+									"rotationOrigin": [
+										17.184,
+										24.8,
+										-4.32
+									],
+									"children": [
+										{
+											"name": "NeedleFuelBar",
+											"from": [
+												17.056,
+												24.416,
+												-4.376
+											],
+											"to": [
+												17.12,
+												26,
+												-4.264
+											],
+											"faces": {
+												"north": {
+													"texture": "#needle",
+													"uv": [
+														0,
+														0,
+														0.5,
+														1.584
+													]
+												},
+												"east": {
+													"texture": "#needle",
+													"uv": [
+														0,
+														0,
+														0.5,
+														1.584
+													]
+												},
+												"south": {
+													"texture": "#needle",
+													"uv": [
+														0,
+														0,
+														0.5,
+														1.584
+													]
+												},
+												"west": {
+													"texture": "#needle",
+													"uv": [
+														0,
+														0,
+														0.5,
+														1.584
+													]
+												},
+												"up": {
+													"texture": "#needle",
+													"uv": [
+														0,
+														0,
+														0.5,
+														0.5
+													]
+												},
+												"down": {
+													"texture": "#needle",
+													"uv": [
+														0,
+														0,
+														0.5,
+														0.5
+													]
+												}
+											}
+										}
+									]
+								},
+								{
+									"name": "FuelHub",
+									"from": [
+										16.768,
+										24.592,
+										-4.528
+									],
+									"to": [
+										17.152,
+										25.008,
+										-4.112
+									],
+									"faces": {
+										"north": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.5
+											]
+										},
+										"east": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.5
+											]
+										},
+										"south": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.5
+											]
+										},
+										"west": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.5
+											]
+										},
+										"up": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.5
+											]
+										},
+										"down": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.5
+											]
+										}
+									}
+								},
+								{
+									"name": "LampMount",
+									"from": [
+										17.312,
+										23.136,
+										-1.664
+									],
+									"to": [
+										17.456,
+										26.464,
+										1.664
+									],
+									"faces": {
+										"north": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												3.328
+											]
+										},
+										"east": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												3.328,
+												3.328
+											]
+										},
+										"south": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												3.328
+											]
+										},
+										"west": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												3.328,
+												3.328
+											]
+										},
+										"up": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												3.328
+											]
+										},
+										"down": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												3.328
+											]
+										}
+									}
+								},
+								{
+									"name": "LampDial",
+									"from": [
+										17.184,
+										23.2,
+										-1.6
+									],
+									"to": [
+										17.44,
+										26.4,
+										1.6
+									],
+									"faces": {
+										"west": {
+											"texture": "#diallamps",
+											"uv": [
+												0,
+												0,
+												16,
+												16
+											]
+										}
+									}
+								},
+								{
+									"name": "LampStallRim",
+									"from": [
+										17.056,
+										24.624,
+										-1.216
+									],
+									"to": [
+										17.184,
+										25.616,
+										-0.224
+									],
+									"faces": {
+										"north": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.992
+											]
+										},
+										"east": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.992,
+												0.992
+											]
+										},
+										"south": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.992
+											]
+										},
+										"west": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.992,
+												0.992
+											]
+										},
+										"up": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.992
+											]
+										},
+										"down": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.992
+											]
+										}
+									}
+								},
+								{
+									"name": "LampStallOff",
+									"from": [
+										16.928,
+										24.768,
+										-1.072
+									],
+									"to": [
+										17.056,
+										25.472,
+										-0.368
+									],
+									"faces": {
+										"north": {
+											"texture": "#lampredoff",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.704
+											]
+										},
+										"east": {
+											"texture": "#lampredoff",
+											"uv": [
+												0,
+												0,
+												0.704,
+												0.704
+											]
+										},
+										"south": {
+											"texture": "#lampredoff",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.704
+											]
+										},
+										"west": {
+											"texture": "#lampredoff",
+											"uv": [
+												0,
+												0,
+												0.704,
+												0.704
+											]
+										},
+										"up": {
+											"texture": "#lampredoff",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.704
+											]
+										},
+										"down": {
+											"texture": "#lampredoff",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.704
+											]
+										}
+									}
+								},
+								{
+									"name": "LampStallOn",
+									"from": [
+										17.6,
+										24.688,
+										-1.152
+									],
+									"to": [
+										17.888,
+										25.552,
+										-0.288
+									],
+									"faces": {
+										"north": {
+											"texture": "#lampredon",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.864
+											],
+											"glow": 255
+										},
+										"east": {
+											"texture": "#lampredon",
+											"uv": [
+												0,
+												0,
+												0.864,
+												0.864
+											],
+											"glow": 255
+										},
+										"south": {
+											"texture": "#lampredon",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.864
+											],
+											"glow": 255
+										},
+										"west": {
+											"texture": "#lampredon",
+											"uv": [
+												0,
+												0,
+												0.864,
+												0.864
+											],
+											"glow": 255
+										},
+										"up": {
+											"texture": "#lampredon",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.864
+											],
+											"glow": 255
+										},
+										"down": {
+											"texture": "#lampredon",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.864
+											],
+											"glow": 255
+										}
+									}
+								},
+								{
+									"name": "LampFuelRim",
+									"from": [
+										17.056,
+										24.624,
+										0.224
+									],
+									"to": [
+										17.184,
+										25.616,
+										1.216
+									],
+									"faces": {
+										"north": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.992
+											]
+										},
+										"east": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.992,
+												0.992
+											]
+										},
+										"south": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.992
+											]
+										},
+										"west": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.992,
+												0.992
+											]
+										},
+										"up": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.992
+											]
+										},
+										"down": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.992
+											]
+										}
+									}
+								},
+								{
+									"name": "LampFuelOff",
+									"from": [
+										16.928,
+										24.768,
+										0.368
+									],
+									"to": [
+										17.056,
+										25.472,
+										1.072
+									],
+									"faces": {
+										"north": {
+											"texture": "#lampamberoff",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.704
+											]
+										},
+										"east": {
+											"texture": "#lampamberoff",
+											"uv": [
+												0,
+												0,
+												0.704,
+												0.704
+											]
+										},
+										"south": {
+											"texture": "#lampamberoff",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.704
+											]
+										},
+										"west": {
+											"texture": "#lampamberoff",
+											"uv": [
+												0,
+												0,
+												0.704,
+												0.704
+											]
+										},
+										"up": {
+											"texture": "#lampamberoff",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.704
+											]
+										},
+										"down": {
+											"texture": "#lampamberoff",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.704
+											]
+										}
+									}
+								},
+								{
+									"name": "LampFuelOn",
+									"from": [
+										17.6,
+										24.688,
+										0.288
+									],
+									"to": [
+										17.888,
+										25.552,
+										1.152
+									],
+									"faces": {
+										"north": {
+											"texture": "#lampamberon",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.864
+											],
+											"glow": 255
+										},
+										"east": {
+											"texture": "#lampamberon",
+											"uv": [
+												0,
+												0,
+												0.864,
+												0.864
+											],
+											"glow": 255
+										},
+										"south": {
+											"texture": "#lampamberon",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.864
+											],
+											"glow": 255
+										},
+										"west": {
+											"texture": "#lampamberon",
+											"uv": [
+												0,
+												0,
+												0.864,
+												0.864
+											],
+											"glow": 255
+										},
+										"up": {
+											"texture": "#lampamberon",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.864
+											],
+											"glow": 255
+										},
+										"down": {
+											"texture": "#lampamberon",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.864
+											],
+											"glow": 255
+										}
+									}
+								},
+								{
+									"name": "Blank1Mount",
+									"from": [
+										17.312,
+										23.136,
+										2.656
+									],
+									"to": [
+										17.456,
+										26.464,
+										5.984
+									],
+									"faces": {
+										"north": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												3.328
+											]
+										},
+										"east": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												3.328,
+												3.328
+											]
+										},
+										"south": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												3.328
+											]
+										},
+										"west": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												3.328,
+												3.328
+											]
+										},
+										"up": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												3.328
+											]
+										},
+										"down": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												3.328
+											]
+										}
+									}
+								},
+								{
+									"name": "Blank1Dial",
+									"from": [
+										17.184,
+										23.2,
+										2.72
+									],
+									"to": [
+										17.44,
+										26.4,
+										5.92
+									],
+									"faces": {
+										"west": {
+											"texture": "#dialblank",
+											"uv": [
+												0,
+												0,
+												16,
+												16
+											]
+										}
+									}
+								},
+								{
+									"name": "CompassMount",
+									"from": [
+										17.312,
+										26.496,
+										-1.664
+									],
+									"to": [
+										17.456,
+										29.824,
+										1.664
+									],
+									"faces": {
+										"north": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												3.328
+											]
+										},
+										"east": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												3.328,
+												3.328
+											]
+										},
+										"south": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												3.328
+											]
+										},
+										"west": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												3.328,
+												3.328
+											]
+										},
+										"up": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												3.328
+											]
+										},
+										"down": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												3.328
+											]
+										}
+									}
+								},
+								{
+									"name": "CompassCard",
+									"from": [
+										0,
+										0,
+										0
+									],
+									"to": [
+										0,
+										0,
+										0
+									],
+									"faces": {},
+									"rotationOrigin": [
+										17.184,
+										28.16,
+										0
+									],
+									"children": [
+										{
+											"name": "CompassDial",
+											"from": [
+												17.184,
+												26.56,
+												-1.6
+											],
+											"to": [
+												17.44,
+												29.76,
+												1.6
+											],
+											"faces": {
+												"west": {
+													"texture": "#dialcompass",
+													"uv": [
+														0,
+														0,
+														16,
+														16
+													]
+												}
+											}
+										}
+									]
+								},
+								{
+									"name": "CompassLubber",
+									"from": [
+										16.96,
+										29.088,
+										-0.064
+									],
+									"to": [
+										17.088,
+										29.728,
+										0.064
+									],
+									"faces": {
+										"north": {
+											"texture": "#needlered",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.64
+											]
+										},
+										"east": {
+											"texture": "#needlered",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.64
+											]
+										},
+										"south": {
+											"texture": "#needlered",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.64
+											]
+										},
+										"west": {
+											"texture": "#needlered",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.64
+											]
+										},
+										"up": {
+											"texture": "#needlered",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.5
+											]
+										},
+										"down": {
+											"texture": "#needlered",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.5
+											]
+										}
+									}
 								}
 							]
 						}

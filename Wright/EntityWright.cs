@@ -67,6 +67,12 @@ public class EntityWright : EntityBoat
 
     public double Throttle;
 
+    // Oppstart: fra motoren er av til den tar (sekunder). Så lenge den sveiver er gassen låst til CrankThrottle
+    double engineStartSeconds = 2;
+    const double CrankThrottle = 0.01;
+    bool engineOn;
+    double startupLeft;
+
     // Visuelt: propell, hjul og eksos (attributes.visuals i JSON)
     double propMaxRevs = 6;       // omdreininger/s ved full gass (holdes lavt, ellers «står» propellen på skjermen)
     double propIdleRevs = 1.5;    // tomgang når motoren går
@@ -75,7 +81,16 @@ public class EntityWright : EntityBoat
     Vec3d[] exhausts = { new(2.38, 1.95, 0.335), new(2.84, 1.95, 0.335) }; // design-ramme: +X nese, +Y opp, +Z høyre
     double propAngle, wheelAngle, wheelRate, propRevs;
     Vec3d? lastRenderPos;
+
+    // Instrumentbordet (attributes.instruments i JSON). Viserne leses av posisjonsendring, så de virker for alle
+    float needleSign = 1;         // +1 = viserne går med klokka slik piloten ser dem
+    double speedDialMax = 25;     // blokker/s ved fullt utslag (270°)
+    double lowFuelFraction = 0.15;
+    double altLongPerTurn = 100, altShortPerTurn = 1000; // blokker over havnivå per runde
+    double gaugeSpeed, gaugeFuel;
+    Vec3d? lastGaugePos;
     SimpleParticleProperties? smoke;
+    WrightEngineSound? engineSound;
 
     /// <summary>Gass slik alle klienter ser den: egen verdi for piloten, ellers synket fra serveren.</summary>
     public double EngineThrottle
@@ -100,6 +115,7 @@ public class EntityWright : EntityBoat
     {
         base.Initialize(properties, api, InChunkIndex3d);
         InitFuelInventory(api);
+        if (api is ICoreClientAPI capiInit) engineSound = new WrightEngineSound(capiInit, this, properties.Attributes["sound"]);
 
         var fuel = properties.Attributes["fuel"];
         if (fuel.Exists)
@@ -121,9 +137,20 @@ public class EntityWright : EntityBoat
             if (ex != null) exhausts = Array.ConvertAll(ex, e => new Vec3d(e[0], e[1], e[2]));
         }
 
+        var ins = properties.Attributes["instruments"];
+        if (ins.Exists)
+        {
+            needleSign = ins["needleSign"].AsFloat(needleSign);
+            speedDialMax = ins["speedDialMax"].AsDouble(speedDialMax);
+            lowFuelFraction = ins["lowFuelFraction"].AsDouble(lowFuelFraction);
+            altLongPerTurn = ins["altLongPerTurn"].AsDouble(altLongPerTurn);
+            altShortPerTurn = ins["altShortPerTurn"].AsDouble(altShortPerTurn);
+        }
+
         var f = properties.Attributes["flight"];
         if (!f.Exists) return;
         maxSpeed = f["maxSpeed"].AsDouble(maxSpeed);
+        engineStartSeconds = f["engineStartSeconds"].AsDouble(engineStartSeconds);
         stallSpeed = f["stallSpeed"].AsDouble(stallSpeed);
         accel = f["accel"].AsDouble(accel);
         throttleRate = f["throttleRate"].AsDouble(throttleRate);
@@ -279,6 +306,8 @@ public class EntityWright : EntityBoat
             World.SpawnItemEntity(fuelInv[0].TakeOutWhole(), Pos.XYZ);
         }
         fuelDialog?.TryClose();
+        engineSound?.Dispose();
+        engineSound = null;
         base.OnEntityDespawn(despawn);
     }
 
@@ -365,6 +394,15 @@ public class EntityWright : EntityBoat
             double fuel = FuelLitres;
             if (fuel <= 0) Throttle = 0;
             else if (Api.Side == EnumAppSide.Server) FuelLitres = fuel - Throttle * fuelBurnRate * dt;
+        }
+
+        // --- Oppstart --- motoren sveiver før den tar (matcher startlyden): gassen holdes nede så flyet står stille
+        if (Throttle > 0 && !engineOn) { engineOn = true; startupLeft = engineStartSeconds; }
+        if (Throttle <= 0) { engineOn = false; startupLeft = 0; }
+        if (startupLeft > 0)
+        {
+            startupLeft -= dt;
+            Throttle = Math.Min(Throttle, CrankThrottle);
         }
 
         double lift = LiftRatio;
@@ -480,17 +518,39 @@ public class EntityWright : EntityBoat
         if (Properties.Client.Renderer is not EntityShapeRenderer renderer) return;
 
         // Overstyr båtens vugging med flyets egen holdning
+        // Risting: ved steiling, og ved overfart i dykk (over toppfart, sterkere jo mer). Full gass i cruise = rolig
+        double overspeed = GameMath.Clamp((ForwardSpeed / maxSpeed - 1.05) / 0.25, 0, 1);
+        float shakeAmount = Stalling ? 1 : (float)overspeed;
         float shake = 0;
-        if (Stalling || ForwardSpeed > maxSpeed * 0.95)
+        if (shakeAmount > 0)
         {
             double t = capi.InWorldEllapsedMilliseconds / 1000.0;
-            shake = (float)(Math.Sin(t * 47) * 0.012 + Math.Sin(t * 31) * 0.008);
+            shake = shakeAmount * (float)(Math.Sin(t * 47) * 0.012 + Math.Sin(t * 31) * 0.008);
         }
         renderer.xangle = visualRollSign * (float)BankAngle + shake;
         renderer.yangle = 0;
         renderer.zangle = visualPitchSign * (float)PitchAngle + shake * 0.5f;
 
         UpdateSpinAnimations(dt);
+        engineSound?.Update(dt, EngineThrottle, fuelCapacity > 0 ? FuelLitres / fuelCapacity : 0, lowFuelFraction);
+        MuteBoatSounds(capi);
+    }
+
+    /// <summary>
+    /// Vanilla spiller flåte-lyder (skvulp + fart gjennom vann) for alle som sitter i et båtsete — også vårt fly.
+    /// Systemet ticker hvert ~0,12 s og starter dem på nytt, så vi demper dem hver frame mens spilleren sitter her.
+    /// </summary>
+    void MuteBoatSounds(ICoreClientAPI capi)
+    {
+        if (capi.World.Player.Entity.MountedOn is not IMountableSeat seat || seat.MountSupplier != this) return;
+        var boating = capi.ModLoader.GetModSystem<ModSystemBoatingSoundAndRatlineStamina>();
+        if (boating == null) return;
+        foreach (var s in new[] { boating.idleSound, boating.travelSound })
+        {
+            if (s == null || s.IsDisposed || !s.IsPlaying) continue;
+            s.SetVolume(0);
+            s.Stop();
+        }
     }
 
     /// <summary>
@@ -521,6 +581,57 @@ public class EntityWright : EntityBoat
 
         SetSpinFrame(anim, "propspin", propAngle);
         SetSpinFrame(anim, "wheelspin", wheelAngle);
+
+        UpdateInstruments(dt, anim);
+    }
+
+    /// <summary>
+    /// Instrumentbordet: visere og kompasskort er shape-animasjoner (én runde over 30 rammer) som stilles direkte,
+    /// lampene er animasjoner som skyver et selvlysende glass fram (ramme 30 = på).
+    /// Vinkel 0 = rett opp på skiva.
+    /// </summary>
+    void UpdateInstruments(float dt, IAnimationManager anim)
+    {
+        // Fart: faktisk forflytning (også stigning/dykk), glattet så viseren ikke skjelver
+        var p = Pos.XYZ;
+        if (lastGaugePos != null && dt > 0)
+        {
+            double moved = p.DistanceTo(lastGaugePos);
+            double speed = moved < 2 ? moved / dt : 0; // teleport = 0
+            gaugeSpeed += (speed - gaugeSpeed) * Math.Min(1, 3 * dt);
+        }
+        lastGaugePos = p;
+        SetSpinFrame(anim, "needlespeed", needleSign * (-135 + 270 * GameMath.Clamp(gaugeSpeed / speedDialMax, 0, 1)));
+
+        // Drivstoff: E (−90°) til F (+90°), viseren siger rolig
+        double fuel = fuelCapacity > 0 ? FuelLitres / fuelCapacity : 0;
+        gaugeFuel += (fuel - gaugeFuel) * Math.Min(1, 2 * dt);
+        SetSpinFrame(anim, "needlefuel", needleSign * (-90 + 180 * GameMath.Clamp(gaugeFuel, 0, 1)));
+
+        // Høyde over havet: lang viser 100 blokker per runde, kort 1000
+        double alt = Math.Max(0, Pos.Y - Api.World.SeaLevel);
+        SetSpinFrame(anim, "needlealtlong", needleSign * alt / altLongPerTurn * 360);
+        SetSpinFrame(anim, "needlealtshort", needleSign * alt / altShortPerTurn * 360);
+
+        // Kompass: kortet dreier motsatt av kursen, så N alltid peker mot nord (−Z). Forover = −ViewVector
+        var view = Pos.GetViewVector();
+        double heading = Math.Atan2(-view.X, view.Z) * GameMath.RAD2DEG; // 0 = nord, 90 = øst
+        SetSpinFrame(anim, "compasscard", -needleSign * heading);
+
+        // Lamper: STALL blinker, FUEL lyser under grensa og blinker når tanken er tom
+        bool blink = (Api.World.ElapsedMilliseconds / 250) % 2 == 0;
+        SetLamp(anim, "lampstall", Flying && Stalling && blink);
+        SetLamp(anim, "lampfuel", fuel < lowFuelFraction && (fuel > 0 || blink));
+    }
+
+    static void SetLamp(IAnimationManager anim, string code, bool on)
+    {
+        if (!anim.IsAnimationActive(code)) anim.StartAnimation(code);
+        var state = anim.GetAnimationState(code);
+        if (state == null) return;
+        state.CurrentFrame = on ? 30 : 0;
+        state.BlendedWeight = 1;
+        state.EasingFactor = 1;
     }
 
     static void SetSpinFrame(IAnimationManager anim, string code, double angle)
@@ -528,7 +639,7 @@ public class EntityWright : EntityBoat
         if (!anim.IsAnimationActive(code)) anim.StartAnimation(code);
         var state = anim.GetAnimationState(code);
         if (state == null) return;
-        state.CurrentFrame = (float)(angle / 360 * 30);
+        state.CurrentFrame = (float)(GameMath.Mod(angle, 360) / 360 * 30);
         state.BlendedWeight = 1;
         state.EasingFactor = 1;
     }

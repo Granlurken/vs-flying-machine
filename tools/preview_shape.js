@@ -5,7 +5,10 @@ const fs = require("fs");
 const path = require("path");
 const zlib = require("zlib");
 
-const [, , shapeFile, outFile, ...hidden] = process.argv;
+const args = process.argv.slice(2);
+// --cockpit: én stor visning fra pilotens øyne (i stedet for de fire standardvinklene)
+const cockpit = args.includes("--cockpit");
+const [shapeFile, outFile, ...hidden] = args.filter(a => a !== "--cockpit");
 const shape = JSON.parse(fs.readFileSync(shapeFile, "utf8"));
 const ASSETS = path.join(process.env.APPDATA, "Vintagestory", "assets");
 
@@ -69,7 +72,9 @@ function texture(key) {
   const [dom, p] = loc.includes(":") ? loc.split(":") : ["game", loc];
   const dirs = dom === "game" ? ["survival", "game"] : [dom];
   for (const d of dirs) {
-    const f = path.join(ASSETS, d, "textures", p + ".png");
+    // Egne mod-teksturer ligger i Wright/assets/<domene>, ikke i spillets assets
+    const root = dom === "game" ? ASSETS : path.join(__dirname, "..", "Wright", "assets");
+    const f = path.join(root, d, "textures", p + ".png");
     if (fs.existsSync(f)) return (texCache[key] = readPng(f));
   }
   console.warn("Fant ikke tekstur " + loc);
@@ -91,6 +96,8 @@ const apply = (m, [x, y, z]) => [m[0] * x + m[4] * y + m[8] * z + m[12], m[1] * 
 const D = Math.PI / 180;
 
 // ---------- samle trekanter
+const CUBE_V = [-1,-1,-1,-1,1,-1,1,1,-1,1,-1,-1, 1,-1,-1,1,1,-1,1,1,1,1,-1,1, 1,-1,1,1,1,1,-1,1,1,-1,-1,1, -1,-1,1,-1,1,1,-1,1,-1,-1,-1,-1, 1,1,1,1,1,-1,-1,1,-1,-1,1,1, -1,-1,1,-1,-1,-1,1,-1,-1,1,-1,1];
+const CUBE_UV = [1,0,1,1,0,1,0,0, 1,0,1,1,0,1,0,0, 1,0,1,1,0,1,0,0, 1,0,1,1,0,1,0,0, 1,0,1,1,0,1,0,0, 1,0,1,1,0,1,0,0];
 const quads = [];
 function walk(els, parent, pathName) {
   for (const e of els) {
@@ -102,14 +109,20 @@ function walk(els, parent, pathName) {
     m = mul(m, T(e.from[0] / 16 - o[0], e.from[1] / 16 - o[1], e.from[2] / 16 - o[2]));
     const [sx, sy, sz] = [0, 1, 2].map(i => (e.to[i] - e.from[i]) / 16);
     const P = (x, y, z) => apply(m, [x * sx, y * sy, z * sz]);
-    const F = {
-      north: [P(1, 1, 0), P(0, 1, 0), P(0, 0, 0), P(1, 0, 0)], south: [P(0, 1, 1), P(1, 1, 1), P(1, 0, 1), P(0, 0, 1)],
-      east: [P(1, 1, 1), P(1, 1, 0), P(1, 0, 0), P(1, 0, 1)], west: [P(0, 1, 0), P(0, 1, 1), P(0, 0, 1), P(0, 0, 0)],
-      up: [P(0, 1, 0), P(1, 1, 0), P(1, 1, 1), P(0, 1, 1)], down: [P(0, 0, 1), P(1, 0, 1), P(1, 0, 0), P(0, 0, 0)]
-    };
-    for (const [fn, face] of Object.entries(e.faces || {})) {
-      if (!F[fn] || !face.texture) continue;
-      quads.push({ v: F[fn], tex: face.texture.replace("#", ""), uv: face.uv || [0, 0, 16, 16] });
+    // Hjørner og UV per flate rett fra VS (CubeMeshUtil.CubeVertices/CubeUvCoords, ModelCubeUtilExt.AddFace):
+    // U = uv[0] + a·(uv[2]−uv[0]), V = uv[3] + b·(uv[1]−uv[3])
+    for (const [fi, fn] of ["north", "east", "south", "west", "up", "down"].entries()) {
+      const face = (e.faces || {})[fn];
+      if (!face || !face.texture) continue;
+      const uv = face.uv || [0, 0, 16, 16];
+      const v = [], uvs = [];
+      for (let j = 0; j < 4; j++) {
+        const c = CUBE_V.slice(fi * 12 + j * 3, fi * 12 + j * 3 + 3).map(k => (k + 1) / 2);
+        v.push(P(...c));
+        const [ua, vb] = CUBE_UV.slice(fi * 8 + j * 2, fi * 8 + j * 2 + 2);
+        uvs.push([uv[0] + ua * (uv[2] - uv[0]), uv[3] + vb * (uv[1] - uv[3])]);
+      }
+      quads.push({ v, tex: face.texture.replace("#", ""), uvs });
     }
     if (e.children) walk(e.children, m, full);
   }
@@ -123,7 +136,9 @@ const views = [
   { name: "side", yaw: 90, pitch: 3, dist: 14 },
   { name: "ovenfra", yaw: 90, pitch: 80, dist: 15 }
 ];
-const VW = 640, VH = 400, SS = 2, W = VW * 2 * SS, H = VH * 2 * SS;
+// Pilotens øyne: design (0.4, 2.2, 0) → verden (0.5−x, y, 0.5−z) (barn er relative til Root sin from, og Root er snudd 180°)
+if (cockpit) views.splice(0, views.length, { name: "cockpit", eye: [0.1, 2.2, 0.5], look: [-0.9, 1.55, 0.5] });
+const VW = cockpit ? 1280 : 640, VH = cockpit ? 800 : 400, SS = 2, W = VW * (cockpit ? 1 : 2) * SS, H = VH * (cockpit ? 1 : 2) * SS;
 const color = new Float32Array(W * H * 3), zbuf = new Float32Array(W * H).fill(Infinity);
 for (let i = 0; i < W * H; i++) { const y = Math.floor(i / W) % (VH * SS); const t = y / (VH * SS); color[i * 3] = 150 + 60 * t; color[i * 3 + 1] = 170 + 50 * t; color[i * 3 + 2] = 190 + 30 * t; }
 const light = (() => { const l = [0.4, 0.8, 0.3]; const n = Math.hypot(...l); return l.map(v => v / n); })();
@@ -132,13 +147,14 @@ const light = (() => { const l = [0.4, 0.8, 0.3]; const n = Math.hypot(...l); re
 const target = [0.5, 1.1, 0.5];
 views.forEach((view, vi) => {
   const ox = (vi % 2) * VW * SS, oy = Math.floor(vi / 2) * VH * SS;
-  const yaw = view.yaw * D, pitch = view.pitch * D;
-  const eye = [target[0] - Math.cos(pitch) * Math.cos(yaw) * view.dist, target[1] + Math.sin(pitch) * view.dist, target[2] - Math.cos(pitch) * Math.sin(yaw) * view.dist];
-  const fwd = target.map((v, i) => v - eye[i]); const fl = Math.hypot(...fwd); fwd.forEach((v, i) => (fwd[i] = v / fl));
+  const yaw = (view.yaw || 0) * D, pitch = (view.pitch || 0) * D;
+  const tgt = view.look || target;
+  const eye = view.eye || [target[0] - Math.cos(pitch) * Math.cos(yaw) * view.dist, target[1] + Math.sin(pitch) * view.dist, target[2] - Math.cos(pitch) * Math.sin(yaw) * view.dist];
+  const fwd = tgt.map((v, i) => v - eye[i]); const fl = Math.hypot(...fwd); fwd.forEach((v, i) => (fwd[i] = v / fl));
   let right = [fwd[2], 0, -fwd[0]]; const rl = Math.hypot(...right) || 1; right = right.map(v => v / rl);
   right = right.map(v => -v);
   const up = [right[1] * fwd[2] - right[2] * fwd[1], right[2] * fwd[0] - right[0] * fwd[2], right[0] * fwd[1] - right[1] * fwd[0]];
-  const f = VH * SS * 1.6;
+  const f = VH * SS * (cockpit ? 0.9 : 1.6);
   const project = p => {
     const d = [p[0] - eye[0], p[1] - eye[1], p[2] - eye[2]];
     const z = d[0] * fwd[0] + d[1] * fwd[1] + d[2] * fwd[2];
@@ -150,8 +166,7 @@ views.forEach((view, vi) => {
     const n = (() => { const a = q.v[1].map((v, i) => v - q.v[0][i]), b = q.v[3].map((v, i) => v - q.v[0][i]); const c = [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]]; const l = Math.hypot(...c) || 1; return c.map(v => v / l); })();
     const shade = 0.55 + 0.45 * Math.abs(n[0] * light[0] + n[1] * light[1] + n[2] * light[2]);
     const tex = q.ground ? null : texture(q.tex);
-    const [u0, v0, u1, v1] = q.ground ? [0, 0, 1, 1] : q.uv;
-    const uvs = [[u1, v0], [u0, v0], [u0, v1], [u1, v1]];
+    const uvs = q.ground ? [[0, 0], [16, 0], [16, 16], [0, 16]] : q.uvs;
     const pts = q.v.map(project);
     if (pts.some(p => p[2] <= 0.1)) continue;
     for (const tri of [[0, 1, 2], [0, 2, 3]]) {

@@ -6,8 +6,6 @@ namespace Wright;
 
 public class WrightModSystem : ModSystem
 {
-    WrightHud? hud;
-
     public override void Start(ICoreAPI api)
     {
         api.RegisterEntity("EntityWright", typeof(EntityWright));
@@ -17,9 +15,6 @@ public class WrightModSystem : ModSystem
 
     public override void StartClientSide(ICoreClientAPI api)
     {
-        hud = new WrightHud(api);
-        api.Event.RegisterGameTickListener(_ => hud.Update(), 100);
-
         // Høyreklikk på flyet med væskebeholder: fang klikket FØR gjenstanden i hånda får det
         // (ellers drikker/heller bøtta, og EntityWright.OnInteract blir aldri kalt)
         api.Input.InWorldAction += (EnumEntityAction action, bool on, ref EnumHandling handled) =>
