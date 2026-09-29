@@ -1,0 +1,12 @@
+{
+	code: "wheel",
+	shape: { base: "game:block/clutter/wheel-solid" },
+	textures: {
+		"bituminous": { base: "game:block/coal/bituminous" },
+		"iron1": { base: "game:block/metal/sheet/iron1" },
+		"top": { base: "game:block/wood/debarked/oak" },
+		"oak1": { base: "game:block/wood/planks/oak1" }
+	},
+	creativeinventory: { "general": ["*"], "items": ["*"] },
+	maxstacksize: 4
+}
