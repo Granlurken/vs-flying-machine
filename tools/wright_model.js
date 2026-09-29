@@ -287,7 +287,14 @@ const FUEL_CAP = [1.62, TOP + 0.47, 0];
   engine.push(box("FuelCap", [FUEL_CAP[0] - 0.08, FUEL_CAP[1] - 0.03, -0.08], [FUEL_CAP[0] + 0.08, FUEL_CAP[1] + 0.02, 0.08], "iron"));
   engine.push(beam("FuelLine", [tx1 - 0.05, ty0 + 0.05, -0.2], [ex0 + 0.1, 1.2, -0.27], 0.03, "copper"));
   // Klikkboks for påfylling (FuelAP) rundt tanklokket
-  engine.push(apBox("FuelBox", "FuelAP", [FUEL_CAP[0], FUEL_CAP[1] - 0.1, 0], [0.6, 0.45, 0.6]));
+  // Påfyllingstrakt på venstre side av motoren (lett å nå fra bakken), rør inn i veivhuset
+  const fx = ex0 + 0.3, fz = -0.46;
+  engine.push(box("FillerPipe", [fx - 0.04, 1.08, -0.4], [fx + 0.04, 1.16, -0.26], "copper"));
+  engine.push(box("FillerNeck", [fx - 0.05, 1.08, fz - 0.05], [fx + 0.05, 1.3, fz + 0.05], "copper"));
+  engine.push(box("FillerFunnel", [fx - 0.1, 1.3, fz - 0.1], [fx + 0.1, 1.4, fz + 0.1], "copper"));
+  engine.push(box("FillerCap", [fx - 0.08, 1.4, fz - 0.08], [fx + 0.08, 1.44, fz + 0.08], "iron"));
+  // Klikkboks for påfylling (FuelAP): hele motoren + trakta, så den er lett å treffe
+  engine.push(apBox("FuelBox", "FuelAP", [(ex0 + ex1) / 2, 1.35, -0.05], [0.85, 1.1, 1.0]));
 }
 
 // ---------------------------------------------------------------- S6: drivkjede + propell

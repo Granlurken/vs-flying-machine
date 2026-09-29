@@ -17674,16 +17674,292 @@
 							"rotationZ": -46.896
 						},
 						{
-							"name": "FuelBox",
+							"name": "FillerPipe",
 							"from": [
-								21.12,
-								25.52,
-								-4.8
+								39.68,
+								17.28,
+								-6.4
 							],
 							"to": [
-								30.72,
-								32.72,
-								4.8
+								40.96,
+								18.56,
+								-4.16
+							],
+							"faces": {
+								"north": {
+									"texture": "#copper",
+									"uv": [
+										0,
+										0,
+										1.28,
+										1.28
+									]
+								},
+								"east": {
+									"texture": "#copper",
+									"uv": [
+										0,
+										0,
+										2.24,
+										1.28
+									]
+								},
+								"south": {
+									"texture": "#copper",
+									"uv": [
+										0,
+										0,
+										1.28,
+										1.28
+									]
+								},
+								"west": {
+									"texture": "#copper",
+									"uv": [
+										0,
+										0,
+										2.24,
+										1.28
+									]
+								},
+								"up": {
+									"texture": "#copper",
+									"uv": [
+										0,
+										0,
+										1.28,
+										2.24
+									]
+								},
+								"down": {
+									"texture": "#copper",
+									"uv": [
+										0,
+										0,
+										1.28,
+										2.24
+									]
+								}
+							}
+						},
+						{
+							"name": "FillerNeck",
+							"from": [
+								39.52,
+								17.28,
+								-8.16
+							],
+							"to": [
+								41.12,
+								20.8,
+								-6.56
+							],
+							"faces": {
+								"north": {
+									"texture": "#copper",
+									"uv": [
+										0,
+										0,
+										1.6,
+										3.52
+									]
+								},
+								"east": {
+									"texture": "#copper",
+									"uv": [
+										0,
+										0,
+										1.6,
+										3.52
+									]
+								},
+								"south": {
+									"texture": "#copper",
+									"uv": [
+										0,
+										0,
+										1.6,
+										3.52
+									]
+								},
+								"west": {
+									"texture": "#copper",
+									"uv": [
+										0,
+										0,
+										1.6,
+										3.52
+									]
+								},
+								"up": {
+									"texture": "#copper",
+									"uv": [
+										0,
+										0,
+										1.6,
+										1.6
+									]
+								},
+								"down": {
+									"texture": "#copper",
+									"uv": [
+										0,
+										0,
+										1.6,
+										1.6
+									]
+								}
+							}
+						},
+						{
+							"name": "FillerFunnel",
+							"from": [
+								38.72,
+								20.8,
+								-8.96
+							],
+							"to": [
+								41.92,
+								22.4,
+								-5.76
+							],
+							"faces": {
+								"north": {
+									"texture": "#copper",
+									"uv": [
+										0,
+										0,
+										3.2,
+										1.6
+									]
+								},
+								"east": {
+									"texture": "#copper",
+									"uv": [
+										0,
+										0,
+										3.2,
+										1.6
+									]
+								},
+								"south": {
+									"texture": "#copper",
+									"uv": [
+										0,
+										0,
+										3.2,
+										1.6
+									]
+								},
+								"west": {
+									"texture": "#copper",
+									"uv": [
+										0,
+										0,
+										3.2,
+										1.6
+									]
+								},
+								"up": {
+									"texture": "#copper",
+									"uv": [
+										0,
+										0,
+										3.2,
+										3.2
+									]
+								},
+								"down": {
+									"texture": "#copper",
+									"uv": [
+										0,
+										0,
+										3.2,
+										3.2
+									]
+								}
+							}
+						},
+						{
+							"name": "FillerCap",
+							"from": [
+								39.04,
+								22.4,
+								-8.64
+							],
+							"to": [
+								41.6,
+								23.04,
+								-6.08
+							],
+							"faces": {
+								"north": {
+									"texture": "#iron",
+									"uv": [
+										0,
+										0,
+										2.56,
+										0.64
+									]
+								},
+								"east": {
+									"texture": "#iron",
+									"uv": [
+										0,
+										0,
+										2.56,
+										0.64
+									]
+								},
+								"south": {
+									"texture": "#iron",
+									"uv": [
+										0,
+										0,
+										2.56,
+										0.64
+									]
+								},
+								"west": {
+									"texture": "#iron",
+									"uv": [
+										0,
+										0,
+										2.56,
+										0.64
+									]
+								},
+								"up": {
+									"texture": "#iron",
+									"uv": [
+										0,
+										0,
+										2.56,
+										2.56
+									]
+								},
+								"down": {
+									"texture": "#iron",
+									"uv": [
+										0,
+										0,
+										2.56,
+										2.56
+									]
+								}
+							}
+						},
+						{
+							"name": "FuelBox",
+							"from": [
+								33.52,
+								12.8,
+								-8.8
+							],
+							"to": [
+								47.12,
+								30.4,
+								7.2
 							],
 							"faces": {},
 							"attachmentpoints": [
