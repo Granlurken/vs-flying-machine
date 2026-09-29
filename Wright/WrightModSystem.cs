@@ -10,6 +10,8 @@ public class WrightModSystem : ModSystem
     public override void Start(ICoreAPI api)
     {
         api.RegisterEntity("EntityWright", typeof(EntityWright));
+        api.RegisterEntity("EntityWrightConstruction", typeof(EntityWrightConstruction));
+        api.RegisterItemClass("ItemWrightTrestles", typeof(ItemWrightTrestles));
     }
 
     public override void StartClientSide(ICoreClientAPI api)

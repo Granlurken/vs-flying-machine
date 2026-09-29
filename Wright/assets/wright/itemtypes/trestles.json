@@ -1,0 +1,18 @@
+{
+	code: "trestles",
+	class: "ItemWrightTrestles",
+	attributes: {
+		spawnsEntity: "wright:wrightconstruction",
+		// Plassen er siteSize × siteSize blokker og trenger clearance blokker fri luft over
+		siteSize: 9,
+		clearance: 5
+	},
+	// Placeholder: vanilla-supportbeam
+	shape: { base: "game:block/wood/supportbeam/16" },
+	textures: {
+		"all": { base: "game:block/wood/debarked/oak" },
+		"wood": { base: "game:block/wood/debarked/oak" }
+	},
+	creativeinventory: { "general": ["*"], "items": ["*"] },
+	maxstacksize: 1
+}

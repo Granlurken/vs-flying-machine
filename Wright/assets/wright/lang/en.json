@@ -18,5 +18,17 @@
     "item-chaindrive": "Chain drive",
     "itemdesc-chaindrive": "Two gears salvaged from the ruins and a length of iron chain, greased so it runs smooth. Carries the engine's turn back to the propeller.",
     "item-wheel": "Landing wheel",
-    "itemdesc-wheel": "Planks pegged into a solid disc around an iron axle rod, greased so it turns freely. A flying machine rolls on two of them until it is fast enough to fly."
+    "itemdesc-wheel": "Planks pegged into a solid disc around an iron axle rod, greased so it turns freely. A flying machine rolls on two of them until it is fast enough to fly.",
+    "item-trestles": "Flying machine trestles",
+    "itemdesc-trestles": "Sawhorses and a coil of rope to fence off the yard. Set them down on flat, open ground to start building a flying machine there. The yard is 9 by 9 blocks and needs 5 blocks of open air above it.",
+    "entity-wrightconstruction": "Flying machine under construction",
+    "trestles-place": "Set up building site",
+    "trestles-takedown": "Take down trestles",
+    "rollout": "Roll out",
+    "site-notflat": "Needs flat, solid ground: {0}×{0} blocks",
+    "site-notclear": "Needs {1} blocks of open air above the whole building site",
+    "ingredient-supportbeams": "support beams",
+    "ingredient-planks": "planks",
+    "ingredient-nails": "iron nails and strips",
+    "ingredient-chair": "chair"
 }

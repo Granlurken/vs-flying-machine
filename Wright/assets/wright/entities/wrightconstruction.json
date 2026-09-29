@@ -1,0 +1,70 @@
+{
+	code: "wrightconstruction",
+	class: "EntityWrightConstruction",
+	tags: ["inanimate", "structure"],
+	hitboxSize: { x: 3, y: 2 },
+	attributes: {
+		spawnsEntity: "wright:wright",
+		returnsItem: "wright:trestles",
+		// Radianer; snu flyet her hvis det ruller ut feil vei
+		spawnYawOffset: 0,
+		// Hvert steg krever stacks i HOTBAREN og viser en ny gruppe i shapen.
+		// Kreativ modus: Ctrl + høyreklikk hopper over et steg gratis (vanilla-funksjon).
+		stages: [
+			{ addElements: ["Root/S0Site"] },
+			{ requireStacks: [
+				{ type: "block", code: "game:supportbeam-*", name: "wright:ingredient-supportbeams", quantity: 8, storeWildCard: "wood" },
+				{ type: "item", code: "game:plank-*", name: "wright:ingredient-planks", quantity: 16 }
+			], addElements: ["Root/S1Frame"] },
+			{ requireStacks: [
+				{ type: "item", code: "wright:wheel", quantity: 2 },
+				{ type: "block", code: "game:supportbeam-*", name: "wright:ingredient-supportbeams", quantity: 2 },
+				{ type: "item", code: "game:metalnailsandstrips-*", name: "wright:ingredient-nails", allowedVariants: ["iron", "meteoriciron", "steel"], quantity: 2 }
+			], addElements: ["Root/S2Gear"] },
+			{ requireStacks: [
+				{ type: "item", code: "wright:wing", quantity: 1 }
+			], addElements: ["Root/S3LowerWing"] },
+			{ requireStacks: [
+				{ type: "item", code: "wright:wing", quantity: 1 },
+				{ type: "item", code: "game:stick", quantity: 8 },
+				{ type: "item", code: "game:rope", quantity: 4 }
+			], addElements: ["Root/S4UpperWing"] },
+			{ requireStacks: [
+				{ type: "item", code: "wright:engine", quantity: 1 }
+			], addElements: ["Root/S5Engine"] },
+			{ requireStacks: [
+				{ type: "item", code: "wright:chaindrive", quantity: 1 },
+				{ type: "item", code: "wright:propeller", quantity: 1 }
+			], addElements: ["Root/S6Drive"] },
+			{ requireStacks: [
+				{ type: "item", code: "game:plank-*", name: "wright:ingredient-planks", quantity: 8 },
+				{ type: "item", code: "wright:wingfabric", quantity: 2 },
+				{ type: "item", code: "game:rope", quantity: 2 }
+			], addElements: ["Root/S7Tail"] },
+			{ requireStacks: [
+				{ type: "block", code: "game:chair-*", name: "wright:ingredient-chair", quantity: 1 }
+			], addElements: ["Root/S8Seat"] },
+			{ requireStacks: [], actionLangCode: "wright:rollout" }
+		]
+	},
+	client: {
+		size: 1,
+		renderer: "Shape",
+		// Grå-kloss-placeholder (tools/greybox_construction.js). Den ekte modellen må ha de samme gruppenavnene.
+		shape: { base: "wright:entity/construction" },
+		textures: {
+			"planks": { base: "game:block/wood/planks/oak1" },
+			"debarked": { base: "game:block/wood/debarked/oak" },
+			"rope": { base: "game:block/cloth/reedrope" },
+			"metal": { base: "game:block/metal/sheet/iron1" },
+			"cloth": { base: "game:block/cloth/linen/white" }
+		},
+		behaviors: [
+			{ code: "interpolateposition" }
+		]
+	},
+	server: {
+		behaviors: []
+	},
+	sounds: {}
+}
