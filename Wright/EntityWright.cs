@@ -29,7 +29,8 @@ public class EntityWright : EntityBoat
     // Tuning — leses fra entity-JSON (attributes.flight), dette er fallbackene
     double maxSpeed = 0.28;       // toppfart ved full gass
     double stallSpeed = 0.15;     // under dette bærer ikke vingene flyet
-    double accel = 0.15;          // hvor fort farten nærmer seg målfarten (per sekund) — lavt = seigt
+    double thrustAccel = 0.018;   // fart/s ved full gass fra stillestående — lavt = lang rullebane. Luftmotstanden (∝ fart²) tar resten, så toppfarten blir maxSpeed
+    double rollingFriction = 0.002; // fart/s tapt på bakken (hjul i gress)
     double throttleRate = 0.4;    // gass-endring per sekund med W/S holdt inne
     double brakeRate = 0.6;       // ekstra retardasjon på bakken med S på tomgang
     double gravityAlongPath = 0.12; // fart tapt/vunnet per sekund per sin(banevinkel)
@@ -37,17 +38,27 @@ public class EntityWright : EntityBoat
     double verticalResponse = 3;  // hvor fort vertikalfarten følger banen
 
     double pitchRate = 0.7;       // rad/s med Space/Ctrl
+    double pitchResponse = 4;     // hvor fort nesa kommer i gang / stopper (1/s) — lavt = tyngre nese
     double maxPitchUp = 0.6;      // ~35°
     double maxPitchDown = 0.8;    // ~45°
     double rotateLift = 0.8;      // løftandel der nesa kan løftes på bakken (rotasjon før avgang)
     double stallNoseDrop = 1.2;   // rad/s nesa faller når vingene ikke bærer
 
     double maxBank = 0.7;         // ~40°
-    double bankRate = 1.5;        // rad/s inn i krengning
-    double bankReturn = 2.0;      // rad/s tilbake til vannrett når A/D slippes
+    double bankRate = 1.5;        // maks rullehastighet, rad/s
+    double bankStiffness = 9;     // fjær mot ønsket krengning — høyt = kvikkere
+    double bankDamping = 3.3;     // demping — lavt = mer oversving/gynging (2·√stiffness = ingen oversving)
     double airTurnRate = 1.2;     // rad/s sving ved full krengning
     double groundTurnRate = 0.8;  // rad/s halesporstyring
     double turnResponse = 3;      // hvor fort svingraten følger ønsket verdi
+
+    // Skrens: banen (retningen flyet faktisk beveger seg) henger etter nesa
+    double airGrip = 1.5;         // 1/s: hvor fort banen retter seg etter nesa i lufta — lavt = mer skrens
+    double groundGrip = 8;        // hjulene holder banen stramt på bakken
+    double slipDrag = 0.4;        // andel fart tapt per sekund ved 90° skrens
+    double trackYaw = double.NaN; // retningen flyet beveger seg
+    double bankVelocity, pitchVelocity;
+    readonly EntityPos trackPos = new();
 
     // Visuell tilt — fortegn/akse kan snus i JSON hvis modellen tipper feil vei
     float visualPitchSign = -1;
@@ -152,23 +163,29 @@ public class EntityWright : EntityBoat
         maxSpeed = f["maxSpeed"].AsDouble(maxSpeed);
         engineStartSeconds = f["engineStartSeconds"].AsDouble(engineStartSeconds);
         stallSpeed = f["stallSpeed"].AsDouble(stallSpeed);
-        accel = f["accel"].AsDouble(accel);
+        thrustAccel = f["thrustAccel"].AsDouble(thrustAccel);
+        rollingFriction = f["rollingFriction"].AsDouble(rollingFriction);
         throttleRate = f["throttleRate"].AsDouble(throttleRate);
         brakeRate = f["brakeRate"].AsDouble(brakeRate);
         gravityAlongPath = f["gravityAlongPath"].AsDouble(gravityAlongPath);
         maxSinkRate = f["maxSinkRate"].AsDouble(maxSinkRate);
         verticalResponse = f["verticalResponse"].AsDouble(verticalResponse);
         pitchRate = f["pitchRate"].AsDouble(pitchRate);
+        pitchResponse = f["pitchResponse"].AsDouble(pitchResponse);
         maxPitchUp = f["maxPitchUp"].AsDouble(maxPitchUp);
         maxPitchDown = f["maxPitchDown"].AsDouble(maxPitchDown);
         rotateLift = f["rotateLift"].AsDouble(rotateLift);
         stallNoseDrop = f["stallNoseDrop"].AsDouble(stallNoseDrop);
         maxBank = f["maxBank"].AsDouble(maxBank);
         bankRate = f["bankRate"].AsDouble(bankRate);
-        bankReturn = f["bankReturn"].AsDouble(bankReturn);
+        bankStiffness = f["bankStiffness"].AsDouble(bankStiffness);
+        bankDamping = f["bankDamping"].AsDouble(bankDamping);
         airTurnRate = f["airTurnRate"].AsDouble(airTurnRate);
         groundTurnRate = f["groundTurnRate"].AsDouble(groundTurnRate);
         turnResponse = f["turnResponse"].AsDouble(turnResponse);
+        airGrip = f["airGrip"].AsDouble(airGrip);
+        groundGrip = f["groundGrip"].AsDouble(groundGrip);
+        slipDrag = f["slipDrag"].AsDouble(slipDrag);
         visualPitchSign = f["visualPitchSign"].AsFloat(visualPitchSign);
         visualRollSign = f["visualRollSign"].AsFloat(visualRollSign);
     }
@@ -363,6 +380,15 @@ public class EntityWright : EntityBoat
         return value < target ? Math.Min(value + step, target) : Math.Max(value - step, target);
     }
 
+    /// <summary>Korteste vinkel fra «from» til «to», i [-π, π].</summary>
+    static double AngleDiff(double from, double to)
+    {
+        double d = (to - from) % (2 * Math.PI);
+        if (d > Math.PI) d -= 2 * Math.PI;
+        if (d < -Math.PI) d += 2 * Math.PI;
+        return d;
+    }
+
     protected override void updateBoatAngleAndMotion(float dt)
     {
         dt = Math.Min(0.5f, dt);
@@ -410,8 +436,10 @@ public class EntityWright : EntityBoat
         // --- Nesevinkel ---
         if (Flying)
         {
-            if (pullUp) PitchAngle += pitchRate * dt;
-            if (pushDown) PitchAngle -= pitchRate * dt;
+            // Nesa har treghet: den kommer gradvis i gang og glir litt etter når du slipper
+            double pitchInput = (pullUp ? 1 : 0) - (pushDown ? 1 : 0);
+            pitchVelocity += (pitchInput * pitchRate - pitchVelocity) * Math.Min(1, pitchResponse * dt);
+            PitchAngle += pitchVelocity * dt;
 
             // Stall: vingene bærer ikke, nesa faller til flyet har fått fart igjen
             Stalling = lift < 1;
@@ -420,6 +448,7 @@ public class EntityWright : EntityBoat
         else
         {
             Stalling = false;
+            pitchVelocity = 0;
             // På bakken: halen står nede. Nesa kan bare løftes (rotasjon) nær avgangsfart.
             if (pullUp && lift >= rotateLift) PitchAngle += pitchRate * dt;
             else PitchAngle = Approach(PitchAngle, 0, pitchRate * 2 * dt);
@@ -428,8 +457,11 @@ public class EntityWright : EntityBoat
         PitchAngle = GameMath.Clamp(PitchAngle, -maxPitchDown, maxPitchUp);
 
         // --- Fart langs banen ---
-        double targetSpeed = Throttle * maxSpeed;
-        ForwardSpeed += (targetSpeed - ForwardSpeed) * accel * dt;
+        // Skyvekraft minus luftmotstand (∝ fart²). Motstanden er satt så full gass gir nøyaktig maxSpeed.
+        // Gir nesten jevn akselerasjon nedover rullebanen, i stedet for et rykk fra stillestående.
+        double dragCoeff = maxSpeed > 0 ? thrustAccel / (maxSpeed * maxSpeed) : 0;
+        ForwardSpeed += (Throttle * thrustAccel - dragCoeff * ForwardSpeed * ForwardSpeed) * dt;
+        if (!Flying && OnGround) ForwardSpeed -= rollingFriction * dt;
         if (OnGround && Throttle <= 0 && controls?.Backward == true)
         {
             ForwardSpeed = Math.Max(0, ForwardSpeed - brakeRate * maxSpeed * dt);
@@ -442,8 +474,17 @@ public class EntityWright : EntityBoat
         if (!Flying && lift >= 1 && PitchAngle > 0.05) Flying = true;
         if (!OnGround && !Flying && lift >= 1) Flying = true; // rullet utfor en kant med nok fart
 
+        // --- Skrens --- banen retter seg gradvis etter nesa. I en sving peker nesa innover mens flyet
+        // fortsatt glir litt utover; skrensen koster fart.
+        if (double.IsNaN(trackYaw) || ForwardSpeed < 0.002) trackYaw = pos.Yaw;
+        double slip = AngleDiff(trackYaw, pos.Yaw);
+        trackYaw += slip * Math.Min(1, (Flying ? airGrip : groundGrip) * dt);
+        ForwardSpeed *= 1 - slipDrag * Math.Abs(Math.Sin(slip)) * dt;
+
         double horizontal = Flying ? ForwardSpeed * Math.Cos(PitchAngle) : ForwardSpeed;
-        var velocity = pos.GetViewVector().Mul((float)-horizontal).ToVec3d();
+        trackPos.SetFrom(pos);
+        trackPos.Yaw = (float)trackYaw;
+        var velocity = trackPos.GetViewVector().Mul((float)-horizontal).ToVec3d();
         pos.Motion.X = velocity.X;
         pos.Motion.Z = velocity.Z;
 
@@ -465,12 +506,15 @@ public class EntityWright : EntityBoat
         // --- Krengning og sving ---
         if (Flying)
         {
-            if (steer != 0) BankAngle = Approach(BankAngle, steer * maxBank, bankRate * dt);
-            else BankAngle = Approach(BankAngle, 0, bankReturn * dt);
+            // Fjær + demper: krengningen bygger seg opp, skyter litt over og gynger seg på plass
+            double bankAccel = bankStiffness * (steer * maxBank - BankAngle) - bankDamping * bankVelocity;
+            bankVelocity = GameMath.Clamp(bankVelocity + bankAccel * dt, -bankRate, bankRate);
+            BankAngle = GameMath.Clamp(BankAngle + bankVelocity * dt, -maxBank * 1.25, maxBank * 1.25);
         }
         else
         {
-            BankAngle = Approach(BankAngle, 0, bankReturn * 2 * dt);
+            bankVelocity = 0;
+            BankAngle = Approach(BankAngle, 0, bankRate * 2 * dt);
         }
 
         double targetTurn;

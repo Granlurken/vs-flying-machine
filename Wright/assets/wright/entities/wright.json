@@ -17,7 +17,9 @@
 			maxSpeed: 0.34,
 			engineStartSeconds: 2, // sveiv før motoren tar (matcher sounds/engine/start.ogg), flyet står stille så lenge
 			stallSpeed: 0.15,
-			accel: 0.3,
+			// Skyvekraft fra stillestående (fart/s). Lavere = lengre rullebane. 0.03 ≈ 28 blokker før avgang (0.018 ≈ 48, tok ikke av)
+			thrustAccel: 0.03,
+			rollingFriction: 0.002,
 			throttleRate: 0.4,
 			brakeRate: 0.6,
 			gravityAlongPath: 0.06,
@@ -25,17 +27,23 @@
 			verticalResponse: 3,
 			// Nesevinkel (radianer): Space/Ctrl endrer, blir liggende
 			pitchRate: 0.7,
+			pitchResponse: 3, // treghet i nesa — lavere = tyngre
 			maxPitchUp: 0.6,
 			maxPitchDown: 0.8,
 			rotateLift: 0.8,
 			stallNoseDrop: 1.2,
-			// Krengning og sving
+			// Krengning og sving. Krengningen er en fjær: lavere bankDamping = mer gynging/oversving
 			maxBank: 0.7,
-			bankRate: 1.5,
-			bankReturn: 2.0,
-			airTurnRate: 1.2,
+			bankRate: 1.2,
+			bankStiffness: 6,
+			bankDamping: 2.5,
+			airTurnRate: 1.0,
 			groundTurnRate: 0.8,
-			turnResponse: 3,
+			turnResponse: 1.5, // hvor fort svingen følger krengningen — lavere = mer etterslep
+			// Skrens: hvor fort banen retter seg etter nesa (1/s). Lavere = flyet glir mer utover i svinger
+			airGrip: 1.2,
+			groundGrip: 8,
+			slipDrag: 0.4,
 			// Snu til 1/-1 hvis modellen tipper feil vei
 			visualPitchSign: -1,
 			visualRollSign: 1
