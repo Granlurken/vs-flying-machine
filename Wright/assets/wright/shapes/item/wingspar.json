@@ -1,0 +1,511 @@
+{
+	"textureWidth": 16,
+	"textureHeight": 16,
+	"textures": {
+		"planks": "game:block/wood/planks/aged1",
+		"resin": "game:block/resin",
+		"planks2": "game:block/wood/planks/birch1",
+		"twine": "game:block/cloth/reedrope"
+	},
+	"elements": [
+		{
+			"name": "Root",
+			"from": [
+				-8,
+				6,
+				6.5
+			],
+			"to": [
+				-8,
+				6,
+				6.5
+			],
+			"faces": {},
+			"children": [
+				{
+					"name": "Lam0",
+					"from": [
+						0,
+						0,
+						0
+					],
+					"to": [
+						32,
+						1.2,
+						3
+					],
+					"faces": {
+						"north": {
+							"texture": "#planks",
+							"uv": [
+								0,
+								0,
+								16,
+								1.2
+							]
+						},
+						"east": {
+							"texture": "#planks",
+							"uv": [
+								0,
+								0,
+								3,
+								1.2
+							]
+						},
+						"south": {
+							"texture": "#planks",
+							"uv": [
+								0,
+								0,
+								16,
+								1.2
+							]
+						},
+						"west": {
+							"texture": "#planks",
+							"uv": [
+								0,
+								0,
+								3,
+								1.2
+							]
+						},
+						"up": {
+							"texture": "#planks",
+							"uv": [
+								0,
+								0,
+								16,
+								3
+							]
+						},
+						"down": {
+							"texture": "#planks",
+							"uv": [
+								0,
+								0,
+								16,
+								3
+							]
+						}
+					}
+				},
+				{
+					"name": "Glue0",
+					"from": [
+						0.2,
+						1.2,
+						0.1
+					],
+					"to": [
+						31.8,
+						1.4,
+						2.9
+					],
+					"faces": {
+						"north": {
+							"texture": "#resin",
+							"uv": [
+								0,
+								0,
+								16,
+								0.5
+							]
+						},
+						"east": {
+							"texture": "#resin",
+							"uv": [
+								0,
+								0,
+								2.8,
+								0.5
+							]
+						},
+						"south": {
+							"texture": "#resin",
+							"uv": [
+								0,
+								0,
+								16,
+								0.5
+							]
+						},
+						"west": {
+							"texture": "#resin",
+							"uv": [
+								0,
+								0,
+								2.8,
+								0.5
+							]
+						},
+						"up": {
+							"texture": "#resin",
+							"uv": [
+								0,
+								0,
+								16,
+								2.8
+							]
+						},
+						"down": {
+							"texture": "#resin",
+							"uv": [
+								0,
+								0,
+								16,
+								2.8
+							]
+						}
+					}
+				},
+				{
+					"name": "Lam1",
+					"from": [
+						0,
+						1.4,
+						0
+					],
+					"to": [
+						32,
+						2.6,
+						3
+					],
+					"faces": {
+						"north": {
+							"texture": "#planks2",
+							"uv": [
+								0,
+								0,
+								16,
+								1.2
+							]
+						},
+						"east": {
+							"texture": "#planks2",
+							"uv": [
+								0,
+								0,
+								3,
+								1.2
+							]
+						},
+						"south": {
+							"texture": "#planks2",
+							"uv": [
+								0,
+								0,
+								16,
+								1.2
+							]
+						},
+						"west": {
+							"texture": "#planks2",
+							"uv": [
+								0,
+								0,
+								3,
+								1.2
+							]
+						},
+						"up": {
+							"texture": "#planks2",
+							"uv": [
+								0,
+								0,
+								16,
+								3
+							]
+						},
+						"down": {
+							"texture": "#planks2",
+							"uv": [
+								0,
+								0,
+								16,
+								3
+							]
+						}
+					}
+				},
+				{
+					"name": "Glue1",
+					"from": [
+						0.2,
+						2.6,
+						0.1
+					],
+					"to": [
+						31.8,
+						2.8,
+						2.9
+					],
+					"faces": {
+						"north": {
+							"texture": "#resin",
+							"uv": [
+								0,
+								0,
+								16,
+								0.5
+							]
+						},
+						"east": {
+							"texture": "#resin",
+							"uv": [
+								0,
+								0,
+								2.8,
+								0.5
+							]
+						},
+						"south": {
+							"texture": "#resin",
+							"uv": [
+								0,
+								0,
+								16,
+								0.5
+							]
+						},
+						"west": {
+							"texture": "#resin",
+							"uv": [
+								0,
+								0,
+								2.8,
+								0.5
+							]
+						},
+						"up": {
+							"texture": "#resin",
+							"uv": [
+								0,
+								0,
+								16,
+								2.8
+							]
+						},
+						"down": {
+							"texture": "#resin",
+							"uv": [
+								0,
+								0,
+								16,
+								2.8
+							]
+						}
+					}
+				},
+				{
+					"name": "Lam2",
+					"from": [
+						0,
+						2.8,
+						0
+					],
+					"to": [
+						32,
+						4,
+						3
+					],
+					"faces": {
+						"north": {
+							"texture": "#planks",
+							"uv": [
+								0,
+								0,
+								16,
+								1.2
+							]
+						},
+						"east": {
+							"texture": "#planks",
+							"uv": [
+								0,
+								0,
+								3,
+								1.2
+							]
+						},
+						"south": {
+							"texture": "#planks",
+							"uv": [
+								0,
+								0,
+								16,
+								1.2
+							]
+						},
+						"west": {
+							"texture": "#planks",
+							"uv": [
+								0,
+								0,
+								3,
+								1.2
+							]
+						},
+						"up": {
+							"texture": "#planks",
+							"uv": [
+								0,
+								0,
+								16,
+								3
+							]
+						},
+						"down": {
+							"texture": "#planks",
+							"uv": [
+								0,
+								0,
+								16,
+								3
+							]
+						}
+					}
+				},
+				{
+					"name": "LashA",
+					"from": [
+						3,
+						-0.2,
+						-0.2
+					],
+					"to": [
+						4.2,
+						4.2,
+						3.2
+					],
+					"faces": {
+						"north": {
+							"texture": "#twine",
+							"uv": [
+								0,
+								0,
+								1.2,
+								4.4
+							]
+						},
+						"east": {
+							"texture": "#twine",
+							"uv": [
+								0,
+								0,
+								3.4,
+								4.4
+							]
+						},
+						"south": {
+							"texture": "#twine",
+							"uv": [
+								0,
+								0,
+								1.2,
+								4.4
+							]
+						},
+						"west": {
+							"texture": "#twine",
+							"uv": [
+								0,
+								0,
+								3.4,
+								4.4
+							]
+						},
+						"up": {
+							"texture": "#twine",
+							"uv": [
+								0,
+								0,
+								1.2,
+								3.4
+							]
+						},
+						"down": {
+							"texture": "#twine",
+							"uv": [
+								0,
+								0,
+								1.2,
+								3.4
+							]
+						}
+					}
+				},
+				{
+					"name": "LashB",
+					"from": [
+						27.8,
+						-0.2,
+						-0.2
+					],
+					"to": [
+						29,
+						4.2,
+						3.2
+					],
+					"faces": {
+						"north": {
+							"texture": "#twine",
+							"uv": [
+								0,
+								0,
+								1.2,
+								4.4
+							]
+						},
+						"east": {
+							"texture": "#twine",
+							"uv": [
+								0,
+								0,
+								3.4,
+								4.4
+							]
+						},
+						"south": {
+							"texture": "#twine",
+							"uv": [
+								0,
+								0,
+								1.2,
+								4.4
+							]
+						},
+						"west": {
+							"texture": "#twine",
+							"uv": [
+								0,
+								0,
+								3.4,
+								4.4
+							]
+						},
+						"up": {
+							"texture": "#twine",
+							"uv": [
+								0,
+								0,
+								1.2,
+								3.4
+							]
+						},
+						"down": {
+							"texture": "#twine",
+							"uv": [
+								0,
+								0,
+								1.2,
+								3.4
+							]
+						}
+					}
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,398 @@
+{
+	"textureWidth": 16,
+	"textureHeight": 16,
+	"textures": {
+		"aged": "game:block/wood/debarked/aged"
+	},
+	"elements": [
+		{
+			"name": "Root",
+			"from": [
+				49.6,
+				1.321,
+				8
+			],
+			"to": [
+				49.6,
+				1.321,
+				8
+			],
+			"faces": {},
+			"children": [
+				{
+					"name": "TrestleBar0",
+					"from": [
+						-42.72,
+						11.659,
+						-12.8
+					],
+					"to": [
+						-40.48,
+						13.579,
+						12.8
+					],
+					"faces": {
+						"north": {
+							"texture": "#aged",
+							"uv": [
+								0,
+								0,
+								2.24,
+								1.92
+							]
+						},
+						"east": {
+							"texture": "#aged",
+							"uv": [
+								0,
+								0,
+								16,
+								1.92
+							]
+						},
+						"south": {
+							"texture": "#aged",
+							"uv": [
+								0,
+								0,
+								2.24,
+								1.92
+							]
+						},
+						"west": {
+							"texture": "#aged",
+							"uv": [
+								0,
+								0,
+								16,
+								1.92
+							]
+						},
+						"up": {
+							"texture": "#aged",
+							"uv": [
+								0,
+								0,
+								2.24,
+								16
+							]
+						},
+						"down": {
+							"texture": "#aged",
+							"uv": [
+								0,
+								0,
+								2.24,
+								16
+							]
+						}
+					}
+				},
+				{
+					"name": "TrestleLeg000",
+					"from": [
+						-41.6,
+						11.419,
+						-10.48
+					],
+					"to": [
+						-28.553,
+						12.539,
+						-9.36
+					],
+					"rotationOrigin": [
+						-41.6,
+						11.979,
+						-9.92
+					],
+					"faces": {
+						"north": {
+							"texture": "#aged",
+							"uv": [
+								0,
+								0,
+								13.047,
+								1.12
+							]
+						},
+						"east": {
+							"texture": "#aged",
+							"uv": [
+								0,
+								0,
+								1.12,
+								1.12
+							]
+						},
+						"south": {
+							"texture": "#aged",
+							"uv": [
+								0,
+								0,
+								13.047,
+								1.12
+							]
+						},
+						"west": {
+							"texture": "#aged",
+							"uv": [
+								0,
+								0,
+								1.12,
+								1.12
+							]
+						},
+						"up": {
+							"texture": "#aged",
+							"uv": [
+								0,
+								0,
+								13.047,
+								1.12
+							]
+						},
+						"down": {
+							"texture": "#aged",
+							"uv": [
+								0,
+								0,
+								13.047,
+								1.12
+							]
+						}
+					},
+					"rotationY": 158.199,
+					"rotationZ": -66.656
+				},
+				{
+					"name": "TrestleLeg001",
+					"from": [
+						-41.6,
+						11.419,
+						-10.48
+					],
+					"to": [
+						-28.553,
+						12.539,
+						-9.36
+					],
+					"rotationOrigin": [
+						-41.6,
+						11.979,
+						-9.92
+					],
+					"faces": {
+						"north": {
+							"texture": "#aged",
+							"uv": [
+								0,
+								0,
+								13.047,
+								1.12
+							]
+						},
+						"east": {
+							"texture": "#aged",
+							"uv": [
+								0,
+								0,
+								1.12,
+								1.12
+							]
+						},
+						"south": {
+							"texture": "#aged",
+							"uv": [
+								0,
+								0,
+								13.047,
+								1.12
+							]
+						},
+						"west": {
+							"texture": "#aged",
+							"uv": [
+								0,
+								0,
+								1.12,
+								1.12
+							]
+						},
+						"up": {
+							"texture": "#aged",
+							"uv": [
+								0,
+								0,
+								13.047,
+								1.12
+							]
+						},
+						"down": {
+							"texture": "#aged",
+							"uv": [
+								0,
+								0,
+								13.047,
+								1.12
+							]
+						}
+					},
+					"rotationY": 21.801,
+					"rotationZ": -66.656
+				},
+				{
+					"name": "TrestleLeg010",
+					"from": [
+						-41.6,
+						11.419,
+						9.36
+					],
+					"to": [
+						-28.553,
+						12.539,
+						10.48
+					],
+					"rotationOrigin": [
+						-41.6,
+						11.979,
+						9.92
+					],
+					"faces": {
+						"north": {
+							"texture": "#aged",
+							"uv": [
+								0,
+								0,
+								13.047,
+								1.12
+							]
+						},
+						"east": {
+							"texture": "#aged",
+							"uv": [
+								0,
+								0,
+								1.12,
+								1.12
+							]
+						},
+						"south": {
+							"texture": "#aged",
+							"uv": [
+								0,
+								0,
+								13.047,
+								1.12
+							]
+						},
+						"west": {
+							"texture": "#aged",
+							"uv": [
+								0,
+								0,
+								1.12,
+								1.12
+							]
+						},
+						"up": {
+							"texture": "#aged",
+							"uv": [
+								0,
+								0,
+								13.047,
+								1.12
+							]
+						},
+						"down": {
+							"texture": "#aged",
+							"uv": [
+								0,
+								0,
+								13.047,
+								1.12
+							]
+						}
+					},
+					"rotationY": -158.199,
+					"rotationZ": -66.656
+				},
+				{
+					"name": "TrestleLeg011",
+					"from": [
+						-41.6,
+						11.419,
+						9.36
+					],
+					"to": [
+						-28.553,
+						12.539,
+						10.48
+					],
+					"rotationOrigin": [
+						-41.6,
+						11.979,
+						9.92
+					],
+					"faces": {
+						"north": {
+							"texture": "#aged",
+							"uv": [
+								0,
+								0,
+								13.047,
+								1.12
+							]
+						},
+						"east": {
+							"texture": "#aged",
+							"uv": [
+								0,
+								0,
+								1.12,
+								1.12
+							]
+						},
+						"south": {
+							"texture": "#aged",
+							"uv": [
+								0,
+								0,
+								13.047,
+								1.12
+							]
+						},
+						"west": {
+							"texture": "#aged",
+							"uv": [
+								0,
+								0,
+								1.12,
+								1.12
+							]
+						},
+						"up": {
+							"texture": "#aged",
+							"uv": [
+								0,
+								0,
+								13.047,
+								1.12
+							]
+						},
+						"down": {
+							"texture": "#aged",
+							"uv": [
+								0,
+								0,
+								13.047,
+								1.12
+							]
+						}
+					},
+					"rotationY": -21.801,
+					"rotationZ": -66.656
+				}
+			]
+		}
+	]
+}

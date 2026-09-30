@@ -1,0 +1,3303 @@
+{
+	"textureWidth": 16,
+	"textureHeight": 16,
+	"textures": {
+		"wood": "game:block/wood/debarked/oak",
+		"fabric": "game:block/cloth/linen/normal1",
+		"patch3": "game:block/cloth/linen/village/darkbrown",
+		"twine": "game:block/cloth/reedrope",
+		"patch2": "game:block/cloth/burlap/sides"
+	},
+	"elements": [
+		{
+			"name": "Root",
+			"from": [
+				2.112,
+				-4.92,
+				8
+			],
+			"to": [
+				2.112,
+				-4.92,
+				8
+			],
+			"faces": {},
+			"children": [
+				{
+					"name": "S3LowerWing",
+					"from": [
+						0,
+						0,
+						0
+					],
+					"to": [
+						0,
+						0,
+						0
+					],
+					"faces": {},
+					"children": [
+						{
+							"name": "LowerFrontSpar",
+							"from": [
+								14.08,
+								11.808,
+								-67.2
+							],
+							"to": [
+								146.88,
+								13.6,
+								-65.024
+							],
+							"rotationOrigin": [
+								14.08,
+								12.8,
+								-66.4
+							],
+							"faces": {
+								"north": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										1.6
+									]
+								},
+								"east": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										1.6,
+										1.6
+									]
+								},
+								"south": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										1.6
+									]
+								},
+								"west": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										1.6,
+										1.6
+									]
+								},
+								"up": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										1.6
+									]
+								},
+								"down": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										1.6
+									]
+								}
+							},
+							"rotationY": -90
+						},
+						{
+							"name": "LowerRearSpar",
+							"from": [
+								0,
+								12.16,
+								-67.04
+							],
+							"to": [
+								132.8,
+								14.016,
+								-65.76
+							],
+							"rotationOrigin": [
+								0,
+								12.8,
+								-66.4
+							],
+							"faces": {
+								"north": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										1.28
+									]
+								},
+								"east": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										1.28,
+										1.28
+									]
+								},
+								"south": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										1.28
+									]
+								},
+								"west": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										1.28,
+										1.28
+									]
+								},
+								"up": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										1.28
+									]
+								},
+								"down": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										1.28
+									]
+								}
+							},
+							"rotationY": -90
+						},
+						{
+							"name": "LowerLeadingEdge",
+							"from": [
+								15.2,
+								12.16,
+								-66.4
+							],
+							"to": [
+								16.384,
+								13.44,
+								66.4
+							],
+							"faces": {
+								"north": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.8,
+										1.28
+									]
+								},
+								"east": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										1.28
+									]
+								},
+								"south": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.8,
+										1.28
+									]
+								},
+								"west": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										1.28
+									]
+								},
+								"up": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.8,
+										16
+									]
+								},
+								"down": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.8,
+										16
+									]
+								}
+							}
+						},
+						{
+							"name": "LowerRib0",
+							"from": [
+								-2.4,
+								11.616,
+								-66.8
+							],
+							"to": [
+								14.4,
+								14.176,
+								-66
+							],
+							"faces": {
+								"north": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										1.6
+									]
+								},
+								"east": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.8,
+										1.6
+									]
+								},
+								"south": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										1.6
+									]
+								},
+								"west": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.8,
+										1.6
+									]
+								},
+								"up": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										0.8
+									]
+								},
+								"down": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										0.8
+									]
+								}
+							}
+						},
+						{
+							"name": "LowerPanel0",
+							"from": [
+								-4.8,
+								12.32,
+								-66
+							],
+							"to": [
+								16.576,
+								13.28,
+								-56.585
+							],
+							"faces": {
+								"north": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										0.96
+									]
+								},
+								"east": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										9.415,
+										0.96
+									]
+								},
+								"south": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										0.96
+									]
+								},
+								"west": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										9.415,
+										0.96
+									]
+								},
+								"up": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										9.415
+									]
+								},
+								"down": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										9.415
+									]
+								}
+							}
+						},
+						{
+							"name": "LowerRib1",
+							"from": [
+								-4.8,
+								12,
+								-56.585
+							],
+							"to": [
+								16.192,
+								14.176,
+								-55.785
+							],
+							"faces": {
+								"north": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										1.6
+									]
+								},
+								"east": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.8,
+										1.6
+									]
+								},
+								"south": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										1.6
+									]
+								},
+								"west": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.8,
+										1.6
+									]
+								},
+								"up": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										0.8
+									]
+								},
+								"down": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										0.8
+									]
+								}
+							}
+						},
+						{
+							"name": "LowerPanel1",
+							"from": [
+								-4.8,
+								12.32,
+								-55.785
+							],
+							"to": [
+								16.192,
+								13.28,
+								-46.369
+							],
+							"faces": {
+								"north": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										0.96
+									]
+								},
+								"east": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										9.415,
+										0.96
+									]
+								},
+								"south": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										0.96
+									]
+								},
+								"west": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										9.415,
+										0.96
+									]
+								},
+								"up": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										9.415
+									]
+								},
+								"down": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										9.415
+									]
+								}
+							}
+						},
+						{
+							"name": "LowerPatch1",
+							"from": [
+								-1.455,
+								13.088,
+								-50.978
+							],
+							"to": [
+								2.621,
+								13.584,
+								-47.177
+							],
+							"faces": {
+								"north": {
+									"texture": "#patch3",
+									"uv": [
+										0,
+										0,
+										4.075,
+										0.5
+									]
+								},
+								"east": {
+									"texture": "#patch3",
+									"uv": [
+										0,
+										0,
+										3.8,
+										0.5
+									]
+								},
+								"south": {
+									"texture": "#patch3",
+									"uv": [
+										0,
+										0,
+										4.075,
+										0.5
+									]
+								},
+								"west": {
+									"texture": "#patch3",
+									"uv": [
+										0,
+										0,
+										3.8,
+										0.5
+									]
+								},
+								"up": {
+									"texture": "#patch3",
+									"uv": [
+										0,
+										0,
+										4.075,
+										3.8
+									]
+								},
+								"down": {
+									"texture": "#patch3",
+									"uv": [
+										0,
+										0,
+										4.075,
+										3.8
+									]
+								}
+							},
+							"rotationOrigin": [
+								0.583,
+								13.336,
+								-49.077
+							],
+							"rotationY": 5.375
+						},
+						{
+							"name": "LowerThreadA1",
+							"from": [
+								-3.84,
+								13.072,
+								-55.401
+							],
+							"to": [
+								16.847,
+								13.84,
+								-55.209
+							],
+							"rotationOrigin": [
+								-3.84,
+								13.36,
+								-55.305
+							],
+							"faces": {
+								"north": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										16,
+										0.5
+									]
+								},
+								"east": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										0.5,
+										0.5
+									]
+								},
+								"south": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										16,
+										0.5
+									]
+								},
+								"west": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										0.5,
+										0.5
+									]
+								},
+								"up": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										16,
+										0.5
+									]
+								},
+								"down": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										16,
+										0.5
+									]
+								}
+							},
+							"rotationY": -24.125
+						},
+						{
+							"name": "LowerThreadB1",
+							"from": [
+								-3.84,
+								13.264,
+								-46.945
+							],
+							"to": [
+								16.847,
+								14.224,
+								-46.753
+							],
+							"rotationOrigin": [
+								-3.84,
+								13.36,
+								-46.849
+							],
+							"faces": {
+								"north": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										16,
+										0.5
+									]
+								},
+								"east": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										0.5,
+										0.5
+									]
+								},
+								"south": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										16,
+										0.5
+									]
+								},
+								"west": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										0.5,
+										0.5
+									]
+								},
+								"up": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										16,
+										0.5
+									]
+								},
+								"down": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										16,
+										0.5
+									]
+								}
+							},
+							"rotationY": 24.125
+						},
+						{
+							"name": "LowerRib2",
+							"from": [
+								-4.8,
+								12,
+								-46.369
+							],
+							"to": [
+								16.192,
+								13.792,
+								-45.569
+							],
+							"faces": {
+								"north": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										1.6
+									]
+								},
+								"east": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.8,
+										1.6
+									]
+								},
+								"south": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										1.6
+									]
+								},
+								"west": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.8,
+										1.6
+									]
+								},
+								"up": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										0.8
+									]
+								},
+								"down": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										0.8
+									]
+								}
+							}
+						},
+						{
+							"name": "LowerPanel2",
+							"from": [
+								-4.8,
+								12.32,
+								-45.569
+							],
+							"to": [
+								16.192,
+								13.28,
+								-36.154
+							],
+							"faces": {
+								"north": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										0.96
+									]
+								},
+								"east": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										9.415,
+										0.96
+									]
+								},
+								"south": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										0.96
+									]
+								},
+								"west": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										9.415,
+										0.96
+									]
+								},
+								"up": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										9.415
+									]
+								},
+								"down": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										9.415
+									]
+								}
+							}
+						},
+						{
+							"name": "LowerRib3",
+							"from": [
+								-4.8,
+								12,
+								-36.154
+							],
+							"to": [
+								16.192,
+								13.792,
+								-35.354
+							],
+							"faces": {
+								"north": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										1.6
+									]
+								},
+								"east": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.8,
+										1.6
+									]
+								},
+								"south": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										1.6
+									]
+								},
+								"west": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.8,
+										1.6
+									]
+								},
+								"up": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										0.8
+									]
+								},
+								"down": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										0.8
+									]
+								}
+							}
+						},
+						{
+							"name": "LowerPanel3",
+							"from": [
+								-4.8,
+								12.32,
+								-35.354
+							],
+							"to": [
+								16.192,
+								13.28,
+								-25.938
+							],
+							"faces": {
+								"north": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										0.96
+									]
+								},
+								"east": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										9.415,
+										0.96
+									]
+								},
+								"south": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										0.96
+									]
+								},
+								"west": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										9.415,
+										0.96
+									]
+								},
+								"up": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										9.415
+									]
+								},
+								"down": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										9.415
+									]
+								}
+							}
+						},
+						{
+							"name": "LowerPatch3",
+							"from": [
+								0.419,
+								13.28,
+								-33.587
+							],
+							"to": [
+								6.502,
+								13.584,
+								-28.097
+							],
+							"faces": {
+								"north": {
+									"texture": "#patch2",
+									"uv": [
+										0,
+										0,
+										6.083,
+										0.5
+									]
+								},
+								"east": {
+									"texture": "#patch2",
+									"uv": [
+										0,
+										0,
+										5.49,
+										0.5
+									]
+								},
+								"south": {
+									"texture": "#patch2",
+									"uv": [
+										0,
+										0,
+										6.083,
+										0.5
+									]
+								},
+								"west": {
+									"texture": "#patch2",
+									"uv": [
+										0,
+										0,
+										5.49,
+										0.5
+									]
+								},
+								"up": {
+									"texture": "#patch2",
+									"uv": [
+										0,
+										0,
+										6.083,
+										5.49
+									]
+								},
+								"down": {
+									"texture": "#patch2",
+									"uv": [
+										0,
+										0,
+										6.083,
+										5.49
+									]
+								}
+							},
+							"rotationOrigin": [
+								3.46,
+								13.336,
+								-30.842
+							],
+							"rotationY": -0.23
+						},
+						{
+							"name": "LowerRib4",
+							"from": [
+								-4.8,
+								12,
+								-25.938
+							],
+							"to": [
+								16.192,
+								13.792,
+								-25.138
+							],
+							"faces": {
+								"north": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										1.6
+									]
+								},
+								"east": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.8,
+										1.6
+									]
+								},
+								"south": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										1.6
+									]
+								},
+								"west": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.8,
+										1.6
+									]
+								},
+								"up": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										0.8
+									]
+								},
+								"down": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										0.8
+									]
+								}
+							}
+						},
+						{
+							"name": "LowerPanel4",
+							"from": [
+								-4.8,
+								12.32,
+								-25.138
+							],
+							"to": [
+								16.192,
+								13.28,
+								-15.723
+							],
+							"faces": {
+								"north": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										0.96
+									]
+								},
+								"east": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										9.415,
+										0.96
+									]
+								},
+								"south": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										0.96
+									]
+								},
+								"west": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										9.415,
+										0.96
+									]
+								},
+								"up": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										9.415
+									]
+								},
+								"down": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										9.415
+									]
+								}
+							}
+						},
+						{
+							"name": "LowerPatch4",
+							"from": [
+								5.253,
+								13.28,
+								-20.262
+							],
+							"to": [
+								11.111,
+								13.392,
+								-17.019
+							],
+							"faces": {
+								"north": {
+									"texture": "#patch3",
+									"uv": [
+										0,
+										0,
+										5.858,
+										0.5
+									]
+								},
+								"east": {
+									"texture": "#patch3",
+									"uv": [
+										0,
+										0,
+										3.243,
+										0.5
+									]
+								},
+								"south": {
+									"texture": "#patch3",
+									"uv": [
+										0,
+										0,
+										5.858,
+										0.5
+									]
+								},
+								"west": {
+									"texture": "#patch3",
+									"uv": [
+										0,
+										0,
+										3.243,
+										0.5
+									]
+								},
+								"up": {
+									"texture": "#patch3",
+									"uv": [
+										0,
+										0,
+										5.858,
+										3.243
+									]
+								},
+								"down": {
+									"texture": "#patch3",
+									"uv": [
+										0,
+										0,
+										5.858,
+										3.243
+									]
+								}
+							},
+							"rotationOrigin": [
+								8.182,
+								13.336,
+								-18.64
+							],
+							"rotationY": 6.924
+						},
+						{
+							"name": "LowerRib5",
+							"from": [
+								-4.8,
+								12,
+								-15.723
+							],
+							"to": [
+								16,
+								13.792,
+								-14.923
+							],
+							"faces": {
+								"north": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										1.6
+									]
+								},
+								"east": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.8,
+										1.6
+									]
+								},
+								"south": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										1.6
+									]
+								},
+								"west": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.8,
+										1.6
+									]
+								},
+								"up": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										0.8
+									]
+								},
+								"down": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										0.8
+									]
+								}
+							}
+						},
+						{
+							"name": "LowerPanel5",
+							"from": [
+								-4.8,
+								11.936,
+								-14.923
+							],
+							"to": [
+								16,
+								13.28,
+								-5.508
+							],
+							"faces": {
+								"north": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										0.96
+									]
+								},
+								"east": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										9.415,
+										0.96
+									]
+								},
+								"south": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										0.96
+									]
+								},
+								"west": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										9.415,
+										0.96
+									]
+								},
+								"up": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										9.415
+									]
+								},
+								"down": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										9.415
+									]
+								}
+							}
+						},
+						{
+							"name": "LowerThreadA5",
+							"from": [
+								-3.84,
+								13.072,
+								-14.539
+							],
+							"to": [
+								16.847,
+								13.456,
+								-14.347
+							],
+							"rotationOrigin": [
+								-3.84,
+								13.36,
+								-14.443
+							],
+							"faces": {
+								"north": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										16,
+										0.5
+									]
+								},
+								"east": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										0.5,
+										0.5
+									]
+								},
+								"south": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										16,
+										0.5
+									]
+								},
+								"west": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										0.5,
+										0.5
+									]
+								},
+								"up": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										16,
+										0.5
+									]
+								},
+								"down": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										16,
+										0.5
+									]
+								}
+							},
+							"rotationY": -24.125
+						},
+						{
+							"name": "LowerThreadB5",
+							"from": [
+								-3.84,
+								13.264,
+								-6.084
+							],
+							"to": [
+								16.847,
+								13.84,
+								-5.892
+							],
+							"rotationOrigin": [
+								-3.84,
+								13.36,
+								-5.988
+							],
+							"faces": {
+								"north": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										16,
+										0.5
+									]
+								},
+								"east": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										0.5,
+										0.5
+									]
+								},
+								"south": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										16,
+										0.5
+									]
+								},
+								"west": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										0.5,
+										0.5
+									]
+								},
+								"up": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										16,
+										0.5
+									]
+								},
+								"down": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										16,
+										0.5
+									]
+								}
+							},
+							"rotationY": 24.125
+						},
+						{
+							"name": "LowerRib6",
+							"from": [
+								-4.8,
+								12,
+								-5.508
+							],
+							"to": [
+								16,
+								13.792,
+								-4.708
+							],
+							"faces": {
+								"north": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										1.6
+									]
+								},
+								"east": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.8,
+										1.6
+									]
+								},
+								"south": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										1.6
+									]
+								},
+								"west": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.8,
+										1.6
+									]
+								},
+								"up": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										0.8
+									]
+								},
+								"down": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										0.8
+									]
+								}
+							}
+						},
+						{
+							"name": "LowerPanel6",
+							"from": [
+								-4.8,
+								11.936,
+								-4.708
+							],
+							"to": [
+								16,
+								13.28,
+								4.708
+							],
+							"faces": {
+								"north": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										0.96
+									]
+								},
+								"east": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										9.415,
+										0.96
+									]
+								},
+								"south": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										0.96
+									]
+								},
+								"west": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										9.415,
+										0.96
+									]
+								},
+								"up": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										9.415
+									]
+								},
+								"down": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										9.415
+									]
+								}
+							}
+						},
+						{
+							"name": "LowerRib7",
+							"from": [
+								-4.8,
+								12,
+								4.708
+							],
+							"to": [
+								16,
+								13.792,
+								5.508
+							],
+							"faces": {
+								"north": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										1.6
+									]
+								},
+								"east": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.8,
+										1.6
+									]
+								},
+								"south": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										1.6
+									]
+								},
+								"west": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.8,
+										1.6
+									]
+								},
+								"up": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										0.8
+									]
+								},
+								"down": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										0.8
+									]
+								}
+							}
+						},
+						{
+							"name": "LowerPanel7",
+							"from": [
+								-4.8,
+								11.936,
+								5.508
+							],
+							"to": [
+								16,
+								13.28,
+								14.923
+							],
+							"faces": {
+								"north": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										0.96
+									]
+								},
+								"east": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										9.415,
+										0.96
+									]
+								},
+								"south": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										0.96
+									]
+								},
+								"west": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										9.415,
+										0.96
+									]
+								},
+								"up": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										9.415
+									]
+								},
+								"down": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										9.415
+									]
+								}
+							}
+						},
+						{
+							"name": "LowerRib8",
+							"from": [
+								-4.8,
+								12,
+								14.923
+							],
+							"to": [
+								16,
+								13.792,
+								15.723
+							],
+							"faces": {
+								"north": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										1.6
+									]
+								},
+								"east": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.8,
+										1.6
+									]
+								},
+								"south": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										1.6
+									]
+								},
+								"west": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.8,
+										1.6
+									]
+								},
+								"up": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										0.8
+									]
+								},
+								"down": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										0.8
+									]
+								}
+							}
+						},
+						{
+							"name": "LowerPanel8",
+							"from": [
+								-4.8,
+								12.32,
+								15.723
+							],
+							"to": [
+								16,
+								13.28,
+								25.138
+							],
+							"faces": {
+								"north": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										0.96
+									]
+								},
+								"east": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										9.415,
+										0.96
+									]
+								},
+								"south": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										0.96
+									]
+								},
+								"west": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										9.415,
+										0.96
+									]
+								},
+								"up": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										9.415
+									]
+								},
+								"down": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										9.415
+									]
+								}
+							}
+						},
+						{
+							"name": "LowerThreadA8",
+							"from": [
+								-3.84,
+								13.072,
+								16.107
+							],
+							"to": [
+								16.847,
+								13.456,
+								16.299
+							],
+							"rotationOrigin": [
+								-3.84,
+								13.36,
+								16.203
+							],
+							"faces": {
+								"north": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										16,
+										0.5
+									]
+								},
+								"east": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										0.5,
+										0.5
+									]
+								},
+								"south": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										16,
+										0.5
+									]
+								},
+								"west": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										0.5,
+										0.5
+									]
+								},
+								"up": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										16,
+										0.5
+									]
+								},
+								"down": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										16,
+										0.5
+									]
+								}
+							},
+							"rotationY": -24.125
+						},
+						{
+							"name": "LowerThreadB8",
+							"from": [
+								-3.84,
+								13.264,
+								24.562
+							],
+							"to": [
+								16.847,
+								13.84,
+								24.754
+							],
+							"rotationOrigin": [
+								-3.84,
+								13.36,
+								24.658
+							],
+							"faces": {
+								"north": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										16,
+										0.5
+									]
+								},
+								"east": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										0.5,
+										0.5
+									]
+								},
+								"south": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										16,
+										0.5
+									]
+								},
+								"west": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										0.5,
+										0.5
+									]
+								},
+								"up": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										16,
+										0.5
+									]
+								},
+								"down": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										16,
+										0.5
+									]
+								}
+							},
+							"rotationY": 24.125
+						},
+						{
+							"name": "LowerRib9",
+							"from": [
+								-4.8,
+								12,
+								25.138
+							],
+							"to": [
+								16,
+								13.792,
+								25.938
+							],
+							"faces": {
+								"north": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										1.6
+									]
+								},
+								"east": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.8,
+										1.6
+									]
+								},
+								"south": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										1.6
+									]
+								},
+								"west": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.8,
+										1.6
+									]
+								},
+								"up": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										0.8
+									]
+								},
+								"down": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										0.8
+									]
+								}
+							}
+						},
+						{
+							"name": "LowerPanel9",
+							"from": [
+								-4.8,
+								12.32,
+								25.938
+							],
+							"to": [
+								16,
+								13.28,
+								35.354
+							],
+							"faces": {
+								"north": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										0.96
+									]
+								},
+								"east": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										9.415,
+										0.96
+									]
+								},
+								"south": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										0.96
+									]
+								},
+								"west": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										9.415,
+										0.96
+									]
+								},
+								"up": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										9.415
+									]
+								},
+								"down": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										9.415
+									]
+								}
+							}
+						},
+						{
+							"name": "LowerRib10",
+							"from": [
+								-4.8,
+								12,
+								35.354
+							],
+							"to": [
+								16,
+								13.792,
+								36.154
+							],
+							"faces": {
+								"north": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										1.6
+									]
+								},
+								"east": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.8,
+										1.6
+									]
+								},
+								"south": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										1.6
+									]
+								},
+								"west": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.8,
+										1.6
+									]
+								},
+								"up": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										0.8
+									]
+								},
+								"down": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										0.8
+									]
+								}
+							}
+						},
+						{
+							"name": "LowerPanel10",
+							"from": [
+								-4.8,
+								12.32,
+								36.154
+							],
+							"to": [
+								16,
+								13.28,
+								45.569
+							],
+							"faces": {
+								"north": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										0.96
+									]
+								},
+								"east": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										9.415,
+										0.96
+									]
+								},
+								"south": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										0.96
+									]
+								},
+								"west": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										9.415,
+										0.96
+									]
+								},
+								"up": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										9.415
+									]
+								},
+								"down": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										9.415
+									]
+								}
+							}
+						},
+						{
+							"name": "LowerPatch10",
+							"from": [
+								-0.007,
+								12.896,
+								40.531
+							],
+							"to": [
+								5.941,
+								13.392,
+								43.744
+							],
+							"faces": {
+								"north": {
+									"texture": "#patch2",
+									"uv": [
+										0,
+										0,
+										5.948,
+										0.5
+									]
+								},
+								"east": {
+									"texture": "#patch2",
+									"uv": [
+										0,
+										0,
+										3.213,
+										0.5
+									]
+								},
+								"south": {
+									"texture": "#patch2",
+									"uv": [
+										0,
+										0,
+										5.948,
+										0.5
+									]
+								},
+								"west": {
+									"texture": "#patch2",
+									"uv": [
+										0,
+										0,
+										3.213,
+										0.5
+									]
+								},
+								"up": {
+									"texture": "#patch2",
+									"uv": [
+										0,
+										0,
+										5.948,
+										3.213
+									]
+								},
+								"down": {
+									"texture": "#patch2",
+									"uv": [
+										0,
+										0,
+										5.948,
+										3.213
+									]
+								}
+							},
+							"rotationOrigin": [
+								2.967,
+								13.336,
+								42.138
+							],
+							"rotationY": -0.831
+						},
+						{
+							"name": "LowerThreadA10",
+							"from": [
+								-3.84,
+								13.072,
+								36.538
+							],
+							"to": [
+								16.847,
+								13.84,
+								36.73
+							],
+							"rotationOrigin": [
+								-3.84,
+								13.36,
+								36.634
+							],
+							"faces": {
+								"north": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										16,
+										0.5
+									]
+								},
+								"east": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										0.5,
+										0.5
+									]
+								},
+								"south": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										16,
+										0.5
+									]
+								},
+								"west": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										0.5,
+										0.5
+									]
+								},
+								"up": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										16,
+										0.5
+									]
+								},
+								"down": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										16,
+										0.5
+									]
+								}
+							},
+							"rotationY": -24.125
+						},
+						{
+							"name": "LowerThreadB10",
+							"from": [
+								-3.84,
+								13.264,
+								44.993
+							],
+							"to": [
+								16.847,
+								14.224,
+								45.185
+							],
+							"rotationOrigin": [
+								-3.84,
+								13.36,
+								45.089
+							],
+							"faces": {
+								"north": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										16,
+										0.5
+									]
+								},
+								"east": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										0.5,
+										0.5
+									]
+								},
+								"south": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										16,
+										0.5
+									]
+								},
+								"west": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										0.5,
+										0.5
+									]
+								},
+								"up": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										16,
+										0.5
+									]
+								},
+								"down": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										16,
+										0.5
+									]
+								}
+							},
+							"rotationY": 24.125
+						},
+						{
+							"name": "LowerRib11",
+							"from": [
+								-4.8,
+								12,
+								45.569
+							],
+							"to": [
+								16,
+								13.792,
+								46.369
+							],
+							"faces": {
+								"north": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										1.6
+									]
+								},
+								"east": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.8,
+										1.6
+									]
+								},
+								"south": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										1.6
+									]
+								},
+								"west": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.8,
+										1.6
+									]
+								},
+								"up": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										0.8
+									]
+								},
+								"down": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										0.8
+									]
+								}
+							}
+						},
+						{
+							"name": "LowerPanel11",
+							"from": [
+								-4.8,
+								12.32,
+								46.369
+							],
+							"to": [
+								16,
+								13.28,
+								55.785
+							],
+							"faces": {
+								"north": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										0.96
+									]
+								},
+								"east": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										9.415,
+										0.96
+									]
+								},
+								"south": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										0.96
+									]
+								},
+								"west": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										9.415,
+										0.96
+									]
+								},
+								"up": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										9.415
+									]
+								},
+								"down": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										9.415
+									]
+								}
+							}
+						},
+						{
+							"name": "LowerRib12",
+							"from": [
+								-4.8,
+								12,
+								55.785
+							],
+							"to": [
+								16,
+								13.792,
+								56.585
+							],
+							"faces": {
+								"north": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										1.6
+									]
+								},
+								"east": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.8,
+										1.6
+									]
+								},
+								"south": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										1.6
+									]
+								},
+								"west": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.8,
+										1.6
+									]
+								},
+								"up": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										0.8
+									]
+								},
+								"down": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										0.8
+									]
+								}
+							}
+						},
+						{
+							"name": "LowerPanel12",
+							"from": [
+								-4.8,
+								12.32,
+								56.585
+							],
+							"to": [
+								16,
+								13.28,
+								66
+							],
+							"faces": {
+								"north": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										0.96
+									]
+								},
+								"east": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										9.415,
+										0.96
+									]
+								},
+								"south": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										0.96
+									]
+								},
+								"west": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										9.415,
+										0.96
+									]
+								},
+								"up": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										9.415
+									]
+								},
+								"down": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										9.415
+									]
+								}
+							}
+						},
+						{
+							"name": "LowerRib13",
+							"from": [
+								-2.592,
+								12,
+								66
+							],
+							"to": [
+								14.4,
+								13.792,
+								66.8
+							],
+							"faces": {
+								"north": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										1.6
+									]
+								},
+								"east": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.8,
+										1.6
+									]
+								},
+								"south": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										1.6
+									]
+								},
+								"west": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.8,
+										1.6
+									]
+								},
+								"up": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										0.8
+									]
+								},
+								"down": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										16,
+										0.8
+									]
+								}
+							}
+						},
+						{
+							"name": "LowerTip0",
+							"from": [
+								-2.592,
+								12.4,
+								-68.32
+							],
+							"to": [
+								14.592,
+								13.2,
+								-66.4
+							],
+							"faces": {
+								"north": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										0.8
+									]
+								},
+								"east": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										1.92,
+										0.8
+									]
+								},
+								"south": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										0.8
+									]
+								},
+								"west": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										1.92,
+										0.8
+									]
+								},
+								"up": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										1.92
+									]
+								},
+								"down": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										1.92
+									]
+								}
+							}
+						},
+						{
+							"name": "LowerTipBow0",
+							"from": [
+								0.8,
+								12.32,
+								-69.28
+							],
+							"to": [
+								12,
+								13.28,
+								-68.32
+							],
+							"faces": {
+								"north": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										11.2,
+										0.96
+									]
+								},
+								"east": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.96,
+										0.96
+									]
+								},
+								"south": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										11.2,
+										0.96
+									]
+								},
+								"west": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.96,
+										0.96
+									]
+								},
+								"up": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										11.2,
+										0.96
+									]
+								},
+								"down": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										11.2,
+										0.96
+									]
+								}
+							}
+						},
+						{
+							"name": "LowerTip1",
+							"from": [
+								-2.4,
+								12.4,
+								66.4
+							],
+							"to": [
+								14.592,
+								13.2,
+								68.32
+							],
+							"faces": {
+								"north": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										0.8
+									]
+								},
+								"east": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										1.92,
+										0.8
+									]
+								},
+								"south": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										0.8
+									]
+								},
+								"west": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										1.92,
+										0.8
+									]
+								},
+								"up": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										1.92
+									]
+								},
+								"down": {
+									"texture": "#fabric",
+									"uv": [
+										0,
+										0,
+										16,
+										1.92
+									]
+								}
+							}
+						},
+						{
+							"name": "LowerTipBow1",
+							"from": [
+								0.8,
+								12.32,
+								68.32
+							],
+							"to": [
+								12,
+								13.28,
+								69.28
+							],
+							"faces": {
+								"north": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										11.2,
+										0.96
+									]
+								},
+								"east": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.96,
+										0.96
+									]
+								},
+								"south": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										11.2,
+										0.96
+									]
+								},
+								"west": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.96,
+										0.96
+									]
+								},
+								"up": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										11.2,
+										0.96
+									]
+								},
+								"down": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										11.2,
+										0.96
+									]
+								}
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}

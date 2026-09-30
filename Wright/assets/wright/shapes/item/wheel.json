@@ -1,0 +1,1020 @@
+{
+	"textureWidth": 16,
+	"textureHeight": 16,
+	"textures": {
+		"planks": "game:block/wood/planks/aged1",
+		"wood": "game:block/wood/debarked/oak",
+		"iron": "game:block/metal/sheet/iron1"
+	},
+	"elements": [
+		{
+			"name": "Root",
+			"from": [
+				-12.8,
+				1.6,
+				23.68
+			],
+			"to": [
+				-12.8,
+				1.6,
+				23.68
+			],
+			"faces": {},
+			"children": [
+				{
+					"name": "WheelL",
+					"from": [
+						0,
+						0,
+						0
+					],
+					"to": [
+						0,
+						0,
+						0
+					],
+					"faces": {},
+					"rotationOrigin": [
+						20.8,
+						6.4,
+						-15.68
+					],
+					"children": [
+						{
+							"name": "WheelLRim0",
+							"from": [
+								26.88,
+								3.002,
+								-16.72
+							],
+							"to": [
+								32.237,
+								4.442,
+								-14.256
+							],
+							"rotationOrigin": [
+								26.88,
+								3.722,
+								-15.68
+							],
+							"faces": {
+								"north": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										5.357,
+										1.44
+									]
+								},
+								"east": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										2.08,
+										1.44
+									]
+								},
+								"south": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										5.357,
+										1.44
+									]
+								},
+								"west": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										2.08,
+										1.44
+									]
+								},
+								"up": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										5.357,
+										2.08
+									]
+								},
+								"down": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										5.357,
+										2.08
+									]
+								}
+							},
+							"rotationZ": 90
+						},
+						{
+							"name": "WheelLRim1",
+							"from": [
+								26.993,
+								8.085,
+								-16.72
+							],
+							"to": [
+								32.35,
+								9.525,
+								-14.064
+							],
+							"rotationOrigin": [
+								26.993,
+								8.805,
+								-15.68
+							],
+							"faces": {
+								"north": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										5.357,
+										1.44
+									]
+								},
+								"east": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										2.08,
+										1.44
+									]
+								},
+								"south": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										5.357,
+										1.44
+									]
+								},
+								"west": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										2.08,
+										1.44
+									]
+								},
+								"up": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										5.357,
+										2.08
+									]
+								},
+								"down": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										5.357,
+										2.08
+									]
+								}
+							},
+							"rotationY": -180,
+							"rotationZ": 45
+						},
+						{
+							"name": "WheelLRim2",
+							"from": [
+								23.478,
+								11.76,
+								-16.912
+							],
+							"to": [
+								28.835,
+								13.2,
+								-14.256
+							],
+							"rotationOrigin": [
+								23.478,
+								12.48,
+								-15.68
+							],
+							"faces": {
+								"north": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										5.357,
+										1.44
+									]
+								},
+								"east": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										2.08,
+										1.44
+									]
+								},
+								"south": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										5.357,
+										1.44
+									]
+								},
+								"west": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										2.08,
+										1.44
+									]
+								},
+								"up": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										5.357,
+										2.08
+									]
+								},
+								"down": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										5.357,
+										2.08
+									]
+								}
+							},
+							"rotationY": -180
+						},
+						{
+							"name": "WheelLRim3",
+							"from": [
+								18.395,
+								11.873,
+								-17.104
+							],
+							"to": [
+								23.752,
+								13.313,
+								-14.448
+							],
+							"rotationOrigin": [
+								18.395,
+								12.593,
+								-15.68
+							],
+							"faces": {
+								"north": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										5.357,
+										1.44
+									]
+								},
+								"east": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										2.08,
+										1.44
+									]
+								},
+								"south": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										5.357,
+										1.44
+									]
+								},
+								"west": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										2.08,
+										1.44
+									]
+								},
+								"up": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										5.357,
+										2.08
+									]
+								},
+								"down": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										5.357,
+										2.08
+									]
+								}
+							},
+							"rotationY": -180,
+							"rotationZ": -45
+						},
+						{
+							"name": "WheelLRim4",
+							"from": [
+								14.72,
+								8.358,
+								-16.72
+							],
+							"to": [
+								20.077,
+								9.798,
+								-14.064
+							],
+							"rotationOrigin": [
+								14.72,
+								9.078,
+								-15.68
+							],
+							"faces": {
+								"north": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										5.357,
+										1.44
+									]
+								},
+								"east": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										2.08,
+										1.44
+									]
+								},
+								"south": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										5.357,
+										1.44
+									]
+								},
+								"west": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										2.08,
+										1.44
+									]
+								},
+								"up": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										5.357,
+										2.08
+									]
+								},
+								"down": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										5.357,
+										2.08
+									]
+								}
+							},
+							"rotationZ": -90
+						},
+						{
+							"name": "WheelLRim5",
+							"from": [
+								14.607,
+								3.275,
+								-17.104
+							],
+							"to": [
+								19.964,
+								4.715,
+								-14.64
+							],
+							"rotationOrigin": [
+								14.607,
+								3.995,
+								-15.68
+							],
+							"faces": {
+								"north": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										5.357,
+										1.44
+									]
+								},
+								"east": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										2.08,
+										1.44
+									]
+								},
+								"south": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										5.357,
+										1.44
+									]
+								},
+								"west": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										2.08,
+										1.44
+									]
+								},
+								"up": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										5.357,
+										2.08
+									]
+								},
+								"down": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										5.357,
+										2.08
+									]
+								}
+							},
+							"rotationZ": -45
+						},
+						{
+							"name": "WheelLRim6",
+							"from": [
+								18.122,
+								-0.4,
+								-16.912
+							],
+							"to": [
+								23.478,
+								1.04,
+								-14.256
+							],
+							"rotationOrigin": [
+								18.122,
+								0.32,
+								-15.68
+							],
+							"faces": {
+								"north": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										5.357,
+										1.44
+									]
+								},
+								"east": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										2.08,
+										1.44
+									]
+								},
+								"south": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										5.357,
+										1.44
+									]
+								},
+								"west": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										2.08,
+										1.44
+									]
+								},
+								"up": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										5.357,
+										2.08
+									]
+								},
+								"down": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										5.357,
+										2.08
+									]
+								}
+							}
+						},
+						{
+							"name": "WheelLRim7",
+							"from": [
+								23.205,
+								-0.513,
+								-17.104
+							],
+							"to": [
+								28.562,
+								0.927,
+								-14.448
+							],
+							"rotationOrigin": [
+								23.205,
+								0.207,
+								-15.68
+							],
+							"faces": {
+								"north": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										5.357,
+										1.44
+									]
+								},
+								"east": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										2.08,
+										1.44
+									]
+								},
+								"south": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										5.357,
+										1.44
+									]
+								},
+								"west": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										2.08,
+										1.44
+									]
+								},
+								"up": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										5.357,
+										2.08
+									]
+								},
+								"down": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										5.357,
+										2.08
+									]
+								}
+							},
+							"rotationZ": 45
+						},
+						{
+							"name": "WheelLSpoke0",
+							"from": [
+								15.183,
+								3.673,
+								-16.272
+							],
+							"to": [
+								27.343,
+								4.473,
+								-14.896
+							],
+							"rotationOrigin": [
+								15.183,
+								4.073,
+								-15.68
+							],
+							"faces": {
+								"north": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										12.16,
+										0.8
+									]
+								},
+								"east": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.8,
+										0.8
+									]
+								},
+								"south": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										12.16,
+										0.8
+									]
+								},
+								"west": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.8,
+										0.8
+									]
+								},
+								"up": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										12.16,
+										0.8
+									]
+								},
+								"down": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										12.16,
+										0.8
+									]
+								}
+							},
+							"rotationZ": 22.5
+						},
+						{
+							"name": "WheelLSpoke1",
+							"from": [
+								18.473,
+								0.383,
+								-16.464
+							],
+							"to": [
+								30.633,
+								1.183,
+								-15.088
+							],
+							"rotationOrigin": [
+								18.473,
+								0.783,
+								-15.68
+							],
+							"faces": {
+								"north": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										12.16,
+										0.8
+									]
+								},
+								"east": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.8,
+										0.8
+									]
+								},
+								"south": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										12.16,
+										0.8
+									]
+								},
+								"west": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.8,
+										0.8
+									]
+								},
+								"up": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										12.16,
+										0.8
+									]
+								},
+								"down": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										12.16,
+										0.8
+									]
+								}
+							},
+							"rotationZ": 67.5
+						},
+						{
+							"name": "WheelLSpoke2",
+							"from": [
+								23.127,
+								0.383,
+								-16.08
+							],
+							"to": [
+								35.287,
+								1.183,
+								-14.704
+							],
+							"rotationOrigin": [
+								23.127,
+								0.783,
+								-15.68
+							],
+							"faces": {
+								"north": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										12.16,
+										0.8
+									]
+								},
+								"east": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.8,
+										0.8
+									]
+								},
+								"south": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										12.16,
+										0.8
+									]
+								},
+								"west": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.8,
+										0.8
+									]
+								},
+								"up": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										12.16,
+										0.8
+									]
+								},
+								"down": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										12.16,
+										0.8
+									]
+								}
+							},
+							"rotationY": -180,
+							"rotationZ": 67.5
+						},
+						{
+							"name": "WheelLSpoke3",
+							"from": [
+								26.417,
+								3.673,
+								-16.656
+							],
+							"to": [
+								38.577,
+								4.473,
+								-15.28
+							],
+							"rotationOrigin": [
+								26.417,
+								4.073,
+								-15.68
+							],
+							"faces": {
+								"north": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										12.16,
+										0.8
+									]
+								},
+								"east": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.8,
+										0.8
+									]
+								},
+								"south": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										12.16,
+										0.8
+									]
+								},
+								"west": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.8,
+										0.8
+									]
+								},
+								"up": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										12.16,
+										0.8
+									]
+								},
+								"down": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										12.16,
+										0.8
+									]
+								}
+							},
+							"rotationY": -180,
+							"rotationZ": 22.5
+						},
+						{
+							"name": "WheelLHub",
+							"from": [
+								19.52,
+								5.12,
+								-17.2
+							],
+							"to": [
+								22.08,
+								7.68,
+								-14.16
+							],
+							"faces": {
+								"north": {
+									"texture": "#iron",
+									"uv": [
+										0,
+										0,
+										2.56,
+										2.56
+									]
+								},
+								"east": {
+									"texture": "#iron",
+									"uv": [
+										0,
+										0,
+										3.04,
+										2.56
+									]
+								},
+								"south": {
+									"texture": "#iron",
+									"uv": [
+										0,
+										0,
+										2.56,
+										2.56
+									]
+								},
+								"west": {
+									"texture": "#iron",
+									"uv": [
+										0,
+										0,
+										3.04,
+										2.56
+									]
+								},
+								"up": {
+									"texture": "#iron",
+									"uv": [
+										0,
+										0,
+										2.56,
+										3.04
+									]
+								},
+								"down": {
+									"texture": "#iron",
+									"uv": [
+										0,
+										0,
+										2.56,
+										3.04
+									]
+								}
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,466 @@
+{
+	"textureWidth": 16,
+	"textureHeight": 16,
+	"textures": {
+		"iron": "game:block/metal/sheet/iron1",
+		"chain": "game:block/metal/tarnished/chain-rust"
+	},
+	"elements": [
+		{
+			"name": "Root",
+			"from": [
+				-38.564,
+				-13.366,
+				8
+			],
+			"to": [
+				-38.564,
+				-13.366,
+				8
+			],
+			"faces": {},
+			"children": [
+				{
+					"name": "CrankSprocketA",
+					"from": [
+						45.728,
+						16,
+						-1.6
+					],
+					"to": [
+						46.88,
+						19.2,
+						1.6
+					],
+					"faces": {
+						"north": {
+							"texture": "#iron",
+							"uv": [
+								0,
+								0,
+								0.96,
+								3.2
+							]
+						},
+						"east": {
+							"texture": "#iron",
+							"uv": [
+								0,
+								0,
+								3.2,
+								3.2
+							]
+						},
+						"south": {
+							"texture": "#iron",
+							"uv": [
+								0,
+								0,
+								0.96,
+								3.2
+							]
+						},
+						"west": {
+							"texture": "#iron",
+							"uv": [
+								0,
+								0,
+								3.2,
+								3.2
+							]
+						},
+						"up": {
+							"texture": "#iron",
+							"uv": [
+								0,
+								0,
+								0.96,
+								3.2
+							]
+						},
+						"down": {
+							"texture": "#iron",
+							"uv": [
+								0,
+								0,
+								0.96,
+								3.2
+							]
+						}
+					}
+				},
+				{
+					"name": "CrankSprocketB",
+					"from": [
+						45.92,
+						16,
+						-1.6
+					],
+					"to": [
+						47.072,
+						19.2,
+						1.6
+					],
+					"faces": {
+						"north": {
+							"texture": "#iron",
+							"uv": [
+								0,
+								0,
+								0.96,
+								3.2
+							]
+						},
+						"east": {
+							"texture": "#iron",
+							"uv": [
+								0,
+								0,
+								3.2,
+								3.2
+							]
+						},
+						"south": {
+							"texture": "#iron",
+							"uv": [
+								0,
+								0,
+								0.96,
+								3.2
+							]
+						},
+						"west": {
+							"texture": "#iron",
+							"uv": [
+								0,
+								0,
+								3.2,
+								3.2
+							]
+						},
+						"up": {
+							"texture": "#iron",
+							"uv": [
+								0,
+								0,
+								0.96,
+								3.2
+							]
+						},
+						"down": {
+							"texture": "#iron",
+							"uv": [
+								0,
+								0,
+								0.96,
+								3.2
+							]
+						}
+					},
+					"rotationOrigin": [
+						46.4,
+						17.6,
+						0
+					],
+					"rotationX": 45
+				},
+				{
+					"name": "PropSprocketA",
+					"from": [
+						45.728,
+						21.6,
+						-2.4
+					],
+					"to": [
+						46.88,
+						26.4,
+						2.4
+					],
+					"faces": {
+						"north": {
+							"texture": "#iron",
+							"uv": [
+								0,
+								0,
+								0.96,
+								4.8
+							]
+						},
+						"east": {
+							"texture": "#iron",
+							"uv": [
+								0,
+								0,
+								4.8,
+								4.8
+							]
+						},
+						"south": {
+							"texture": "#iron",
+							"uv": [
+								0,
+								0,
+								0.96,
+								4.8
+							]
+						},
+						"west": {
+							"texture": "#iron",
+							"uv": [
+								0,
+								0,
+								4.8,
+								4.8
+							]
+						},
+						"up": {
+							"texture": "#iron",
+							"uv": [
+								0,
+								0,
+								0.96,
+								4.8
+							]
+						},
+						"down": {
+							"texture": "#iron",
+							"uv": [
+								0,
+								0,
+								0.96,
+								4.8
+							]
+						}
+					}
+				},
+				{
+					"name": "PropSprocketB",
+					"from": [
+						45.92,
+						21.6,
+						-2.4
+					],
+					"to": [
+						47.072,
+						26.4,
+						2.4
+					],
+					"faces": {
+						"north": {
+							"texture": "#iron",
+							"uv": [
+								0,
+								0,
+								0.96,
+								4.8
+							]
+						},
+						"east": {
+							"texture": "#iron",
+							"uv": [
+								0,
+								0,
+								4.8,
+								4.8
+							]
+						},
+						"south": {
+							"texture": "#iron",
+							"uv": [
+								0,
+								0,
+								0.96,
+								4.8
+							]
+						},
+						"west": {
+							"texture": "#iron",
+							"uv": [
+								0,
+								0,
+								4.8,
+								4.8
+							]
+						},
+						"up": {
+							"texture": "#iron",
+							"uv": [
+								0,
+								0,
+								0.96,
+								4.8
+							]
+						},
+						"down": {
+							"texture": "#iron",
+							"uv": [
+								0,
+								0,
+								0.96,
+								4.8
+							]
+						}
+					},
+					"rotationOrigin": [
+						46.4,
+						24,
+						0
+					],
+					"rotationX": 45
+				},
+				{
+					"name": "ChainL",
+					"from": [
+						47.12,
+						17.32,
+						-2.36
+					],
+					"to": [
+						53.617,
+						17.88,
+						-1.8
+					],
+					"rotationOrigin": [
+						47.12,
+						17.6,
+						-2.08
+					],
+					"faces": {
+						"north": {
+							"texture": "#chain",
+							"uv": [
+								0,
+								0,
+								6.497,
+								0.56
+							]
+						},
+						"east": {
+							"texture": "#chain",
+							"uv": [
+								0,
+								0,
+								0.56,
+								0.56
+							]
+						},
+						"south": {
+							"texture": "#chain",
+							"uv": [
+								0,
+								0,
+								6.497,
+								0.56
+							]
+						},
+						"west": {
+							"texture": "#chain",
+							"uv": [
+								0,
+								0,
+								0.56,
+								0.56
+							]
+						},
+						"up": {
+							"texture": "#chain",
+							"uv": [
+								0,
+								0,
+								6.497,
+								0.56
+							]
+						},
+						"down": {
+							"texture": "#chain",
+							"uv": [
+								0,
+								0,
+								6.497,
+								0.56
+							]
+						}
+					},
+					"rotationY": 90,
+					"rotationZ": 80.074
+				},
+				{
+					"name": "ChainR",
+					"from": [
+						47.12,
+						17.32,
+						1.8
+					],
+					"to": [
+						53.617,
+						17.88,
+						2.36
+					],
+					"rotationOrigin": [
+						47.12,
+						17.6,
+						2.08
+					],
+					"faces": {
+						"north": {
+							"texture": "#chain",
+							"uv": [
+								0,
+								0,
+								6.497,
+								0.56
+							]
+						},
+						"east": {
+							"texture": "#chain",
+							"uv": [
+								0,
+								0,
+								0.56,
+								0.56
+							]
+						},
+						"south": {
+							"texture": "#chain",
+							"uv": [
+								0,
+								0,
+								6.497,
+								0.56
+							]
+						},
+						"west": {
+							"texture": "#chain",
+							"uv": [
+								0,
+								0,
+								0.56,
+								0.56
+							]
+						},
+						"up": {
+							"texture": "#chain",
+							"uv": [
+								0,
+								0,
+								6.497,
+								0.56
+							]
+						},
+						"down": {
+							"texture": "#chain",
+							"uv": [
+								0,
+								0,
+								6.497,
+								0.56
+							]
+						}
+					},
+					"rotationY": -90,
+					"rotationZ": 80.074
+				}
+			]
+		}
+	]
+}

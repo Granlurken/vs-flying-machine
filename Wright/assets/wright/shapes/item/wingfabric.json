@@ -1,0 +1,371 @@
+{
+	"textureWidth": 16,
+	"textureHeight": 16,
+	"textures": {
+		"fabric": "game:block/cloth/linen/normal1",
+		"twine": "game:block/cloth/reedrope"
+	},
+	"elements": [
+		{
+			"name": "Root",
+			"from": [
+				1.8,
+				5.8,
+				2.9
+			],
+			"to": [
+				1.8,
+				5.8,
+				2.9
+			],
+			"faces": {},
+			"children": [
+				{
+					"name": "Fold0",
+					"from": [
+						0,
+						0,
+						0
+					],
+					"to": [
+						12,
+						1.1,
+						10
+					],
+					"faces": {
+						"north": {
+							"texture": "#fabric",
+							"uv": [
+								0,
+								0,
+								12,
+								1.1
+							]
+						},
+						"east": {
+							"texture": "#fabric",
+							"uv": [
+								0,
+								0,
+								10,
+								1.1
+							]
+						},
+						"south": {
+							"texture": "#fabric",
+							"uv": [
+								0,
+								0,
+								12,
+								1.1
+							]
+						},
+						"west": {
+							"texture": "#fabric",
+							"uv": [
+								0,
+								0,
+								10,
+								1.1
+							]
+						},
+						"up": {
+							"texture": "#fabric",
+							"uv": [
+								0,
+								0,
+								12,
+								10
+							]
+						},
+						"down": {
+							"texture": "#fabric",
+							"uv": [
+								0,
+								0,
+								12,
+								10
+							]
+						}
+					}
+				},
+				{
+					"name": "Fold1",
+					"from": [
+						0.4,
+						1.1,
+						0.2
+					],
+					"to": [
+						12.4,
+						2.2,
+						10.2
+					],
+					"faces": {
+						"north": {
+							"texture": "#fabric",
+							"uv": [
+								0,
+								0,
+								12,
+								1.1
+							]
+						},
+						"east": {
+							"texture": "#fabric",
+							"uv": [
+								0,
+								0,
+								10,
+								1.1
+							]
+						},
+						"south": {
+							"texture": "#fabric",
+							"uv": [
+								0,
+								0,
+								12,
+								1.1
+							]
+						},
+						"west": {
+							"texture": "#fabric",
+							"uv": [
+								0,
+								0,
+								10,
+								1.1
+							]
+						},
+						"up": {
+							"texture": "#fabric",
+							"uv": [
+								0,
+								0,
+								12,
+								10
+							]
+						},
+						"down": {
+							"texture": "#fabric",
+							"uv": [
+								0,
+								0,
+								12,
+								10
+							]
+						}
+					}
+				},
+				{
+					"name": "Fold2",
+					"from": [
+						0,
+						2.2,
+						0
+					],
+					"to": [
+						12,
+						3.3000000000000003,
+						10
+					],
+					"faces": {
+						"north": {
+							"texture": "#fabric",
+							"uv": [
+								0,
+								0,
+								12,
+								1.1
+							]
+						},
+						"east": {
+							"texture": "#fabric",
+							"uv": [
+								0,
+								0,
+								10,
+								1.1
+							]
+						},
+						"south": {
+							"texture": "#fabric",
+							"uv": [
+								0,
+								0,
+								12,
+								1.1
+							]
+						},
+						"west": {
+							"texture": "#fabric",
+							"uv": [
+								0,
+								0,
+								10,
+								1.1
+							]
+						},
+						"up": {
+							"texture": "#fabric",
+							"uv": [
+								0,
+								0,
+								12,
+								10
+							]
+						},
+						"down": {
+							"texture": "#fabric",
+							"uv": [
+								0,
+								0,
+								12,
+								10
+							]
+						}
+					}
+				},
+				{
+					"name": "Fold3",
+					"from": [
+						0.4,
+						3.3000000000000003,
+						0.2
+					],
+					"to": [
+						12.4,
+						4.4,
+						10.2
+					],
+					"faces": {
+						"north": {
+							"texture": "#fabric",
+							"uv": [
+								0,
+								0,
+								12,
+								1.1
+							]
+						},
+						"east": {
+							"texture": "#fabric",
+							"uv": [
+								0,
+								0,
+								10,
+								1.1
+							]
+						},
+						"south": {
+							"texture": "#fabric",
+							"uv": [
+								0,
+								0,
+								12,
+								1.1
+							]
+						},
+						"west": {
+							"texture": "#fabric",
+							"uv": [
+								0,
+								0,
+								10,
+								1.1
+							]
+						},
+						"up": {
+							"texture": "#fabric",
+							"uv": [
+								0,
+								0,
+								12,
+								10
+							]
+						},
+						"down": {
+							"texture": "#fabric",
+							"uv": [
+								0,
+								0,
+								12,
+								10
+							]
+						}
+					}
+				},
+				{
+					"name": "Tie",
+					"from": [
+						5.4,
+						-0.15,
+						-0.15
+					],
+					"to": [
+						6.6,
+						4.55,
+						10.35
+					],
+					"faces": {
+						"north": {
+							"texture": "#twine",
+							"uv": [
+								0,
+								0,
+								1.2,
+								4.7
+							]
+						},
+						"east": {
+							"texture": "#twine",
+							"uv": [
+								0,
+								0,
+								10.5,
+								4.7
+							]
+						},
+						"south": {
+							"texture": "#twine",
+							"uv": [
+								0,
+								0,
+								1.2,
+								4.7
+							]
+						},
+						"west": {
+							"texture": "#twine",
+							"uv": [
+								0,
+								0,
+								10.5,
+								4.7
+							]
+						},
+						"up": {
+							"texture": "#twine",
+							"uv": [
+								0,
+								0,
+								1.2,
+								10.5
+							]
+						},
+						"down": {
+							"texture": "#twine",
+							"uv": [
+								0,
+								0,
+								1.2,
+								10.5
+							]
+						}
+					}
+				}
+			]
+		}
+	]
+}
