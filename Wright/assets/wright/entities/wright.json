@@ -43,6 +43,7 @@
 			// Skrens: hvor fort banen retter seg etter nesa (1/s). Lavere = flyet glir mer utover i svinger
 			airGrip: 1.2,
 			groundGrip: 8,
+			groundSettle: 5, // 1/s: hvor fort flyet legger seg på hjulene etter landing — lavere = mykere
 			slipDrag: 0.4,
 			// Snu til 1/-1 hvis modellen tipper feil vei
 			visualPitchSign: -1,
@@ -76,10 +77,21 @@
 			volumeStart: 1.0,
 			volumeCough: 1.0,
 			range: 64,
-			startBlendSeconds: 1.5,
+			startBlendSeconds: 1.5, // kryssfading startlyd → tomgangsløkke
+			startTailSeconds: 1.0, // uttoningen bakt inn i start.ogg — kryssfadingen er ferdig før den
 			spinDownSeconds: 1.2,
 			coughIntervalLow: 7,
-			coughIntervalEmpty: 1.5
+			coughIntervalEmpty: 1.5,
+			// Hjulbrems (hold S på tomgang). Volum/tonehøyde følger farten, sterkest ved fullSpeed blokker/s
+			brake: {
+				sound: "game:sounds/effect/woodgrind.ogg",
+				volume: 0.8,
+				pitchSlow: 0.7,
+				pitchFast: 1.1,
+				fullSpeed: 8,
+				fadeSeconds: 0.25,
+				range: 32
+			}
 		},
 		swimmingOffsetY: 0.45,
 		requiresPaddlingTool: false,

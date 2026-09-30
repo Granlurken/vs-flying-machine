@@ -17,7 +17,7 @@ namespace Wright;
 /// Vinkler i radianer.
 ///
 /// Kontroller:
-///   W/S    = gass opp/ned (blir liggende). S på tomgang på bakken = brems.
+///   W/S    = gass opp/ned (blir liggende). Hold S på tomgang på bakken = hjulbrems (med lyd).
 ///   Space  = nesa opp, Ctrl = nesa ned. Nesevinkelen blir liggende når du slipper (trim).
 ///   A/D    = krengning i lufta (svingen følger krengningen), halesporstyring på bakken.
 ///
@@ -54,6 +54,7 @@ public class EntityWright : EntityBoat
 
     // Skrens: banen (retningen flyet faktisk beveger seg) henger etter nesa
     double airGrip = 1.5;         // 1/s: hvor fort banen retter seg etter nesa i lufta — lavt = mer skrens
+    double groundSettle = 5;      // 1/s: hvor fort flyet legger seg på hjulene etter landing (nese/krengning) — lavt = mykere
     double groundGrip = 8;        // hjulene holder banen stramt på bakken
     double slipDrag = 0.4;        // andel fart tapt per sekund ved 90° skrens
     double trackYaw = double.NaN; // retningen flyet beveger seg
@@ -91,6 +92,8 @@ public class EntityWright : EntityBoat
     double wheelRadius = 0.38;
     Vec3d[] exhausts = { new(2.38, 1.95, 0.335), new(2.84, 1.95, 0.335) }; // design-ramme: +X nese, +Y opp, +Z høyre
     double propAngle, wheelAngle, wheelRate, propRevs;
+    double propCrankTime = -1;   // sekunder inn i sveivingen (klient), −1 = ikke i gang
+    WrightBrakeSound? brakeSound;
     Vec3d? lastRenderPos;
 
     // Instrumentbordet (attributes.instruments i JSON). Viserne leses av posisjonsendring, så de virker for alle
@@ -114,6 +117,19 @@ public class EntityWright : EntityBoat
         }
     }
     public bool Flying { get; private set; }
+    /// <summary>Hjulbremsen er på (S holdt på tomgang, på bakken, flyet ruller).</summary>
+    public bool Braking { get; private set; }
+
+    /// <summary>Bremsen slik alle klienter ser den: egen verdi for piloten, ellers synket fra serveren.</summary>
+    public bool BrakeActive
+    {
+        get
+        {
+            if (Api is ICoreClientAPI capi && capi.World.Player.Entity.MountedOn is IMountableSeat seat
+                && seat.MountSupplier == this && seat.CanControl) return Braking;
+            return WatchedAttributes.GetBool("braking", false);
+        }
+    }
     /// <summary>Nesevinkel, positiv = nesa opp.</summary>
     public double PitchAngle { get; private set; }
     /// <summary>Krengning, positiv = venstre vinge ned.</summary>
@@ -126,7 +142,11 @@ public class EntityWright : EntityBoat
     {
         base.Initialize(properties, api, InChunkIndex3d);
         InitFuelInventory(api);
-        if (api is ICoreClientAPI capiInit) engineSound = new WrightEngineSound(capiInit, this, properties.Attributes["sound"]);
+        if (api is ICoreClientAPI capiInit)
+        {
+            engineSound = new WrightEngineSound(capiInit, this, properties.Attributes["sound"]);
+            brakeSound = new WrightBrakeSound(capiInit, this, properties.Attributes["sound"]["brake"]);
+        }
 
         var fuel = properties.Attributes["fuel"];
         if (fuel.Exists)
@@ -185,6 +205,7 @@ public class EntityWright : EntityBoat
         turnResponse = f["turnResponse"].AsDouble(turnResponse);
         airGrip = f["airGrip"].AsDouble(airGrip);
         groundGrip = f["groundGrip"].AsDouble(groundGrip);
+        groundSettle = f["groundSettle"].AsDouble(groundSettle);
         slipDrag = f["slipDrag"].AsDouble(slipDrag);
         visualPitchSign = f["visualPitchSign"].AsFloat(visualPitchSign);
         visualRollSign = f["visualRollSign"].AsFloat(visualRollSign);
@@ -263,6 +284,7 @@ public class EntityWright : EntityBoat
         {
             WatchedAttributes.SetFloat("throttle", (float)Throttle);
         }
+        if (WatchedAttributes.GetBool("braking", false) != Braking) WatchedAttributes.SetBool("braking", Braking);
     }
 
     public override void OnInteract(EntityAgent byEntity, ItemSlot itemslot, Vec3d hitPosition, EnumInteractMode mode)
@@ -325,6 +347,8 @@ public class EntityWright : EntityBoat
         fuelDialog?.TryClose();
         engineSound?.Dispose();
         engineSound = null;
+        brakeSound?.Dispose();
+        brakeSound = null;
         base.OnEntityDespawn(despawn);
     }
 
@@ -373,7 +397,21 @@ public class EntityWright : EntityBoat
         return null;
     }
 
-    public double LiftRatio => stallSpeed > 0 ? Math.Pow(ForwardSpeed / stallSpeed, 2) : 0;
+    /// <summary>
+    /// Står hjulene på noe? Egen sjekk i stedet for OnGround: på pilotens klient blir OnGround aldri satt for flyet,
+    /// så klienten trodde den fortsatt fløy etter landing (nesa ned, ingen brems) mens serveren hadde landet.
+    /// Tynn sonde rett under kollisjonsboksen — samme svar på begge sider.
+    /// </summary>
+    bool WheelsOnGround()
+    {
+        var box = CollisionBox;
+        if (box == null) return OnGround;
+        groundProbe.Set(box.X1, box.Y1 - 0.08f, box.Z1, box.X2, box.Y1, box.Z2);
+        return World.CollisionTester.IsColliding(World.BlockAccessor, groundProbe, Pos.XYZ, false);
+    }
+    readonly Cuboidf groundProbe = new();
+
+    public double LiftRatio =>stallSpeed > 0 ? Math.Pow(ForwardSpeed / stallSpeed, 2) : 0;
 
     static double Approach(double value, double target, double step)
     {
@@ -413,6 +451,7 @@ public class EntityWright : EntityBoat
             Throttle = 0; // ingen pilot = motoren går ikke
         }
         Throttle = GameMath.Clamp(Throttle, 0, 1);
+        bool grounded = WheelsOnGround();
 
         // --- Drivstoff --- tom tank = motoren stopper, flyet glir
         if (Throttle > 0)
@@ -451,8 +490,8 @@ public class EntityWright : EntityBoat
             pitchVelocity = 0;
             // På bakken: halen står nede. Nesa kan bare løftes (rotasjon) nær avgangsfart.
             if (pullUp && lift >= rotateLift) PitchAngle += pitchRate * dt;
+            else if (PitchAngle < 0) PitchAngle += -PitchAngle * Math.Min(1, groundSettle * dt); // landet med nesa ned: flyet legger seg mykt ned på hjulene
             else PitchAngle = Approach(PitchAngle, 0, pitchRate * 2 * dt);
-            PitchAngle = Math.Max(0, PitchAngle);
         }
         PitchAngle = GameMath.Clamp(PitchAngle, -maxPitchDown, maxPitchUp);
 
@@ -461,8 +500,10 @@ public class EntityWright : EntityBoat
         // Gir nesten jevn akselerasjon nedover rullebanen, i stedet for et rykk fra stillestående.
         double dragCoeff = maxSpeed > 0 ? thrustAccel / (maxSpeed * maxSpeed) : 0;
         ForwardSpeed += (Throttle * thrustAccel - dragCoeff * ForwardSpeed * ForwardSpeed) * dt;
-        if (!Flying && OnGround) ForwardSpeed -= rollingFriction * dt;
-        if (OnGround && Throttle <= 0 && controls?.Backward == true)
+        if (!Flying && grounded) ForwardSpeed -= rollingFriction * dt;
+        // Brems: hold S når gassen er nede. På hjulene = ikke i lufta (OnGround alene er upålitelig for flyet)
+        Braking = !Flying && Throttle <= 0 && controls?.Backward == true && ForwardSpeed > 0;
+        if (Braking)
         {
             ForwardSpeed = Math.Max(0, ForwardSpeed - brakeRate * maxSpeed * dt);
         }
@@ -472,7 +513,7 @@ public class EntityWright : EntityBoat
 
         // Avgang: vingene bærer og nesa er oppe
         if (!Flying && lift >= 1 && PitchAngle > 0.05) Flying = true;
-        if (!OnGround && !Flying && lift >= 1) Flying = true; // rullet utfor en kant med nok fart
+        if (!grounded && !Flying && lift >= 1) Flying = true; // rullet utfor en kant med nok fart
 
         // --- Skrens --- banen retter seg gradvis etter nesa. I en sving peker nesa innover mens flyet
         // fortsatt glir litt utover; skrensen koster fart.
@@ -497,7 +538,7 @@ public class EntityWright : EntityBoat
             pos.Motion.Y += (targetVy - pos.Motion.Y) * Math.Min(1, verticalResponse * dt);
 
             // Landet: gi tilbake tyngdekraften
-            if (OnGround && pos.Motion.Y <= 0.001 && PitchAngle <= 0.1)
+            if (grounded && pos.Motion.Y <= 0.001 && PitchAngle <= 0.1)
             {
                 Flying = false;
             }
@@ -514,7 +555,7 @@ public class EntityWright : EntityBoat
         else
         {
             bankVelocity = 0;
-            BankAngle = Approach(BankAngle, 0, bankRate * 2 * dt);
+            BankAngle += -BankAngle * Math.Min(1, groundSettle * dt); // retter seg mykt opp etter landing
         }
 
         double targetTurn;
@@ -577,6 +618,7 @@ public class EntityWright : EntityBoat
 
         UpdateSpinAnimations(dt);
         engineSound?.Update(dt, EngineThrottle, fuelCapacity > 0 ? FuelLitres / fuelCapacity : 0, lowFuelFraction);
+        brakeSound?.Update(dt, BrakeActive, gaugeSpeed);
     }
 
     /// <summary>
@@ -591,7 +633,17 @@ public class EntityWright : EntityBoat
         // Propell: tomgang når motoren går, opp mot maks med gassen. Tom tank = står stille
         double throttle = EngineThrottle;
         double targetRevs = throttle > 0 ? propIdleRevs + (propMaxRevs - propIdleRevs) * throttle : 0;
-        propRevs += (targetRevs - propRevs) * Math.Min(1, 2 * dt); // spinner opp og ned mykt
+        // Sveiv: fra stillestående bruker propellen hele oppstartstida på å nå tomgang (når motoren tar).
+        // Spinner den fortsatt ned fra forrige gang, tar den bare opp igjen
+        if (throttle <= 0) propCrankTime = -1;
+        else if (propCrankTime < 0 && propRevs < 0.05) propCrankTime = 0;
+        if (propCrankTime >= 0 && propCrankTime < engineStartSeconds)
+        {
+            propCrankTime += dt;
+            double k = Math.Min(1, propCrankTime / engineStartSeconds);
+            propRevs = propIdleRevs * k * k; // tungt i starten, tar seg opp mot slutten
+        }
+        else propRevs += (targetRevs - propRevs) * Math.Min(1, 2 * dt); // spinner opp og ned mykt
         propAngle = GameMath.Mod(propAngle + propSpinSign * propRevs * 360 * dt, 360);
 
         // Hjul: ruller med faktisk bakkefart (posisjonsendring — virker også hos tilskuere)
@@ -600,7 +652,7 @@ public class EntityWright : EntityBoat
         {
             double dist = Math.Sqrt(Math.Pow(p.X - lastRenderPos.X, 2) + Math.Pow(p.Z - lastRenderPos.Z, 2));
             double rate = dist < 2 ? dist / dt / wheelRadius * GameMath.RAD2DEG : 0; // grader/s (teleport = 0)
-            wheelRate = OnGround ? rate : wheelRate * Math.Max(0, 1 - 0.5 * dt); // i lufta spinner de ut
+            wheelRate = WheelsOnGround() ? rate : wheelRate * Math.Max(0, 1 - 0.5 * dt); // i lufta spinner de ut
         }
         lastRenderPos = p;
         wheelAngle = GameMath.Mod(wheelAngle + wheelSpinSign * wheelRate * dt, 360);

@@ -26,7 +26,8 @@ public class WrightEngineSound : IDisposable
     float volIdle = 0.5f, volFull = 1f;
     float startVolume = 1f, coughVolume = 1f;
     float range = 64f;
-    float startBlend = 1.5f;       // sekunder før startlyden slutter at løkka begynner å tone inn
+    float startBlend = 1.5f;       // lengden på kryssfadingen startlyd → løkke (sekunder)
+    float startTail = 1f;          // uttoningen som er bakt inn i slutten av start.ogg — kryssfadingen er ferdig før den
     float spinDownSeconds = 1.2f;
     float coughIntervalLow = 7f;   // sekunder mellom hosting ved grensa for lite drivstoff
     float coughIntervalEmpty = 1.5f; // … og nesten tom
@@ -54,6 +55,7 @@ public class WrightEngineSound : IDisposable
             coughVolume = cfg["volumeCough"].AsFloat(coughVolume);
             range = cfg["range"].AsFloat(range);
             startBlend = cfg["startBlendSeconds"].AsFloat(startBlend);
+            startTail = cfg["startTailSeconds"].AsFloat(startTail);
             spinDownSeconds = cfg["spinDownSeconds"].AsFloat(spinDownSeconds);
             coughIntervalLow = cfg["coughIntervalLow"].AsFloat(coughIntervalLow);
             coughIntervalEmpty = cfg["coughIntervalEmpty"].AsFloat(coughIntervalEmpty);
@@ -89,9 +91,18 @@ public class WrightEngineSound : IDisposable
         {
             runTime += dt;
             // Løkka toner inn mens startlyden går over i jevn gange
-            double fadeIn = startLength > 0
-                ? GameMath.Clamp((runTime - (startLength - startBlend)) / startBlend, 0, 1)
+            // Equal-power kryssfading (sin/cos): summen holder seg jevn, ingen dupp midt i overgangen.
+            // Ferdig før startlydens egen uttoning, så løkka har tatt over helt når startlyden stilner
+            double blendEnd = startLength - startTail;
+            double x = startLength > 0 && startBlend > 0
+                ? GameMath.Clamp((runTime - (blendEnd - startBlend)) / startBlend, 0, 1)
                 : 1;
+            double fadeIn = Math.Sin(x * Math.PI / 2);
+            if (start != null)
+            {
+                start.SetVolume(startVolume * (float)Math.Cos(x * Math.PI / 2));
+                if (x >= 1) { start.Stop(); if (!start.IsDisposed) start.Dispose(); start = null; }
+            }
             UpdateCough(dt, fuelFraction, lowFuelFraction, pos);
             float t = (float)GameMath.Clamp(throttle, 0, 1);
             float pitch = GameMath.Lerp(pitchIdle, pitchFull, t);
