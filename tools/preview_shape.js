@@ -8,7 +8,9 @@ const zlib = require("zlib");
 const args = process.argv.slice(2);
 // --cockpit: én stor visning fra pilotens øyne (i stedet for de fire standardvinklene)
 const cockpit = args.includes("--cockpit");
-const [shapeFile, outFile, ...hidden] = args.filter(a => a !== "--cockpit");
+// --item: kameraet sikter på shapens midte med avstand etter størrelsen (item-shapes er små og sentrert i 8,8,8 px)
+const itemView = args.includes("--item");
+const [shapeFile, outFile, ...hidden] = args.filter(a => !a.startsWith("--"));
 const shape = JSON.parse(fs.readFileSync(shapeFile, "utf8"));
 const ASSETS = path.join(process.env.APPDATA, "Vintagestory", "assets");
 
@@ -144,7 +146,14 @@ for (let i = 0; i < W * H; i++) { const y = Math.floor(i / W) % (VH * SS); const
 const light = (() => { const l = [0.4, 0.8, 0.3]; const n = Math.hypot(...l); return l.map(v => v / n); })();
 
 // Kameraet ser mot flyets midte. Shapen er snudd 180° i Root, så «foran» i verden er −X.
-const target = [0.5, 1.1, 0.5];
+let target = [0.5, 1.1, 0.5];
+if (itemView) {
+  const lo = [Infinity, Infinity, Infinity], hi = [-Infinity, -Infinity, -Infinity];
+  for (const q of quads) for (const p of q.v) p.forEach((v, i) => { lo[i] = Math.min(lo[i], v); hi[i] = Math.max(hi[i], v); });
+  target = lo.map((v, i) => (v + hi[i]) / 2);
+  const k = Math.hypot(...hi.map((v, i) => v - lo[i])) / 2.4;
+  views.forEach(v => { v.dist *= k / 2; });
+}
 views.forEach((view, vi) => {
   const ox = (vi % 2) * VW * SS, oy = Math.floor(vi / 2) * VH * SS;
   const yaw = (view.yaw || 0) * D, pitch = (view.pitch || 0) * D;

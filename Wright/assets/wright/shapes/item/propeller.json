@@ -1,0 +1,785 @@
+{
+	"textureWidth": 16,
+	"textureHeight": 16,
+	"textures": {
+		"planks": "game:block/wood/planks/aged1",
+		"iron": "game:block/metal/sheet/iron1"
+	},
+	"elements": [
+		{
+			"name": "Root",
+			"from": [
+				-43.36,
+				-16,
+				8
+			],
+			"to": [
+				-43.36,
+				-16,
+				8
+			],
+			"faces": {},
+			"children": [
+				{
+					"name": "Propeller",
+					"from": [
+						0,
+						0,
+						0
+					],
+					"to": [
+						0,
+						0,
+						0
+					],
+					"faces": {},
+					"rotationOrigin": [
+						50.88,
+						24,
+						0
+					],
+					"children": [
+						{
+							"name": "PropHub",
+							"from": [
+								49.92,
+								22.4,
+								-1.6
+							],
+							"to": [
+								51.84,
+								25.6,
+								1.6
+							],
+							"faces": {
+								"north": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										1.92,
+										3.2
+									]
+								},
+								"east": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										3.2,
+										3.2
+									]
+								},
+								"south": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										1.92,
+										3.2
+									]
+								},
+								"west": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										3.2,
+										3.2
+									]
+								},
+								"up": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										1.92,
+										3.2
+									]
+								},
+								"down": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										1.92,
+										3.2
+									]
+								}
+							}
+						},
+						{
+							"name": "Spinner",
+							"from": [
+								51.84,
+								23.2,
+								-0.8
+							],
+							"to": [
+								52.8,
+								24.8,
+								0.8
+							],
+							"faces": {
+								"north": {
+									"texture": "#iron",
+									"uv": [
+										0,
+										0,
+										0.96,
+										1.6
+									]
+								},
+								"east": {
+									"texture": "#iron",
+									"uv": [
+										0,
+										0,
+										1.6,
+										1.6
+									]
+								},
+								"south": {
+									"texture": "#iron",
+									"uv": [
+										0,
+										0,
+										0.96,
+										1.6
+									]
+								},
+								"west": {
+									"texture": "#iron",
+									"uv": [
+										0,
+										0,
+										1.6,
+										1.6
+									]
+								},
+								"up": {
+									"texture": "#iron",
+									"uv": [
+										0,
+										0,
+										0.96,
+										1.6
+									]
+								},
+								"down": {
+									"texture": "#iron",
+									"uv": [
+										0,
+										0,
+										0.96,
+										1.6
+									]
+								}
+							}
+						},
+						{
+							"name": "Blade00",
+							"from": [
+								50.88,
+								24.96,
+								-1.12
+							],
+							"to": [
+								51.68,
+								29.44,
+								1.12
+							],
+							"rotationOrigin": [
+								50.88,
+								24,
+								0
+							],
+							"faces": {
+								"north": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										0.8,
+										4.48
+									]
+								},
+								"east": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										2.24,
+										4.48
+									]
+								},
+								"south": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										0.8,
+										4.48
+									]
+								},
+								"west": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										2.24,
+										4.48
+									]
+								},
+								"up": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										0.8,
+										2.24
+									]
+								},
+								"down": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										0.8,
+										2.24
+									]
+								}
+							},
+							"rotationX": 20
+						},
+						{
+							"name": "Blade01",
+							"from": [
+								50.88,
+								29.44,
+								-1.6
+							],
+							"to": [
+								51.68,
+								37.6,
+								1.6
+							],
+							"rotationOrigin": [
+								50.88,
+								24,
+								0
+							],
+							"faces": {
+								"north": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										0.8,
+										8.16
+									]
+								},
+								"east": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										3.2,
+										8.16
+									]
+								},
+								"south": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										0.8,
+										8.16
+									]
+								},
+								"west": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										3.2,
+										8.16
+									]
+								},
+								"up": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										0.8,
+										3.2
+									]
+								},
+								"down": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										0.8,
+										3.2
+									]
+								}
+							},
+							"rotationX": 20
+						},
+						{
+							"name": "Blade02",
+							"from": [
+								50.88,
+								37.6,
+								-1.28
+							],
+							"to": [
+								51.68,
+								41.92,
+								1.28
+							],
+							"rotationOrigin": [
+								50.88,
+								24,
+								0
+							],
+							"faces": {
+								"north": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										0.8,
+										4.32
+									]
+								},
+								"east": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										2.56,
+										4.32
+									]
+								},
+								"south": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										0.8,
+										4.32
+									]
+								},
+								"west": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										2.56,
+										4.32
+									]
+								},
+								"up": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										0.8,
+										2.56
+									]
+								},
+								"down": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										0.8,
+										2.56
+									]
+								}
+							},
+							"rotationX": 20
+						},
+						{
+							"name": "Blade03",
+							"from": [
+								50.88,
+								41.92,
+								-0.8
+							],
+							"to": [
+								51.68,
+								43.2,
+								0.8
+							],
+							"rotationOrigin": [
+								50.88,
+								24,
+								0
+							],
+							"faces": {
+								"north": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										0.8,
+										1.28
+									]
+								},
+								"east": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										1.6,
+										1.28
+									]
+								},
+								"south": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										0.8,
+										1.28
+									]
+								},
+								"west": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										1.6,
+										1.28
+									]
+								},
+								"up": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										0.8,
+										1.6
+									]
+								},
+								"down": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										0.8,
+										1.6
+									]
+								}
+							},
+							"rotationX": 20
+						},
+						{
+							"name": "Blade10",
+							"from": [
+								50.88,
+								24.96,
+								-1.12
+							],
+							"to": [
+								51.68,
+								29.44,
+								1.12
+							],
+							"rotationOrigin": [
+								50.88,
+								24,
+								0
+							],
+							"faces": {
+								"north": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										0.8,
+										4.48
+									]
+								},
+								"east": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										2.24,
+										4.48
+									]
+								},
+								"south": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										0.8,
+										4.48
+									]
+								},
+								"west": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										2.24,
+										4.48
+									]
+								},
+								"up": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										0.8,
+										2.24
+									]
+								},
+								"down": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										0.8,
+										2.24
+									]
+								}
+							},
+							"rotationX": 200
+						},
+						{
+							"name": "Blade11",
+							"from": [
+								50.88,
+								29.44,
+								-1.6
+							],
+							"to": [
+								51.68,
+								37.6,
+								1.6
+							],
+							"rotationOrigin": [
+								50.88,
+								24,
+								0
+							],
+							"faces": {
+								"north": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										0.8,
+										8.16
+									]
+								},
+								"east": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										3.2,
+										8.16
+									]
+								},
+								"south": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										0.8,
+										8.16
+									]
+								},
+								"west": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										3.2,
+										8.16
+									]
+								},
+								"up": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										0.8,
+										3.2
+									]
+								},
+								"down": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										0.8,
+										3.2
+									]
+								}
+							},
+							"rotationX": 200
+						},
+						{
+							"name": "Blade12",
+							"from": [
+								50.88,
+								37.6,
+								-1.28
+							],
+							"to": [
+								51.68,
+								41.92,
+								1.28
+							],
+							"rotationOrigin": [
+								50.88,
+								24,
+								0
+							],
+							"faces": {
+								"north": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										0.8,
+										4.32
+									]
+								},
+								"east": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										2.56,
+										4.32
+									]
+								},
+								"south": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										0.8,
+										4.32
+									]
+								},
+								"west": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										2.56,
+										4.32
+									]
+								},
+								"up": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										0.8,
+										2.56
+									]
+								},
+								"down": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										0.8,
+										2.56
+									]
+								}
+							},
+							"rotationX": 200
+						},
+						{
+							"name": "Blade13",
+							"from": [
+								50.88,
+								41.92,
+								-0.8
+							],
+							"to": [
+								51.68,
+								43.2,
+								0.8
+							],
+							"rotationOrigin": [
+								50.88,
+								24,
+								0
+							],
+							"faces": {
+								"north": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										0.8,
+										1.28
+									]
+								},
+								"east": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										1.6,
+										1.28
+									]
+								},
+								"south": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										0.8,
+										1.28
+									]
+								},
+								"west": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										1.6,
+										1.28
+									]
+								},
+								"up": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										0.8,
+										1.6
+									]
+								},
+								"down": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										0.8,
+										1.6
+									]
+								}
+							},
+							"rotationX": 200
+						}
+					]
+				}
+			]
+		}
+	]
+}
