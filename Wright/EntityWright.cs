@@ -577,24 +577,6 @@ public class EntityWright : EntityBoat
 
         UpdateSpinAnimations(dt);
         engineSound?.Update(dt, EngineThrottle, fuelCapacity > 0 ? FuelLitres / fuelCapacity : 0, lowFuelFraction);
-        MuteBoatSounds(capi);
-    }
-
-    /// <summary>
-    /// Vanilla spiller flåte-lyder (skvulp + fart gjennom vann) for alle som sitter i et båtsete — også vårt fly.
-    /// Systemet ticker hvert ~0,12 s og starter dem på nytt, så vi demper dem hver frame mens spilleren sitter her.
-    /// </summary>
-    void MuteBoatSounds(ICoreClientAPI capi)
-    {
-        if (capi.World.Player.Entity.MountedOn is not IMountableSeat seat || seat.MountSupplier != this) return;
-        var boating = capi.ModLoader.GetModSystem<ModSystemBoatingSoundAndRatlineStamina>();
-        if (boating == null) return;
-        foreach (var s in new[] { boating.idleSound, boating.travelSound })
-        {
-            if (s == null || s.IsDisposed || !s.IsPlaying) continue;
-            s.SetVolume(0);
-            s.Stop();
-        }
     }
 
     /// <summary>
