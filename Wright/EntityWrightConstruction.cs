@@ -15,6 +15,8 @@ namespace Wright;
 /// (<c>attributes.spawnsEntity</c>) og byggeplassen forsvinner — den blir ikke stående igjen som båtens rullestokker.
 ///
 /// Steg 0 (bare bukker) kan tas ned igjen med Shift + tom hånd, og gir tilbake <c>attributes.returnsItem</c>.
+/// Senere steg rives med Shift + skiftenøkkel (<c>attributes.disassemblyTools</c>) og gir tilbake alt som er brukt
+/// (se <see cref="WrightMaterials"/>).
 /// </summary>
 public class EntityWrightConstruction : Entity
 {
@@ -80,20 +82,25 @@ public class EntityWrightConstruction : Entity
         // Bare bukker: Shift + tom hånd tar dem ned igjen
         if (rcc.CurrentCompletedStage == 0 && handslot.Empty && byEntity.Controls.ShiftKey)
         {
-            if (World.Side == EnumAppSide.Server)
+            if (World.Side == EnumAppSide.Server) TakeDown(byEntity);
+            return;
+        }
+
+        // Skiftenøkkel + Shift: riv byggeplassen og få tilbake alt som er brukt så langt (pluss bukkene)
+        if (byEntity.Controls.ShiftKey && WrightMaterials.IsDisassemblyTool(handslot.Itemstack, Properties.Attributes))
+        {
+            if (Api is ICoreClientAPI capi && byEntity == capi.World.Player.Entity)
             {
-                string code = Properties.Attributes["returnsItem"].AsString("wright:trestles");
-                var item = World.GetItem(new AssetLocation(code));
-                if (item != null && !byEntity.TryGiveItemStack(new ItemStack(item)))
-                {
-                    World.SpawnItemEntity(new ItemStack(item), Pos.XYZ);
-                }
-                Die(EnumDespawnReason.Removed);
+                WrightHoldAction.Start(capi, this, Properties.Attributes,
+                    () => capi.Network.SendEntityPacket(EntityId, PacketTakeDown, null));
             }
             return;
         }
 
+        // Noter nøyaktig hva steget trekker ut av hotbaren, så demontering kan gi det tilbake
+        var before = World.Side == EnumAppSide.Server ? WrightMaterials.Snapshot(byEntity) : null;
         if (!rcc.OnInteract(byEntity, handslot)) return;
+        if (before != null) WrightMaterials.RecordConsumed(this, before);
 
         CurrentStage = rcc.CurrentCompletedStage;
         rcc.ToTreeAttributes(WatchedAttributes);
@@ -104,6 +111,27 @@ public class EntityWrightConstruction : Entity
         {
             RollOut(byEntity);
         }
+    }
+
+    const int PacketTakeDown = 1002;
+
+    public override void OnReceivedClientPacket(Vintagestory.API.Server.IServerPlayer player, int packetid, byte[] data)
+    {
+        base.OnReceivedClientPacket(player, packetid, data);
+        if (packetid == PacketTakeDown && Alive && player.Entity.Pos.DistanceTo(Pos) < 8
+            && WrightMaterials.IsDisassemblyTool(player.InventoryManager.ActiveHotbarSlot?.Itemstack, Properties.Attributes))
+        {
+            TakeDown(player.Entity);
+        }
+    }
+
+    void TakeDown(EntityAgent byEntity)
+    {
+        var stacks = WrightMaterials.Stored(this) ?? new();
+        var trestles = World.GetItem(new AssetLocation(Properties.Attributes["returnsItem"].AsString("wright:trestles")));
+        if (trestles != null) stacks.Add(new ItemStack(trestles));
+        WrightMaterials.GiveBack(byEntity, stacks, Pos.XYZ);
+        Die(EnumDespawnReason.Removed);
     }
 
     void RollOut(EntityAgent byEntity)
@@ -125,6 +153,7 @@ public class EntityWrightConstruction : Entity
             plane.WatchedAttributes.SetString("createdByPlayername", ep.Player.PlayerName);
             plane.WatchedAttributes.SetString("createdByPlayerUID", ep.Player.PlayerUID);
         }
+        WrightMaterials.CopyTo(this, plane);
         World.SpawnEntity(plane);
         Die(EnumDespawnReason.Removed);
     }
@@ -143,6 +172,16 @@ public class EntityWrightConstruction : Entity
                 RequireFreeHand = true,
                 MouseButton = EnumMouseButton.Right,
                 ActionLangCode = "wright:trestles-takedown"
+            });
+        }
+        else
+        {
+            wis = wis.Append(new WorldInteraction
+            {
+                HotKeyCode = "shift",
+                MouseButton = EnumMouseButton.Right,
+                ActionLangCode = "wright:site-takedown",
+                Itemstacks = WrightMaterials.ToolStacks(world, Properties.Attributes)
             });
         }
         return wis;

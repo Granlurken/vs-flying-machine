@@ -5,6 +5,11 @@
 	weight: 120,
 	attributes: {
 		shouldSwivelFromMotion: false,
+		// Shift + høyreklikk (holdt) med en av disse = ta flyet fra hverandre (gir tilbake alt det ble bygd av)
+		disassemblyTools: ["game:wrench-iron", "game:wrench-meteoriciron", "game:wrench-steel"],
+		// Hold Shift + høyreklikk så lenge (tannhjul ved trådkorset). Lyder: tom streng = ingen
+		disassembly: { seconds: 5, tickSound: "game:sounds/effect/latch", tickInterval: 0.6, doneSound: "game:sounds/player/build" },
+		constructionEntity: "wright:wrightconstruction",
 		speedMultiplier: 1,
 		// Drivstoff: høyreklikk flyet med Aqua Vitae i bøtte/krukke/flaske. Tom tank = glideflukt
 		fuel: {

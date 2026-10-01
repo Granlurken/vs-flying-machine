@@ -37,5 +37,10 @@
     "fuel-empty": "The container is empty",
     "fuel-wrong": "Too weak to burn. The engine runs on Aqua Vitae",
     "fuel-full": "The fuel tank is full",
-    "fuel-pouring": "Pouring..."
+    "fuel-pouring": "Pouring...",
+    "disassemble": "Take apart",
+    "site-takedown": "Tear down building site",
+    "disassemble-occupied": "Everyone must get out of the flying machine first",
+    "disassemble-cargo": "The cargo shelf must be empty",
+    "disassemble-notlanded": "The flying machine must stand still on the ground"
 }

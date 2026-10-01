@@ -6,6 +6,10 @@
 	attributes: {
 		spawnsEntity: "wright:wright",
 		returnsItem: "wright:trestles",
+		// Shift + høyreklikk (holdt) med en av disse = riv byggeplassen (gir tilbake alt som er brukt + bukkene)
+		disassemblyTools: ["game:wrench-iron", "game:wrench-meteoriciron", "game:wrench-steel"],
+		// Hold Shift + høyreklikk så lenge (tannhjul ved trådkorset). Lyder: tom streng = ingen
+		disassembly: { seconds: 5, tickSound: "game:sounds/effect/latch", tickInterval: 0.6, doneSound: "game:sounds/player/build" },
 		// Radianer; snu flyet her hvis det ruller ut feil vei
 		spawnYawOffset: 0,
 		// Hvert steg krever stacks i HOTBAREN og viser en ny gruppe i shapen.

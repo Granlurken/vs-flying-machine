@@ -289,6 +289,19 @@ public class EntityWright : EntityBoat
 
     public override void OnInteract(EntityAgent byEntity, ItemSlot itemslot, Vec3d hitPosition, EnumInteractMode mode)
     {
+        if (mode == EnumInteractMode.Interact && byEntity.Controls.ShiftKey
+            && WrightMaterials.IsDisassemblyTool(itemslot?.Itemstack, Properties.Attributes))
+        {
+            // Klienten holder (tannhjul i 5 s) og sender pakken; serveren gjør ingenting på selve klikket
+            if (Api is ICoreClientAPI capi0 && byEntity == capi0.World.Player.Entity)
+            {
+                string? error = DisassembleError();
+                if (error != null) WrightMaterials.Error(this, byEntity, error);
+                else WrightHoldAction.Start(capi0, this, Properties.Attributes,
+                    () => capi0.Network.SendEntityPacket(EntityId, PacketDisassemble, null));
+            }
+            return;
+        }
         if (mode == EnumInteractMode.Interact && !byEntity.Controls.ShiftKey
             && itemslot?.Itemstack?.Collectible is ILiquidSource
             && byEntity is EntityPlayer ep && IsFuelBox(ep.EntitySelection?.SelectionBoxIndex ?? -1))
@@ -297,6 +310,35 @@ public class EntityWright : EntityBoat
             return; // ikke sett deg inn
         }
         base.OnInteract(byEntity, itemslot, hitPosition, mode);
+    }
+
+    const int PacketDisassemble = 1002;
+
+    /// <summary>Null hvis flyet kan tas fra hverandre: ingen om bord, tom lasteplass, står stille på bakken.</summary>
+    string? DisassembleError()
+    {
+        if (GetBehavior<EntityBehaviorSeatable>()?.AnyMounted() == true) return "wright:disassemble-occupied";
+        if (GetBehavior<EntityBehaviorRideableAccessories>()?.Inventory.Empty == false) return "wright:disassemble-cargo";
+        if (Flying || !WheelsOnGround() || Pos.Motion.Length() > 0.01) return "wright:disassemble-notlanded";
+        return null;
+    }
+
+    /// <summary>
+    /// Shift + skiftenøkkel holdt i <c>attributes.disassembly.seconds</c> (jern eller bedre): flyet tas fra hverandre
+    /// og gir tilbake alt det ble bygd av, bukkene inkludert. Drivstoffet i tanken går tapt. Kun server.
+    /// </summary>
+    void Disassemble(EntityAgent byEntity)
+    {
+
+        string siteCode = Properties.Attributes["constructionEntity"].AsString("wright:wrightconstruction");
+        var stacks = WrightMaterials.Stored(this) ?? WrightMaterials.FromStages(World, siteCode);
+        var siteType = World.GetEntityType(new AssetLocation(siteCode));
+        var trestles = World.GetItem(new AssetLocation(siteType?.Attributes?["returnsItem"].AsString("wright:trestles") ?? "wright:trestles"));
+        if (trestles != null) stacks.Add(new ItemStack(trestles));
+
+        WrightMaterials.GiveBack(byEntity, stacks, Pos.XYZ);
+        World.Logger.Audit("{0} took apart a Wright flyer at {1}.", byEntity.GetName(), Pos);
+        Die(EnumDespawnReason.Removed);
     }
 
     /// <summary>Sant når klikkboksen er tanklokket (FuelAP). Indeks 0 = hovedhitboksen, AP-boksene starter på 1.</summary>
@@ -319,6 +361,16 @@ public class EntityWright : EntityBoat
     public override void OnReceivedClientPacket(IServerPlayer player, int packetid, byte[] data)
     {
         base.OnReceivedClientPacket(player, packetid, data);
+        if (packetid == PacketDisassemble)
+        {
+            // Sjekk alt på nytt: verktøy i hånda, innen rekkevidde, og at flyet fortsatt kan tas fra hverandre
+            if (Alive && player.Entity.Pos.DistanceTo(Pos) < 8 && DisassembleError() == null
+                && WrightMaterials.IsDisassemblyTool(player.InventoryManager.ActiveHotbarSlot?.Itemstack, Properties.Attributes))
+            {
+                Disassemble(player.Entity);
+            }
+            return;
+        }
         if (fuelInv == null) return;
         if (packetid < 1000)
         {
@@ -353,11 +405,25 @@ public class EntityWright : EntityBoat
     }
 
     static WorldInteraction[]? fuelHelp;
+    static WorldInteraction[]? disassembleHelp;
 
     public override WorldInteraction[] GetInteractionHelp(IClientWorldAccessor world, EntitySelection es, IClientPlayer player)
     {
         var help = base.GetInteractionHelp(world, es, player);
-        if (player.Entity.MountedOn == this || !IsFuelBox(es.SelectionBoxIndex)) return help;
+        if (player.Entity.MountedOn == this) return help;
+
+        disassembleHelp ??= new[]
+        {
+            new WorldInteraction
+            {
+                ActionLangCode = "wright:disassemble",
+                HotKeyCode = "shift",
+                MouseButton = EnumMouseButton.Right,
+                Itemstacks = WrightMaterials.ToolStacks(world, Properties.Attributes)
+            }
+        };
+        help = help == null ? disassembleHelp : help.Append(disassembleHelp);
+        if (!IsFuelBox(es.SelectionBoxIndex)) return help;
 
         fuelHelp ??= new[]
         {
@@ -368,7 +434,7 @@ public class EntityWright : EntityBoat
                 Itemstacks = FuelHelpStacks(world)
             }
         };
-        return help == null ? fuelHelp : help.Append(fuelHelp);
+        return help.Append(fuelHelp);
     }
 
     ItemStack[] FuelHelpStacks(IWorldAccessor world)
