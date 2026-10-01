@@ -2,7 +2,7 @@
     "$schema": "https://moddbcdn.vintagestory.at/schema/modinfo.latest.json",
     "type": "Code",
     "modid": "wright",
-    "name": "Wright",
+    "name": "Flying Machine",
     "authors": [ "Eirik" ],
     "description": "An early propeller aircraft. Needs a runway, runs on alcohol.",
     "version": "0.1.0",

@@ -337,8 +337,44 @@ public class EntityWright : EntityBoat
         if (trestles != null) stacks.Add(new ItemStack(trestles));
 
         WrightMaterials.GiveBack(byEntity, stacks, Pos.XYZ);
-        World.Logger.Audit("{0} took apart a Wright flyer at {1}.", byEntity.GetName(), Pos);
+        World.Logger.Audit("{0} took apart a flying machine at {1}.", byEntity.GetName(), Pos);
         Die(EnumDespawnReason.Removed);
+    }
+
+    /// <summary>
+    /// Navnet øverst på skjermen: peker spilleren på en del (sete, motor, lasteplass), vises delen —
+    /// lang-nøkkel <c>wright:part-&lt;AP-kode&gt;</c>. Ellers flyets eget navn.
+    /// </summary>
+    public override string GetName()
+    {
+        string? part = HoveredPart();
+        return part != null ? Lang.Get("wright:part-" + part) : base.GetName();
+    }
+
+    /// <summary>
+    /// Under delenavnet står flyets navn, så man ser hva delen hører til. Vanilla-linja for klikkboksen fjernes:
+    /// selectionboxes-behavioren slår opp «creature-wright:wright-selectionbox-&lt;AP&gt;» (kolon midt i nøkkelen),
+    /// som aldri treffer og vises som rå nøkkel — delenavnet står allerede som tittel.
+    /// </summary>
+    public override string GetInfoText()
+    {
+        var lines = new System.Collections.Generic.List<string>(base.GetInfoText().Split('\n'));
+        lines.RemoveAll(l => l.Contains("-selectionbox-"));
+        string text = string.Join("\n", lines);
+        return HoveredPart() != null ? base.GetName() + "\n" + text : text;
+    }
+
+    /// <summary>AP-koden til klikkboksen den lokale spilleren peker på, eller null (hovedhitboksen / ikke pekt på).</summary>
+    string? HoveredPart()
+    {
+        if (Api is not ICoreClientAPI capi) return null;
+        var sel = capi.World.Player?.CurrentEntitySelection;
+        if (sel?.Entity != this) return null;
+        var boxes = GetBehavior<EntityBehaviorSelectionBoxes>()?.selectionBoxes;
+        int i = sel.SelectionBoxIndex - 1;
+        if (boxes == null || i < 0 || i >= boxes.Length) return null;
+        string code = boxes[i].AttachPoint.Code;
+        return Lang.HasTranslation("wright:part-" + code) ? code : null;
     }
 
     /// <summary>Sant når klikkboksen er tanklokket (FuelAP). Indeks 0 = hovedhitboksen, AP-boksene starter på 1.</summary>
