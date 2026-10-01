@@ -1,14 +1,14 @@
-# Wright — designnotat
+# FlyingMachine — designnotat
 
-_Vintage Story-mod (modid `wright`, tidligere arbeidsnavn «Flyer»), målversjon 1.22.x. Startet 2026-09-27._
+_Vintage Story-mod (modid `flyingmachine`, tidligere arbeidsnavn «Flyer»), målversjon 1.22.x. Startet 2026-09-27._
 
 ## Status
 
-- **Steg 1 – ruller (ferdig, testet):** `EntityWright : EntityBoat`, overstyrer `updateBoatAngleAndMotion` (vanilla stopper når båten ikke svømmer). Item med `ItemBoat`-klassen, settes ut hvor som helst. Placeholder-modell = vanilla-flåten.
+- **Steg 1 – ruller (ferdig, testet):** `EntityFlyingMachine : EntityBoat`, overstyrer `updateBoatAngleAndMotion` (vanilla stopper når båten ikke svømmer). Item med `ItemBoat`-klassen, settes ut hvor som helst. Placeholder-modell = vanilla-flåten.
 - **Steg 2 – løft/stallfart (ferdig, testet):** W/S = gass (blir liggende), Space = nesa opp, Ctrl = nesa ned. Seig akselerasjon, løft ∝ fart², stigning koster fart. Tuning i `attributes.flight` i entity-JSON. HUD-linje med gass/fart/løft/høyde.
 - **Neste:** hvordan flyet bygges (se åpne spørsmål 2, 3 og 7).
 
-Bygg + installer: `./deploy.sh` (kopierer til `VintagestoryData\Mods\wright`).
+Bygg + installer: `./deploy.sh` (kopierer til `VintagestoryData\Mods\flyingmachine`).
 
 ## Idé
 

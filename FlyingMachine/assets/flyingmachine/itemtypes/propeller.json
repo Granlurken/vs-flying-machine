@@ -1,0 +1,33 @@
+{
+	code: "propeller",
+	shape: { base: "flyingmachine:item/propeller" },
+	creativeinventory: { "general": ["*"], "items": ["*"] },
+	maxstacksize: 1,
+	materialDensity: 600,
+	combustibleProps: {
+		burnTemperature: 700,
+		burnDuration: 18
+	},
+	// Shapen er i full størrelse (2,3 blokker, bladene langs Y, tynn langs X) — skaleres ned her.
+	// Bakke: VS ganger skala med 0,2 og translation er i blokker FØR skaleringa (EntityItemRenderer)
+	guiTransform: {
+		translation: { x: 0, y: 0, z: 0 },
+		rotation: { x: -15, y: 75, z: -45 },
+		origin: { x: 0.5, y: 0.5, z: 0.5 },
+		scale: 0.8
+	},
+	groundTransform: {
+		translation: { x: 0, y: 0.07, z: 0 },
+		rotation: { x: 0, y: 0, z: 90 },
+		origin: { x: 0.5, y: 0.5, z: 0.5 },
+		scale: 3
+	},
+	// Hånd (gjelder også førsteperson — VS tegner hele kroppen): translation må oppheve origo/skala for å
+	// havne i hånda; VS-standarden er (-1.5, -1.6, -1.4) ved skala 0.33, her skalert til 0.9
+	tpHandTransform: {
+		translation: { x: -0.55, y: -0.59, z: -0.51 },
+		rotation: { x: 0, y: 180, z: 0 },
+		origin: { x: 0.5, y: 0.5, z: 0.5 },
+		scale: 0.9
+	}
+}

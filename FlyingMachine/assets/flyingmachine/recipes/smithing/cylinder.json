@@ -1,0 +1,31 @@
+{
+	ingredient: { type: "item", code: "game:ingot-*", name: "metal", allowedVariants: ["iron", "meteoriciron", "steel"] },
+	name: "engine cylinder",
+	pattern: [[
+		"#####",
+		"#___#",
+		"#___#",
+		"#___#",
+		"#####",
+	],[
+		"_###_",
+		"#___#",
+		"#___#",
+		"#___#",
+		"_###_",
+	],[
+		"#####",
+		"#___#",
+		"#___#",
+		"#___#",
+		"#####",
+	],[
+		"_###_",
+		"#___#",
+		"#___#",
+		"#___#",
+		"_###_",
+	]],
+	code: "cylinder-{metal}",
+	output: { type: "item", code: "flyingmachine:cylinder-{metal}" }
+}

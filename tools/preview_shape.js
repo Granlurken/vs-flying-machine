@@ -74,8 +74,8 @@ function texture(key) {
   const [dom, p] = loc.includes(":") ? loc.split(":") : ["game", loc];
   const dirs = dom === "game" ? ["survival", "game"] : [dom];
   for (const d of dirs) {
-    // Egne mod-teksturer ligger i Wright/assets/<domene>, ikke i spillets assets
-    const root = dom === "game" ? ASSETS : path.join(__dirname, "..", "Wright", "assets");
+    // Egne mod-teksturer ligger i FlyingMachine/assets/<domene>, ikke i spillets assets
+    const root = dom === "game" ? ASSETS : path.join(__dirname, "..", "FlyingMachine", "assets");
     const f = path.join(root, d, "textures", p + ".png");
     if (fs.existsSync(f)) return (texCache[key] = readPng(f));
   }

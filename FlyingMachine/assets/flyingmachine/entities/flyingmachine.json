@@ -1,0 +1,226 @@
+{
+	code: "flyingmachine",
+	class: "EntityFlyingMachine",
+	tags: ["inanimate", "vehicle"],
+	weight: 120,
+	attributes: {
+		shouldSwivelFromMotion: false,
+		// Shift + høyreklikk (holdt) med en av disse = ta flyet fra hverandre (gir tilbake alt det ble bygd av)
+		disassemblyTools: ["game:wrench-iron", "game:wrench-meteoriciron", "game:wrench-steel"],
+		// Hold Shift + høyreklikk så lenge (tannhjul ved trådkorset). Lyder: tom streng = ingen
+		disassembly: { seconds: 5, tickSound: "game:sounds/effect/latch", tickInterval: 0.6, doneSound: "game:sounds/player/build" },
+		constructionEntity: "flyingmachine:flyingmachineconstruction",
+		speedMultiplier: 1,
+		// Drivstoff: høyreklikk flyet med Aqua Vitae i bøtte/krukke/flaske. Tom tank = glideflukt
+		fuel: {
+			code: "game:alcoholportion",
+			capacityLitres: 10,
+			litresPerMinuteFullThrottle: 1
+		},
+		// Flymodell — fart i blokker per 1/60 s (0.34 = ~20 blokker/s). Se EntityFlyingMachine.cs
+		flight: {
+			maxSpeed: 0.34,
+			engineStartSeconds: 2, // sveiv før motoren tar (matcher sounds/engine/start.ogg), flyet står stille så lenge
+			stallSpeed: 0.15,
+			// Skyvekraft fra stillestående (fart/s). Lavere = lengre rullebane. 0.03 ≈ 28 blokker før avgang (0.018 ≈ 48, tok ikke av)
+			thrustAccel: 0.03,
+			rollingFriction: 0.002,
+			throttleRate: 0.4,
+			brakeRate: 0.6,
+			gravityAlongPath: 0.06,
+			maxSinkRate: 0.2,
+			verticalResponse: 3,
+			// Nesevinkel (radianer): Space/Ctrl endrer, blir liggende
+			pitchRate: 0.7,
+			pitchResponse: 3, // treghet i nesa — lavere = tyngre
+			maxPitchUp: 0.6,
+			maxPitchDown: 0.8,
+			rotateLift: 0.8,
+			stallNoseDrop: 1.2,
+			// Krengning og sving. Krengningen er en fjær: lavere bankDamping = mer gynging/oversving
+			maxBank: 0.7,
+			bankRate: 1.2,
+			bankStiffness: 6,
+			bankDamping: 2.5,
+			airTurnRate: 1.0,
+			groundTurnRate: 0.8,
+			turnResponse: 1.5, // hvor fort svingen følger krengningen — lavere = mer etterslep
+			// Skrens: hvor fort banen retter seg etter nesa (1/s). Lavere = flyet glir mer utover i svinger
+			airGrip: 1.2,
+			groundGrip: 8,
+			groundSettle: 5, // 1/s: hvor fort flyet legger seg på hjulene etter landing — lavere = mykere
+			slipDrag: 0.4,
+			// Snu til 1/-1 hvis modellen tipper feil vei
+			visualPitchSign: -1,
+			visualRollSign: 1
+		},
+		// Propell, hjul og eksosrøyk. Snu fortegnet hvis noe spinner feil vei
+		visuals: {
+			propMaxRevsPerSec: 6,
+			propIdleRevsPerSec: 1.5,
+			propSpinSign: 1,
+			wheelSpinSign: -1,
+			wheelRadius: 0.38,
+			// Eksosrørtoppene i modellens ramme (blokker): +X = nese, +Y = opp, +Z = høyre
+			exhausts: [[2.38, 1.95, 0.335], [2.84, 1.95, 0.335]]
+		},
+		// Instrumentbordet: needleSign snur alle visere + kompasskortet hvis de går feil vei i spillet
+		instruments: {
+			needleSign: 1,
+			speedDialMax: 25,
+			lowFuelFraction: 0.15,
+			altLongPerTurn: 100,
+			altShortPerTurn: 1000,
+			// Variometer: varioMax/varioSpan/varioCurve må stemme med skiva (tools/dash_textures.js). varioLag = sekunder viseren henger etter
+			varioMax: 10,
+			varioSpan: 175,
+			varioCurve: 4,
+			varioLag: 1.5
+		},
+		// Motorlyd (FlyingMachineEngineSound). Tonehøyde/volum går fra idle til full med gassen.
+		// Hosting starter under instruments.lowFuelFraction, mellomrom (s) fra coughIntervalLow ned mot coughIntervalEmpty
+		sound: {
+			pitchIdle: 1.0,
+			pitchFull: 1.5,
+			volumeIdle: 0.5,
+			volumeFull: 1.0,
+			volumeStart: 1.0,
+			volumeCough: 1.0,
+			range: 64,
+			startBlendSeconds: 1.5, // kryssfading startlyd → tomgangsløkke
+			startTailSeconds: 1.0, // uttoningen bakt inn i start.ogg — kryssfadingen er ferdig før den
+			spinDownSeconds: 1.2,
+			coughIntervalLow: 7,
+			coughIntervalEmpty: 1.5,
+			// Hjulbrems (hold S på tomgang). Volum/tonehøyde følger farten, sterkest ved fullSpeed blokker/s
+			brake: {
+				sound: "game:sounds/effect/woodgrind.ogg",
+				volume: 0.8,
+				pitchSlow: 0.7,
+				pitchFast: 1.1,
+				fullSpeed: 8,
+				fadeSeconds: 0.25,
+				range: 32
+			}
+		},
+		swimmingOffsetY: 0.45,
+		requiresPaddlingTool: false,
+		// Av: i overlevelse tas flyet fra hverandre med skiftenøkkel. Kreativ: Shift + høyreklikk med tom hånd (EntityFlyingMachine.OnInteract)
+		rightClickPickup: false,
+		mountAnimations: {
+			idle: "sitboatidle",
+			ready: "sitboatidle",
+			forwards: "sitboatidle",
+			backwards: "sitboatidle"
+		}
+	},
+	hitboxSize: { x: 2, y: 1.2, z: 2 },
+	behaviorConfigs: {
+		passivephysicsmultibox: {
+			collisionBoxes: [
+				// Bare skroget kolliderer (vingene ville satt seg fast overalt). Nesa = +Z her
+				{ x1: -0.6, y1: 0, z1: 0, x2: 0.6, y2: 1.4, z2: 3 },
+				{ x1: -0.6, y1: 0, z1: -4, x2: 0.6, y2: 1.4, z2: 0 }
+			],
+			groundDragFactor: 0,
+			airDragFallingFactor: 0,
+			gravityFactor: 1.0
+		},
+		creaturecarrier: {
+			seats: [
+				{ apName: "PilotAP", controllable: true, bodyYawLimit: 0.5, eyeHeight: 1 },
+				{ apName: "PassengerAP", bodyYawLimit: 0.8, eyeHeight: 1 }
+			]
+		},
+		rideableaccessories: {
+			dropContentsOnDeath: true,
+			// Samme rekkefølge som selectionBoxes under (vanilla-krav). Seter/tank slipper klikket videre
+			wearableSlots: [
+				{ code: "Pilot Seat", forCategoryCodes: [], attachmentPointCode: "PilotAP", emptyInteractPassThrough: true },
+				{ code: "Passenger Seat", forCategoryCodes: [], attachmentPointCode: "PassengerAP", emptyInteractPassThrough: true },
+				{ code: "Fuel", forCategoryCodes: [], attachmentPointCode: "FuelAP", emptyInteractPassThrough: true },
+				// Kiste eller trunk på hylla bak piloten: Ctrl + høyreklikk med kista i hånda
+				{ code: "Cargo", forCategoryCodes: ["chest", "basket", "crate"], attachmentPointCode: "CargoAP",
+					stepParentTo: { "": { elementName: "CargoBox" } } }
+			]
+		},
+		selectionboxes: {
+			// Klikk setet = sett deg, klikk tank/motor med en beholder = fyll drivstoff, hylla = last
+			selectionBoxes: ["PilotAP", "PassengerAP", "FuelAP", "CargoAP"]
+		}
+	},
+	client: {
+		size: 1,
+		renderer: "Shape",
+		// Generert av tools/flyingmachine_model.js — rediger skriptet, ikke JSON-en
+		shape: { base: "flyingmachine:entity/flyingmachine" },
+		textures: {
+			"wood": { base: "game:block/wood/debarked/oak" },
+			"planks": { base: "game:block/wood/planks/aged1" },
+			"planks2": { base: "game:block/wood/planks/birch1" },
+			"aged": { base: "game:block/wood/debarked/aged" },
+			"fabric": { base: "game:block/cloth/linen/normal1" },
+			"patch": { base: "game:block/cloth/linen/brown" },
+			"patch2": { base: "game:block/cloth/burlap/sides" },
+			"patch3": { base: "game:block/cloth/linen/village/darkbrown" },
+			"rope": { base: "game:block/cloth/reedrope" },
+			"twine": { base: "game:block/cloth/reedrope" },
+			"iron": { base: "game:block/metal/sheet/iron1" },
+			"rust": { base: "game:block/metal/corroded/rusty1" },
+			"soot": { base: "game:block/metal/sheet/lead1" },
+			"chain": { base: "game:block/metal/tarnished/chain-rust" },
+			"copper": { base: "game:block/metal/sheet/copper3" },
+			"leather": { base: "game:block/cloth/leather/smallstiches" },
+			"pelt": { base: "game:block/cloth/pelt" },
+			"blanket": { base: "game:block/cloth/wool/green2" },
+			"brass": { base: "game:block/metal/sheet/brass1" },
+			"needle": { base: "flyingmachine:dash/needle" },
+			"needlered": { base: "flyingmachine:dash/needlered" },
+			"dialspeed": { base: "flyingmachine:dash/speed" },
+			"dialalt": { base: "flyingmachine:dash/altimeter" },
+			"dialfuel": { base: "flyingmachine:dash/fuel" },
+			"dialcompass": { base: "flyingmachine:dash/compass" },
+			"dialvario": { base: "flyingmachine:dash/vario" },
+			"ceramic": { base: "game:block/clay/hardened/brown" },
+			"diallamps": { base: "flyingmachine:dash/lamps" },
+			"lampredoff": { base: "flyingmachine:dash/lampredoff" },
+			"lampredon": { base: "flyingmachine:dash/lampredon" },
+			"lampamberoff": { base: "flyingmachine:dash/lampamberoff" },
+			"lampamberon": { base: "flyingmachine:dash/lampamberon" }
+		},
+		animations: [
+			{ code: "turnLeft", animation: "turnLeft", animationSpeed: 1, easeInSpeed: 2, easeOutSpeed: 2 },
+			{ code: "turnRight", animation: "turnRight", animationSpeed: 1, easeInSpeed: 2, easeOutSpeed: 2 },
+			// Rammen settes fra koden (EntityFlyingMachine.UpdateSpinAnimations), derfor fart 0
+			{ code: "propspin", animation: "propspin", animationSpeed: 0, weight: 1, blendMode: "Add" },
+			{ code: "wheelspin", animation: "wheelspin", animationSpeed: 0, weight: 1, blendMode: "Add" },
+			// Instrumentbordet (EntityFlyingMachine.UpdateInstruments). StartAnimation(kode) finner BARE koder som står her
+			{ code: "needlespeed", animation: "needlespeed", animationSpeed: 0, weight: 1, blendMode: "Add" },
+			{ code: "needlealtshort", animation: "needlealtshort", animationSpeed: 0, weight: 1, blendMode: "Add" },
+			{ code: "needlealtlong", animation: "needlealtlong", animationSpeed: 0, weight: 1, blendMode: "Add" },
+			{ code: "needlefuel", animation: "needlefuel", animationSpeed: 0, weight: 1, blendMode: "Add" },
+			{ code: "needlevario", animation: "needlevario", animationSpeed: 0, weight: 1, blendMode: "Add" },
+			{ code: "compasscard", animation: "compasscard", animationSpeed: 0, weight: 1, blendMode: "Add" },
+			{ code: "lampstall", animation: "lampstall", animationSpeed: 0, weight: 1, blendMode: "Add" },
+			{ code: "lampfuel", animation: "lampfuel", animationSpeed: 0, weight: 1, blendMode: "Add" }
+		],
+		behaviors: [
+			{ code: "repulseagents" },
+			{ code: "passivephysicsmultibox" },
+			{ code: "interpolateposition" },
+			{ code: "selectionboxes" },
+			{ code: "rideableaccessories" },
+			{ code: "creaturecarrier" }
+		]
+	},
+	server: {
+		behaviors: [
+			{ code: "repulseagents" },
+			{ code: "passivephysicsmultibox" },
+			{ code: "selectionboxes" },
+			{ code: "rideableaccessories" },
+			{ code: "creaturecarrier" }
+		]
+	},
+	sounds: { }
+}

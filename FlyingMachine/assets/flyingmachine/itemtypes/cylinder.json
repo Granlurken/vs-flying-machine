@@ -1,0 +1,37 @@
+{
+	code: "cylinder",
+	variantgroups: [
+		{ code: "metal", states: ["iron", "meteoriciron", "steel"] },
+	],
+	shape: { base: "flyingmachine:item/cylinder" },
+	textures: {
+		"iron": { base: "game:block/metal/ingot/{metal}" }
+	},
+	attributes: {
+		handbook: {
+			groupBy: ["cylinder-*"]
+		}
+	},
+	creativeinventory: { "general": ["*"], "items": ["*"] },
+	maxstacksize: 4,
+	// Item-shapen er i full størrelse (tools/item_shapes.js) — skaleres her. Bakke: skala × 0,2, y = halv høyde i blokker.
+	// Hånd: translation opphever origo/skala (VS-standard (-1.5, -1.6, -1.4) ved 0.33, skalert til 1.2)
+	guiTransform: {
+		translation: { x: 0, y: 0, z: 0 },
+		rotation: { x: -22.6, y: -45, z: 0 },
+		origin: { x: 0.5, y: 0.5, z: 0.5 },
+		scale: 3
+	},
+	groundTransform: {
+		translation: { x: 0, y: 0.27, z: 0 },
+		rotation: { x: 0, y: 0, z: 0 },
+		origin: { x: 0.5, y: 0.5, z: 0.5 },
+		scale: 5
+	},
+	tpHandTransform: {
+		translation: { x: -0.41, y: -0.44, z: -0.39 },
+		rotation: { x: 0, y: 180, z: 0 },
+		origin: { x: 0.5, y: 0.5, z: 0.5 },
+		scale: 1.2
+	}
+}

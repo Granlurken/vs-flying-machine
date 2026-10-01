@@ -1,17 +1,17 @@
 // Item-shapes (= inventar-ikonene) hentet rett fra flymodellen, så komponenten i sekken ser ut som delen på flyet.
-// Kjør ETTER wright_model.js: node tools/item_shapes.js
-//   leser  Wright/assets/wright/shapes/entity/wright.json
-//   skriver Wright/assets/wright/shapes/item/<item>.json
+// Kjør ETTER flyingmachine_model.js: node tools/item_shapes.js
+//   leser  FlyingMachine/assets/flyingmachine/shapes/entity/flyingmachine.json
+//   skriver FlyingMachine/assets/flyingmachine/shapes/item/<item>.json
 // Hver valgt gruppe klones i full størrelse og sentreres i (8, 8, 8) px; størrelsen i GUI/hånd/bakke styres av
 // transformene i itemtypes-JSON-en (shape-elementer kan ikke skaleres).
 const fs = require("fs");
 const path = require("path");
 
-const ROOT = path.join(__dirname, "..", "Wright", "assets", "wright", "shapes");
-const plane = JSON.parse(fs.readFileSync(path.join(ROOT, "entity", "wright.json"), "utf8"));
+const ROOT = path.join(__dirname, "..", "FlyingMachine", "assets", "flyingmachine", "shapes");
+const plane = JSON.parse(fs.readFileSync(path.join(ROOT, "entity", "flyingmachine.json"), "utf8"));
 const site = JSON.parse(fs.readFileSync(path.join(ROOT, "entity", "construction.json"), "utf8"));
 
-// Egne deler (finnes ikke på flyet): kloss i px, UV = ett rute per 16 px som i wright_model.js
+// Egne deler (finnes ikke på flyet): kloss i px, UV = ett rute per 16 px som i flyingmachine_model.js
 const uvLen = v => Math.max(0.5, Math.min(16, +v.toFixed(3)));
 function box(name, from, to, tex, rot) {
   const [w, h, d] = [0, 1, 2].map(i => to[i] - from[i]);
@@ -90,7 +90,7 @@ const items = {
   chaindrive: { src: plane, names: ["CrankSprocketA", "CrankSprocketB", "PropSprocketA", "PropSprocketB", "ChainL", "ChainR"] },
   wing: { src: plane, names: ["S3LowerWing"] },
   trestles: { src: site, names: ["TrestleBar0", "TrestleLeg000", "TrestleLeg001", "TrestleLeg010", "TrestleLeg011"] },
-  wright: { src: plane, names: ["S1Frame", "S2Gear", "S3LowerWing", "S4UpperWing", "S5Engine", "S6Drive", "S7Tail", "S8Dash", "S9Seat"] },
+  flyingmachine: { src: plane, names: ["S1Frame", "S2Gear", "S3LowerWing", "S4UpperWing", "S5Engine", "S6Drive", "S7Tail", "S8Dash", "S9Seat"] },
   battery: { src: plane, names: ["Battery"] },
   dashboard: { src: plane, names: ["Dashboard"] },
   crankshaft: { build: crankshaft },

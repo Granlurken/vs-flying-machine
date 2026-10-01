@@ -1,0 +1,27 @@
+{
+	code: "engine",
+	shape: { base: "flyingmachine:item/engine" },
+	creativeinventory: { "general": ["*"], "items": ["*"] },
+	maxstacksize: 1,
+	heldTpIdleAnimation: "holdbothhandslarge",
+	// Item-shapen er i full størrelse (tools/item_shapes.js) — skaleres her. Bakke: skala × 0,2, y = halv høyde i blokker.
+	// Hånd: translation opphever origo/skala (VS-standard (-1.5, -1.6, -1.4) ved 0.33, skalert til 0.8)
+	guiTransform: {
+		translation: { x: 0, y: 0, z: 0 },
+		rotation: { x: -22.6, y: -45, z: 0 },
+		origin: { x: 0.5, y: 0.5, z: 0.5 },
+		scale: 1.7
+	},
+	groundTransform: {
+		translation: { x: 0, y: 0.55, z: 0 },
+		rotation: { x: 0, y: 0, z: 0 },
+		origin: { x: 0.5, y: 0.5, z: 0.5 },
+		scale: 5
+	},
+	tpHandTransform: {
+		translation: { x: -0.62, y: -0.66, z: -0.58 },
+		rotation: { x: 0, y: 180, z: 0 },
+		origin: { x: 0.5, y: 0.5, z: 0.5 },
+		scale: 0.8
+	}
+}

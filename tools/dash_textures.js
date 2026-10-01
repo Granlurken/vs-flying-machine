@@ -1,4 +1,4 @@
-// Tegner urskivene til instrumentbordet → Wright/assets/wright/textures/dash/*.png
+// Tegner urskivene til instrumentbordet → FlyingMachine/assets/flyingmachine/textures/dash/*.png
 // Kjør: node tools/dash_textures.js
 // Skivene er 64 px: messingring, gulnet papirskive, streker og tall i en 3×5-pikselskrift.
 // Vinkel 0 = rett opp, positive grader = med klokka (slik piloten ser det).
@@ -7,7 +7,7 @@ const path = require("path");
 const zlib = require("zlib");
 
 const S = 64, C = (S - 1) / 2;
-const outDir = path.join(__dirname, "..", "Wright", "assets", "wright", "textures", "dash");
+const outDir = path.join(__dirname, "..", "FlyingMachine", "assets", "flyingmachine", "textures", "dash");
 fs.mkdirSync(outDir, { recursive: true });
 
 // ---------- PNG (RGBA)
@@ -145,7 +145,7 @@ const dials = {
     text(cv, "FUEL", C + 14.4, C + 9, CREAM);
   },
   // Variometer: 0 klokka 9, UP med klokka, DOWN mot klokka, ±VARIO_MAX blokker/s over ±VARIO_SPAN grader.
-  // Ikke-lineær: log(1+k·x)/log(1+k) gir mer plass nær null. Må stemme med instruments.vario* i entities/wright.json
+  // Ikke-lineær: log(1+k·x)/log(1+k) gir mer plass nær null. Må stemme med instruments.vario* i entities/flyingmachine.json
   vario(cv) {
     dialBase(cv);
     const ang = v => -90 + Math.sign(v) * VARIO_SPAN * Math.log(1 + VARIO_CURVE * Math.abs(v) / VARIO_MAX) / Math.log(1 + VARIO_CURVE);

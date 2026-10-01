@@ -1,0 +1,28 @@
+{
+	code: "battery",
+	shape: { base: "flyingmachine:item/battery" },
+	creativeinventory: { "general": ["*"], "items": ["*"] },
+	maxstacksize: 4,
+	materialDensity: 1800,
+	// Blysyre-batteri (0,21 × 0,32 × 0,2 blokker) — driver STALL/FUEL-lampene på instrumentbordet
+	// Item-shapen er i full størrelse (tools/item_shapes.js). GUI: skala ≈ 1,85 / lengste mål. Bakke: skala × 0,2, y = halv høyde.
+	// Hånd: translation opphever origo/skala (VS-standard (-1.5, -1.6, -1.4) ved 0.33, skalert)
+	guiTransform: {
+		translation: { x: 0, y: 0, z: 0 },
+		rotation: { x: -22.6, y: -45, z: 0 },
+		origin: { x: 0.5, y: 0.5, z: 0.5 },
+		scale: 5.5
+	},
+	groundTransform: {
+		translation: { x: 0, y: 0.16, z: 0 },
+		rotation: { x: 0, y: 0, z: 0 },
+		origin: { x: 0.5, y: 0.5, z: 0.5 },
+		scale: 5
+	},
+	tpHandTransform: {
+		translation: { x: -0.49, y: -0.53, z: -0.46 },
+		rotation: { x: 0, y: 180, z: 0 },
+		origin: { x: 0.5, y: 0.5, z: 0.5 },
+		scale: 1
+	}
+}

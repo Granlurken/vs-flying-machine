@@ -1,5 +1,5 @@
 // Finner flater som ligger i samme plan, vender samme vei og overlapper — det som flimrer (z-fighting) i spillet.
-// Kjør: node tools/zfight_check.js <shape.json>   (wright_model.js bruker findCoplanar() til å rette seg selv)
+// Kjør: node tools/zfight_check.js <shape.json>   (flyingmachine_model.js bruker findCoplanar() til å rette seg selv)
 const fs = require("fs");
 
 const mul = (a, b) => { const o = new Array(16).fill(0); for (let c = 0; c < 4; c++) for (let r = 0; r < 4; r++) for (let k = 0; k < 4; k++) o[c * 4 + r] += a[k * 4 + r] * b[c * 4 + k]; return o; };
@@ -62,7 +62,7 @@ function overlapArea(a, b, n) {
 }
 
 // Par av flater som ligger nærmere enn TOL blokker i samme plan, vender samme vei og overlapper.
-// 0.006 gir margin for dybdepresisjon på avstand (resolveren i wright_model.js skyver 0.012)
+// 0.006 gir margin for dybdepresisjon på avstand (resolveren i flyingmachine_model.js skyver 0.012)
 const TOL = +(process.env.ZF_TOL || 0.006);
 function findCoplanar(shape) {
   const faces = collectFaces(shape), hits = [];

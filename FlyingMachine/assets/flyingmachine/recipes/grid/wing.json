@@ -1,0 +1,14 @@
+[
+	{
+		ingredientPattern: "FFF,SBS,T_T",
+		ingredients: {
+			"F": { type: "item", code: "flyingmachine:wingfabric", quantity: 1 },
+			"S": { type: "item", code: "game:stick", quantity: 1 },
+			"B": { type: "item", code: "flyingmachine:wingspar", quantity: 1 },
+			"T": { type: "item", code: "game:flaxtwine", quantity: 1 }
+		},
+		width: 3,
+		height: 3,
+		output: { type: "item", code: "flyingmachine:wing", quantity: 1 }
+	}
+]

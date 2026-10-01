@@ -1,0 +1,54 @@
+[
+	{
+		ingredientPattern: "CNC,PKP,_F_",
+		ingredients: {
+			"C": { type: "item", code: "flyingmachine:cylinder-*", quantity: 1 },
+			"N": { type: "item", code: "game:metalnailsandstrips-*", name: "nailmetal", allowedVariants: ["iron", "meteoriciron", "steel"], quantity: 1 },
+			"P": { type: "item", code: "game:metalplate-*", name: "platemetal", allowedVariants: ["iron", "meteoriciron", "steel"], quantity: 1 },
+			"K": { type: "item", code: "flyingmachine:crankshaft-*", quantity: 1 },
+			"F": { type: "item", code: "game:fat-rendered", quantity: 1 }
+		},
+		width: 3,
+		height: 3,
+		output: { type: "item", code: "flyingmachine:engine", quantity: 1 }
+	},
+	{
+		ingredientPattern: "CNC,PKP,_J_",
+		ingredients: {
+			"C": { type: "item", code: "flyingmachine:cylinder-*", quantity: 1 },
+			"N": { type: "item", code: "game:metalnailsandstrips-*", name: "nailmetal", allowedVariants: ["iron", "meteoriciron", "steel"], quantity: 1 },
+			"P": { type: "item", code: "game:metalplate-*", name: "platemetal", allowedVariants: ["iron", "meteoriciron", "steel"], quantity: 1 },
+			"K": { type: "item", code: "flyingmachine:crankshaft-*", quantity: 1 },
+			"J": { type: "block", code: "game:jug-*-fired", quantity: 1 }
+		},
+		width: 3,
+		height: 3,
+		attributes: {
+			liquidContainerProps: {
+				requiresContent: { type: "item", code: "game:oilportion-flax" },
+				requiresLitres: 0.25
+			}
+		},
+		output: { type: "item", code: "flyingmachine:engine", quantity: 1 }
+	}
+	,
+	{
+		ingredientPattern: "CNC,PKP,_J_",
+		ingredients: {
+			"C": { type: "item", code: "flyingmachine:cylinder-*", quantity: 1 },
+			"N": { type: "item", code: "game:metalnailsandstrips-*", name: "nailmetal", allowedVariants: ["iron", "meteoriciron", "steel"], quantity: 1 },
+			"P": { type: "item", code: "game:metalplate-*", name: "platemetal", allowedVariants: ["iron", "meteoriciron", "steel"], quantity: 1 },
+			"K": { type: "item", code: "flyingmachine:crankshaft-*", quantity: 1 },
+			"J": { type: "block", code: "game:jug-*-fired", quantity: 1 }
+		},
+		width: 3,
+		height: 3,
+		attributes: {
+			liquidContainerProps: {
+				requiresContent: { type: "item", code: "game:oilportion-olive" },
+				requiresLitres: 0.25
+			}
+		},
+		output: { type: "item", code: "flyingmachine:engine", quantity: 1 }
+	}
+]

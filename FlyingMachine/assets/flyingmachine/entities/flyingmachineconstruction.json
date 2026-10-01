@@ -1,0 +1,105 @@
+{
+	code: "flyingmachineconstruction",
+	class: "EntityFlyingMachineConstruction",
+	tags: ["inanimate", "structure"],
+	hitboxSize: { x: 3, y: 2 },
+	attributes: {
+		spawnsEntity: "flyingmachine:flyingmachine",
+		returnsItem: "flyingmachine:trestles",
+		// Shift + høyreklikk (holdt) med en av disse = riv byggeplassen (gir tilbake alt som er brukt + bukkene)
+		disassemblyTools: ["game:wrench-iron", "game:wrench-meteoriciron", "game:wrench-steel"],
+		// Hold Shift + høyreklikk så lenge (tannhjul ved trådkorset). Lyder: tom streng = ingen
+		disassembly: { seconds: 5, tickSound: "game:sounds/effect/latch", tickInterval: 0.6, doneSound: "game:sounds/player/build" },
+		// Radianer; snu flyet her hvis det ruller ut feil vei
+		spawnYawOffset: 0,
+		// Hvert steg krever stacks i HOTBAREN og viser en ny gruppe i shapen.
+		// Kreativ modus: Ctrl + høyreklikk hopper over et steg gratis (vanilla-funksjon).
+		stages: [
+			{ addElements: ["Root/S0Site"] },
+			{ requireStacks: [
+				{ type: "block", code: "game:supportbeam-*", name: "flyingmachine:ingredient-supportbeams", quantity: 8, storeWildCard: "wood" },
+				{ type: "item", code: "game:plank-*", name: "flyingmachine:ingredient-planks", quantity: 16 }
+			], addElements: ["Root/S1Frame"] },
+			{ requireStacks: [
+				{ type: "item", code: "flyingmachine:wheel", quantity: 2 },
+				{ type: "block", code: "game:supportbeam-*", name: "flyingmachine:ingredient-supportbeams", quantity: 2 },
+				{ type: "item", code: "game:metalnailsandstrips-*", name: "flyingmachine:ingredient-nails", allowedVariants: ["iron", "meteoriciron", "steel"], quantity: 2 }
+			], addElements: ["Root/S2Gear"] },
+			{ requireStacks: [
+				{ type: "item", code: "flyingmachine:wing", quantity: 1 }
+			], addElements: ["Root/S3LowerWing"] },
+			{ requireStacks: [
+				{ type: "item", code: "flyingmachine:wing", quantity: 1 },
+				{ type: "item", code: "game:stick", quantity: 8 },
+				{ type: "item", code: "game:rope", quantity: 4 }
+			], addElements: ["Root/S4UpperWing"] },
+			{ requireStacks: [
+				{ type: "item", code: "flyingmachine:engine", quantity: 1 }
+			], addElements: ["Root/S5Engine"] },
+			{ requireStacks: [
+				{ type: "item", code: "flyingmachine:chaindrive", quantity: 1 },
+				{ type: "item", code: "flyingmachine:propeller", quantity: 1 }
+			], addElements: ["Root/S6Drive"] },
+			{ requireStacks: [
+				{ type: "item", code: "game:plank-*", name: "flyingmachine:ingredient-planks", quantity: 8 },
+				{ type: "item", code: "flyingmachine:wingfabric", quantity: 2 },
+				{ type: "item", code: "game:rope", quantity: 2 }
+			], addElements: ["Root/S7Tail"] },
+			{ requireStacks: [
+				{ type: "item", code: "flyingmachine:dashboard", quantity: 1 },
+				{ type: "item", code: "flyingmachine:battery", quantity: 1 }
+			], addElements: ["Root/S8Dash"] },
+			{ requireStacks: [
+				{ type: "block", code: "game:chair-*", name: "flyingmachine:ingredient-chair", quantity: 2 }
+			], addElements: ["Root/S9Seat"] },
+			{ requireStacks: [], actionLangCode: "flyingmachine:rollout" }
+		]
+	},
+	client: {
+		size: 1,
+		renderer: "Shape",
+		// Generert av tools/flyingmachine_model.js sammen med flyet (samme deler, pluss S0Site)
+		shape: { base: "flyingmachine:entity/construction" },
+		textures: {
+			"wood": { base: "game:block/wood/debarked/oak" },
+			"planks": { base: "game:block/wood/planks/aged1" },
+			"planks2": { base: "game:block/wood/planks/birch1" },
+			"aged": { base: "game:block/wood/debarked/aged" },
+			"fabric": { base: "game:block/cloth/linen/normal1" },
+			"patch": { base: "game:block/cloth/linen/brown" },
+			"patch2": { base: "game:block/cloth/burlap/sides" },
+			"patch3": { base: "game:block/cloth/linen/village/darkbrown" },
+			"rope": { base: "game:block/cloth/reedrope" },
+			"twine": { base: "game:block/cloth/reedrope" },
+			"iron": { base: "game:block/metal/sheet/iron1" },
+			"rust": { base: "game:block/metal/corroded/rusty1" },
+			"soot": { base: "game:block/metal/sheet/lead1" },
+			"chain": { base: "game:block/metal/tarnished/chain-rust" },
+			"copper": { base: "game:block/metal/sheet/copper3" },
+			"leather": { base: "game:block/cloth/leather/smallstiches" },
+			"pelt": { base: "game:block/cloth/pelt" },
+			"blanket": { base: "game:block/cloth/wool/green2" },
+			"brass": { base: "game:block/metal/sheet/brass1" },
+			"needle": { base: "flyingmachine:dash/needle" },
+			"needlered": { base: "flyingmachine:dash/needlered" },
+			"dialspeed": { base: "flyingmachine:dash/speed" },
+			"dialalt": { base: "flyingmachine:dash/altimeter" },
+			"dialfuel": { base: "flyingmachine:dash/fuel" },
+			"dialcompass": { base: "flyingmachine:dash/compass" },
+			"dialvario": { base: "flyingmachine:dash/vario" },
+			"ceramic": { base: "game:block/clay/hardened/brown" },
+			"diallamps": { base: "flyingmachine:dash/lamps" },
+			"lampredoff": { base: "flyingmachine:dash/lampredoff" },
+			"lampredon": { base: "flyingmachine:dash/lampredon" },
+			"lampamberoff": { base: "flyingmachine:dash/lampamberoff" },
+			"lampamberon": { base: "flyingmachine:dash/lampamberon" }
+		},
+		behaviors: [
+			{ code: "interpolateposition" }
+		]
+	},
+	server: {
+		behaviors: []
+	},
+	sounds: {}
+}

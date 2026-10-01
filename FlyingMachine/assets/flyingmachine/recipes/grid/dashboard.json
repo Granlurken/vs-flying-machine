@@ -1,0 +1,15 @@
+[
+	{
+		// Vindusrute til glasset foran skivene, spiker og strips til visere og fester, kobbertråd til lampene
+		ingredientPattern: "NGN,WPW",
+		ingredients: {
+			"N": { type: "item", code: "game:metalnailsandstrips-*", quantity: 1 },
+			"G": { type: "block", code: "game:glasspane-leaded-*", quantity: 1 },
+			"W": { type: "item", code: "flyingmachine:copperwire", quantity: 1 },
+			"P": { type: "item", code: "game:plank-*", quantity: 1 }
+		},
+		width: 3,
+		height: 2,
+		output: { type: "item", code: "flyingmachine:dashboard", quantity: 1 }
+	}
+]

@@ -1,0 +1,47 @@
+[
+	{
+		ingredientPattern: "FPF,PRP,FPF",
+		ingredients: {
+			"P": { type: "item", code: "game:plank-*", quantity: 1 },
+			"R": { type: "item", code: "game:rod-*", name: "rodmetal", allowedVariants: ["iron", "meteoriciron", "steel"], quantity: 1 },
+			"F": { type: "item", code: "game:fat-rendered", quantity: 1 }
+		},
+		width: 3,
+		height: 3,
+		output: { type: "item", code: "flyingmachine:wheel", quantity: 1 }
+	},
+	{
+		ingredientPattern: "JP_,PRP,_P_",
+		ingredients: {
+			"P": { type: "item", code: "game:plank-*", quantity: 1 },
+			"R": { type: "item", code: "game:rod-*", name: "rodmetal", allowedVariants: ["iron", "meteoriciron", "steel"], quantity: 1 },
+			"J": { type: "block", code: "game:jug-*-fired", quantity: 1 }
+		},
+		width: 3,
+		height: 3,
+		attributes: {
+			liquidContainerProps: {
+				requiresContent: { type: "item", code: "game:oilportion-flax" },
+				requiresLitres: 3
+			}
+		},
+		output: { type: "item", code: "flyingmachine:wheel", quantity: 1 }
+	},
+	{
+		ingredientPattern: "JP_,PRP,_P_",
+		ingredients: {
+			"P": { type: "item", code: "game:plank-*", quantity: 1 },
+			"R": { type: "item", code: "game:rod-*", name: "rodmetal", allowedVariants: ["iron", "meteoriciron", "steel"], quantity: 1 },
+			"J": { type: "block", code: "game:jug-*-fired", quantity: 1 }
+		},
+		width: 3,
+		height: 3,
+		attributes: {
+			liquidContainerProps: {
+				requiresContent: { type: "item", code: "game:oilportion-olive" },
+				requiresLitres: 3
+			}
+		},
+		output: { type: "item", code: "flyingmachine:wheel", quantity: 1 }
+	}
+]
