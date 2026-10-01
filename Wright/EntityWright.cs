@@ -303,7 +303,7 @@ public class EntityWright : EntityBoat, ISeatInstSupplier
             // Klienten holder (tannhjul i 5 s) og sender pakken; serveren gjør ingenting på selve klikket
             if (Api is ICoreClientAPI capi0 && byEntity == capi0.World.Player.Entity)
             {
-                string? error = DisassembleError();
+                string? error = DisassembleError(byEntity);
                 if (error != null) WrightMaterials.Error(this, byEntity, error);
                 else WrightHoldAction.Start(capi0, this, Properties.Attributes,
                     () => capi0.Network.SendEntityPacket(EntityId, PacketDisassemble, null));
@@ -321,7 +321,7 @@ public class EntityWright : EntityBoat, ISeatInstSupplier
         // ellers kunne man stappe et bygd fly i sekken i overlevelse)
         if (mode == EnumInteractMode.Interact && byEntity.Controls.ShiftKey && itemslot?.Empty != false
             && (byEntity as EntityPlayer)?.Player?.WorldData.CurrentGameMode == EnumGameMode.Creative
-            && DisassembleError() == null)
+            && DisassembleError(byEntity) == null)
         {
             if (World.Side == EnumAppSide.Server)
             {
@@ -339,6 +339,13 @@ public class EntityWright : EntityBoat, ISeatInstSupplier
     /// <summary>Null hvis flyet kan tas fra hverandre: ingen om bord, tom lasteplass, står stille på bakken.</summary>
     string? DisassembleError()
     {
+        return DisassembleError(null);
+    }
+
+    /// <summary>Som over, pluss eierskap når vi vet hvem som spør.</summary>
+    string? DisassembleError(EntityAgent? byEntity)
+    {
+        if (byEntity != null && WrightMaterials.OwnerError(this, byEntity) is string owner) return owner;
         if (GetBehavior<EntityBehaviorSeatable>()?.AnyMounted() == true) return "wright:disassemble-occupied";
         if (GetBehavior<EntityBehaviorRideableAccessories>()?.Inventory.Empty == false) return "wright:disassemble-cargo";
         if (Flying || !WheelsOnGround() || Pos.Motion.Length() > 0.01) return "wright:disassemble-notlanded";
@@ -422,7 +429,7 @@ public class EntityWright : EntityBoat, ISeatInstSupplier
         if (packetid == PacketDisassemble)
         {
             // Sjekk alt på nytt: verktøy i hånda, innen rekkevidde, og at flyet fortsatt kan tas fra hverandre
-            if (Alive && player.Entity.Pos.DistanceTo(Pos) < 8 && DisassembleError() == null
+            if (Alive && player.Entity.Pos.DistanceTo(Pos) < 8 && DisassembleError(player.Entity) == null
                 && WrightMaterials.IsDisassemblyTool(player.InventoryManager.ActiveHotbarSlot?.Itemstack, Properties.Attributes))
             {
                 Disassemble(player.Entity);

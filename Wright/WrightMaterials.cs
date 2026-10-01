@@ -156,8 +156,46 @@ public static class WrightMaterials
     {
         if (entity.Api is ICoreClientAPI capi && byEntity == capi.World.Player.Entity)
         {
-            capi.TriggerIngameError(entity, "wrightdisassemble", Vintagestory.API.Config.Lang.Get(langCode));
+            capi.TriggerIngameError(entity, "wrightdisassemble", Vintagestory.API.Config.Lang.Get(langCode, OwnerName(entity)));
         }
+    }
+
+    // Eier = den som satte ut bukkene (eldre fly: den som rullet det ut). Samme attributter som vanilla-båten,
+    // så vanilla-linja «Created by» viser eieren.
+    public const string OwnerUidKey = "createdByPlayerUID", OwnerNameKey = "createdByPlayername";
+
+    public static void SetOwner(Entity entity, IPlayer player)
+    {
+        entity.WatchedAttributes.SetString(OwnerUidKey, player.PlayerUID);
+        entity.WatchedAttributes.SetString(OwnerNameKey, player.PlayerName);
+    }
+
+    public static void CopyOwner(Entity from, Entity to)
+    {
+        string? uid = from.WatchedAttributes.GetString(OwnerUidKey);
+        if (string.IsNullOrEmpty(uid)) return;
+        to.WatchedAttributes.SetString(OwnerUidKey, uid);
+        to.WatchedAttributes.SetString(OwnerNameKey, from.WatchedAttributes.GetString(OwnerNameKey));
+    }
+
+    static string OwnerName(Entity entity) => entity.WatchedAttributes.GetString(OwnerNameKey, "?");
+
+    /// <summary>
+    /// Null hvis spilleren får rive dette: eieren selv, serveradmin, eller noen med byggetilgang i et landkrav der
+    /// flyet står (så ingen kan parkere et fly på din tomt for alltid). Uten registrert eier: alle.
+    /// </summary>
+    public static string? OwnerError(Entity entity, EntityAgent byEntity)
+    {
+        string? uid = entity.WatchedAttributes.GetString(OwnerUidKey);
+        if (string.IsNullOrEmpty(uid)) return null;
+        if (byEntity is not EntityPlayer ep || ep.Player == null) return "wright:disassemble-notowner";
+        if (ep.PlayerUID == uid) return null;
+        if (ep.Player.HasPrivilege(Vintagestory.API.Server.Privilege.controlserver)) return null;
+        var pos = entity.Pos.AsBlockPos;
+        var claims = entity.World.Claims.Get(pos);
+        if (claims != null && claims.Length > 0
+            && entity.World.Claims.TestAccess(ep.Player, pos, EnumBlockAccessFlags.BuildOrBreak) == EnumWorldAccessResponse.Granted) return null;
+        return "wright:disassemble-notowner";
     }
 
     static ITreeAttribute Tree(Entity entity)

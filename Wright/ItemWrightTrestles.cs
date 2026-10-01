@@ -50,6 +50,7 @@ public class ItemWrightTrestles : Item
         site.Pos.SetPos(blockSel.Position.ToVec3d().Add(0.5, 1, 0.5));
         const float quarter = GameMath.PIHALF;
         site.Pos.Yaw = (float)Math.Round(byEntity.Pos.Yaw / quarter) * quarter;
+        WrightMaterials.SetOwner(site, ep.Player);
         world.SpawnEntity(site);
 
         slot.TakeOut(1);

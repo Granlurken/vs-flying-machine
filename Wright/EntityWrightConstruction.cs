@@ -82,14 +82,18 @@ public class EntityWrightConstruction : Entity
         // Bare bukker: Shift + tom hånd tar dem ned igjen
         if (rcc.CurrentCompletedStage == 0 && handslot.Empty && byEntity.Controls.ShiftKey)
         {
-            if (World.Side == EnumAppSide.Server) TakeDown(byEntity);
+            string? owner = WrightMaterials.OwnerError(this, byEntity);
+            if (owner != null) WrightMaterials.Error(this, byEntity, owner);
+            else if (World.Side == EnumAppSide.Server) TakeDown(byEntity);
             return;
         }
 
         // Skiftenøkkel + Shift: riv byggeplassen og få tilbake alt som er brukt så langt (pluss bukkene)
         if (byEntity.Controls.ShiftKey && WrightMaterials.IsDisassemblyTool(handslot.Itemstack, Properties.Attributes))
         {
-            if (Api is ICoreClientAPI capi && byEntity == capi.World.Player.Entity)
+            string? owner = WrightMaterials.OwnerError(this, byEntity);
+            if (owner != null) WrightMaterials.Error(this, byEntity, owner);
+            else if (Api is ICoreClientAPI capi && byEntity == capi.World.Player.Entity)
             {
                 WrightHoldAction.Start(capi, this, Properties.Attributes,
                     () => capi.Network.SendEntityPacket(EntityId, PacketTakeDown, null));
@@ -119,7 +123,8 @@ public class EntityWrightConstruction : Entity
     {
         base.OnReceivedClientPacket(player, packetid, data);
         if (packetid == PacketTakeDown && Alive && player.Entity.Pos.DistanceTo(Pos) < 8
-            && WrightMaterials.IsDisassemblyTool(player.InventoryManager.ActiveHotbarSlot?.Itemstack, Properties.Attributes))
+            && WrightMaterials.IsDisassemblyTool(player.InventoryManager.ActiveHotbarSlot?.Itemstack, Properties.Attributes)
+            && WrightMaterials.OwnerError(this, player.Entity) == null)
         {
             TakeDown(player.Entity);
         }
@@ -148,10 +153,12 @@ public class EntityWrightConstruction : Entity
         plane.Pos.SetFrom(Pos);
         plane.Pos.Yaw = Pos.Yaw + Properties.Attributes["spawnYawOffset"].AsFloat(0);
         plane.Pos.Y += 0.1;
-        if (byEntity is EntityPlayer ep && ep.Player != null)
+        // Eieren er den som satte ut bukkene; byggeplasser fra før eierskap: den som ruller ut
+        WrightMaterials.CopyOwner(this, plane);
+        if (string.IsNullOrEmpty(plane.WatchedAttributes.GetString(WrightMaterials.OwnerUidKey))
+            && byEntity is EntityPlayer ep && ep.Player != null)
         {
-            plane.WatchedAttributes.SetString("createdByPlayername", ep.Player.PlayerName);
-            plane.WatchedAttributes.SetString("createdByPlayerUID", ep.Player.PlayerUID);
+            WrightMaterials.SetOwner(plane, ep.Player);
         }
         WrightMaterials.CopyTo(this, plane);
         World.SpawnEntity(plane);
@@ -202,6 +209,8 @@ public class EntityWrightConstruction : Entity
     public override string GetInfoText()
     {
         string text = base.GetInfoText() + "\r\n";
+        string? owner = WatchedAttributes.GetString(WrightMaterials.OwnerNameKey);
+        if (!string.IsNullOrEmpty(owner)) text += Lang.Get("wright:site-owner", owner) + "\r\n";
         if (rcc.StoredWildCards.TryGetValue("wood", out var wood))
         {
             text += Lang.Get("Material: {0}", Lang.Get("material-" + wood)) + "\r\n";
