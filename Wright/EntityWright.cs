@@ -141,6 +141,18 @@ public class EntityWright : EntityBoat, ISeatInstSupplier
 
     public override bool ApplyGravity => !Flying;
 
+    /// <summary>
+    /// Kun ved nyfødsel (ikke ved lasting). Fly fra byggeplassen starter tomme; satt ut med kreativ-itemet
+    /// (eller /entity spawn) får de full tank, så man kan prøvefly uten å destillere først.
+    /// </summary>
+    public override void OnEntitySpawn()
+    {
+        base.OnEntitySpawn();
+        if (Api.Side == EnumAppSide.Server && !WatchedAttributes.GetBool(BuiltOnSiteKey)) FuelLitres = fuelCapacity;
+    }
+
+    public const string BuiltOnSiteKey = "builtOnSite";
+
     public override void Initialize(EntityProperties properties, ICoreAPI api, long InChunkIndex3d)
     {
         base.Initialize(properties, api, InChunkIndex3d);

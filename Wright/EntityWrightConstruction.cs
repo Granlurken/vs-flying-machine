@@ -161,6 +161,8 @@ public class EntityWrightConstruction : Entity
             WrightMaterials.SetOwner(plane, ep.Player);
         }
         WrightMaterials.CopyTo(this, plane);
+        plane.WatchedAttributes.SetBool(EntityWright.BuiltOnSiteKey, true); // bygd = tom tank
+
         World.SpawnEntity(plane);
         Die(EnumDespawnReason.Removed);
     }
