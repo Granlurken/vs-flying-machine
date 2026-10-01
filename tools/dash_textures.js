@@ -34,6 +34,7 @@ let seed = 1911;
 const rnd = () => { seed = (seed + 0x6D2B79F5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
 
 const INK = [38, 32, 26], RED = [150, 36, 28];
+const VARIO_MAX = 10, VARIO_SPAN = 175, VARIO_CURVE = 4;
 
 function canvas() {
   const px = Buffer.alloc(S * S * 4);
@@ -80,7 +81,7 @@ const FONT = {
   3: ["111", "001", "011", "001", "111"], 4: ["101", "101", "111", "001", "001"], 5: ["111", "100", "111", "001", "111"],
   6: ["111", "100", "111", "101", "111"], 7: ["111", "001", "010", "010", "010"], 8: ["111", "101", "111", "101", "111"],
   9: ["111", "101", "111", "001", "111"],
-  A: ["010", "101", "111", "101", "101"], D: ["110", "101", "101", "101", "110"], E: ["111", "100", "110", "100", "111"],
+  A: ["010", "101", "111", "101", "101"], D: ["110", "101", "101", "101", "110"], O: ["111", "101", "101", "101", "111"], E: ["111", "100", "110", "100", "111"],
   F: ["111", "100", "110", "100", "100"], L: ["100", "100", "100", "100", "111"], N: ["101", "111", "111", "111", "101"],
   P: ["110", "101", "110", "100", "100"], S: ["011", "100", "010", "001", "110"], T: ["111", "010", "010", "010", "010"],
   U: ["101", "101", "101", "101", "111"], W: ["10001", "10001", "10101", "10101", "01010"], "/": ["001", "001", "010", "100", "100"]
@@ -143,15 +144,21 @@ const dials = {
     text(cv, "STALL", C - 14.4, C + 9, CREAM);
     text(cv, "FUEL", C + 14.4, C + 9, CREAM);
   },
-  // Tom plass: mørkt hull med to skruer i en messingring
-  blank(cv) {
-    for (let y = 0; y < S; y++) for (let x = 0; x < S; x++) {
-      const d = Math.hypot(x - C, y - C);
-      if (d > 31.5) continue;
-      if (d > 27.5) { const k = 0.7 + rnd() * 0.15; cv.set(x, y, [168 * k, 128 * k, 62 * k]); }
-      else { const k = 0.9 + rnd() * 0.2; cv.set(x, y, [34 * k, 30 * k, 26 * k]); }
+  // Variometer: 0 klokka 9, UP med klokka, DOWN mot klokka, ±VARIO_MAX blokker/s over ±VARIO_SPAN grader.
+  // Ikke-lineær: log(1+k·x)/log(1+k) gir mer plass nær null. Må stemme med instruments.vario* i entities/wright.json
+  vario(cv) {
+    dialBase(cv);
+    const ang = v => -90 + Math.sign(v) * VARIO_SPAN * Math.log(1 + VARIO_CURVE * Math.abs(v) / VARIO_MAX) / Math.log(1 + VARIO_CURVE);
+    for (const s of [1, -1]) {
+      for (let v = 0.5; v <= VARIO_MAX; v += v < 2 ? 0.5 : 1) tick(cv, ang(s * v), 23.5, 26, INK);
+      for (const v of [1, 2, 5]) { tick(cv, ang(s * v), 21.5, 26, INK, 2); text(cv, v, ...at(ang(s * v), 18)); }
+      tick(cv, ang(s * VARIO_MAX), 21.5, 26, INK, 2);
     }
-    for (const [x, y] of [[C - 29, C], [C + 29, C]]) for (let j = -1; j <= 1; j++) for (let i = -1; i <= 1; i++) cv.set(x + i, y + j, i === j ? [60, 50, 30] : [120, 110, 90]);
+    tick(cv, -90, 20, 26, INK, 3);
+    text(cv, "10", ...at(90, 17.5)); // begge tierne møtes klokka 3
+    text(cv, "0", ...at(-90, 16.5));
+    text(cv, "UP", C + 7, C - 8);
+    text(cv, "DOWN", C + 6, C + 9);
   }
 };
 

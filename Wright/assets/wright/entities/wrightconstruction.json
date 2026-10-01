@@ -46,8 +46,12 @@
 				{ type: "item", code: "game:rope", quantity: 2 }
 			], addElements: ["Root/S7Tail"] },
 			{ requireStacks: [
+				{ type: "item", code: "wright:dashboard", quantity: 1 },
+				{ type: "item", code: "wright:battery", quantity: 1 }
+			], addElements: ["Root/S8Dash"] },
+			{ requireStacks: [
 				{ type: "block", code: "game:chair-*", name: "wright:ingredient-chair", quantity: 2 }
-			], addElements: ["Root/S8Seat"] },
+			], addElements: ["Root/S9Seat"] },
 			{ requireStacks: [], actionLangCode: "wright:rollout" }
 		]
 	},
@@ -82,7 +86,8 @@
 			"dialalt": { base: "wright:dash/altimeter" },
 			"dialfuel": { base: "wright:dash/fuel" },
 			"dialcompass": { base: "wright:dash/compass" },
-			"dialblank": { base: "wright:dash/blank" },
+			"dialvario": { base: "wright:dash/vario" },
+			"ceramic": { base: "game:block/clay/hardened/brown" },
 			"diallamps": { base: "wright:dash/lamps" },
 			"lampredoff": { base: "wright:dash/lampredoff" },
 			"lampredon": { base: "wright:dash/lampredon" },

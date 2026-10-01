@@ -1,0 +1,28 @@
+{
+	code: "copperwire",
+	shape: { base: "wright:item/copperwire" },
+	creativeinventory: { "general": ["*"], "items": ["*"] },
+	maxstacksize: 32,
+	materialDensity: 800,
+	// Kveil av kobbertråd (0,75 × 0,11 × 0,56 blokker)
+	// Item-shapen er i full størrelse (tools/item_shapes.js). GUI: skala ≈ 1,85 / lengste mål. Bakke: skala × 0,2, y = halv høyde.
+	// Hånd: translation opphever origo/skala (VS-standard (-1.5, -1.6, -1.4) ved 0.33, skalert)
+	guiTransform: {
+		translation: { x: 0, y: 0, z: 0 },
+		rotation: { x: -22.6, y: -45, z: 0 },
+		origin: { x: 0.5, y: 0.5, z: 0.5 },
+		scale: 2.4
+	},
+	groundTransform: {
+		translation: { x: 0, y: 0.06, z: 0 },
+		rotation: { x: 0, y: 0, z: 0 },
+		origin: { x: 0.5, y: 0.5, z: 0.5 },
+		scale: 5
+	},
+	tpHandTransform: {
+		translation: { x: -0.49, y: -0.53, z: -0.46 },
+		rotation: { x: 0, y: 180, z: 0 },
+		origin: { x: 0.5, y: 0.5, z: 0.5 },
+		scale: 1
+	}
+}

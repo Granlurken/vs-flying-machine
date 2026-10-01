@@ -1,7 +1,7 @@
 // Genererer den ekte Wright-modellen: grov biplan i tre, lin og jern, Vintage Story-stil.
 // Kjør: node tools/wright_model.js
 //   → Wright/assets/wright/shapes/entity/wright.json         (flyet, S1–S8)
-//   → Wright/assets/wright/shapes/entity/construction.json   (byggeplassen, S0Site–S8Seat)
+//   → Wright/assets/wright/shapes/entity/construction.json   (byggeplassen, S0Site–S9Seat)
 // Begge bygges fra de samme delene, så byggeplassen og flyet aldri kan gli fra hverandre.
 //
 // Designramme: mål i blokker, (0,0,0) = bakkenivå midt under flyet, nesa mot +X, opp = +Y, høyre = +Z.
@@ -418,8 +418,9 @@ const PILOT = [0.4, BOT + 0.3, 0], PASSENGER = [-0.9, BOT + 0.3, 0];
 }
 // ---------------------------------------------------------------- instrumentbord (del av S8, bygget inn)
 // Et plankebord på tverrbjelken foran piloten, lent litt bakover mot tanken. Seks plasser (3×2):
-// fart / kompass / høyde øverst, drivstoff + to tomme plasser nederst (til senere instrumenter).
+// fart / kompass / høyde øverst, drivstoff / varsellamper / variometer nederst.
 // Hver viser er en gruppe med origo i skivas sentrum; animasjonene dreier den om lokal X (skivas normal).
+const dashStep = []; // eget byggetrinn (S8Dash): instrumentbordet + batteriet som driver lampene
 const needleAnims = [];
 const lampAnims = []; // [kode, element, forskyvning i X (voksler)]
 {
@@ -468,7 +469,7 @@ const lampAnims = []; // [kode, element, forskyvning i X (voksler)]
       lampAnims.push(["lamp" + key.toLowerCase(), `Lamp${key}On`, px((fx - 0.026) - (x0 + 0.01))]);
     });
   }
-  gauge("Blank1", "dialblank", rows[1], cols[2], []);
+  gauge("Vario", "dialvario", rows[1], cols[2], [["Vario", 0.078, 0.007, 0.004]]);
   // Kompass: selve skiva (kortet) dreier så N peker nord; en fast rød strek øverst viser kursen
   {
     const cy = rows[0], cz = cols[1];
@@ -478,7 +479,19 @@ const lampAnims = []; // [kode, element, forskyvning i X (voksler)]
     dash.push(box("CompassLubber", [fx - 0.014, cy + 0.058, cz - 0.004], [fx - 0.006, cy + 0.098, cz + 0.004], "needlered"));
   }
   // Lent bakover (toppen bort fra piloten) så skivene vender mot pilotens øyne
-  seats.push(group("Dashboard", dash, { rotationOrigin: [x1, y0, 0].map(px), rotationZ: -15 }));
+  dashStep.push(group("Dashboard", dash, { rotationOrigin: [x1, y0, 0].map(px), rotationZ: -15 }));
+  // Blysyre-batteri: brent leirkrukke på gulvet til høyre for pilotens føtter, blypoler og kobbertråd opp til bordet
+  const B = [0.93, BOT + 0.07, 0.28], bw = 0.1; // midt i bunnen
+  const top = B[1] + 0.26;
+  dashStep.push(group("Battery", [
+    box("BatteryJar", [B[0] - bw, B[1], B[2] - bw], [B[0] + bw, top - 0.04, B[2] + bw], "ceramic"),
+    box("BatteryShoulder", [B[0] - bw + 0.025, top - 0.04, B[2] - bw + 0.025], [B[0] + bw - 0.025, top, B[2] + bw - 0.025], "ceramic"),
+    box("BatteryLid", [B[0] - 0.045, top, B[2] - 0.045], [B[0] + 0.045, top + 0.025, B[2] + 0.045], "aged"),
+    box("BatteryPostLead", [B[0] - 0.012, top, B[2] - 0.075], [B[0] + 0.012, top + 0.06, B[2] - 0.051], "soot"),
+    box("BatteryPostCopper", [B[0] - 0.012, top, B[2] + 0.051], [B[0] + 0.012, top + 0.06, B[2] + 0.075], "copper")
+  ]));
+  dashStep.push(beam("BatteryWireA", [B[0], top + 0.05, B[2] - 0.063], [x0 - 0.01, y0 + 0.02, B[2] - 0.12], 0.012, "copper", 0.012));
+  dashStep.push(beam("BatteryWireB", [B[0], top + 0.05, B[2] + 0.063], [x0 - 0.01, y0 + 0.02, B[2] + 0.02], 0.012, "copper", 0.012));
 }
 
 // Seteklossen skal starte på puta, ikke midt i den
@@ -537,7 +550,8 @@ const textures = {
   dialalt: "wright:dash/altimeter",
   dialfuel: "wright:dash/fuel",
   dialcompass: "wright:dash/compass",
-  dialblank: "wright:dash/blank",
+  dialvario: "wright:dash/vario",
+  ceramic: "game:block/clay/hardened/brown",
   diallamps: "wright:dash/lamps",
   lampredoff: "wright:dash/lampredoff",
   lampredon: "wright:dash/lampredon",
@@ -547,7 +561,7 @@ const textures = {
 
 const steps = [
   ["S1Frame", frame], ["S2Gear", gear], ["S3LowerWing", lowerWing], ["S4UpperWing", upperWing],
-  ["S5Engine", engine], ["S6Drive", drive], ["S7Tail", tail], ["S8Seat", seats]
+  ["S5Engine", engine], ["S6Drive", drive], ["S7Tail", tail], ["S8Dash", dashStep], ["S9Seat", seats]
 ];
 
 const spin = (code, el, axis) => ({

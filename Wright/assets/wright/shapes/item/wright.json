@@ -17,9 +17,6 @@
 		"copper": "game:block/metal/sheet/copper3",
 		"soot": "game:block/metal/sheet/lead1",
 		"chain": "game:block/metal/tarnished/chain-rust",
-		"pelt": "game:block/cloth/pelt",
-		"leather": "game:block/cloth/leather/smallstiches",
-		"blanket": "game:block/cloth/wool/green2",
 		"brass": "game:block/metal/sheet/brass1",
 		"dialspeed": "wright:dash/speed",
 		"needle": "wright:dash/needle",
@@ -30,9 +27,13 @@
 		"lampredon": "wright:dash/lampredon",
 		"lampamberoff": "wright:dash/lampamberoff",
 		"lampamberon": "wright:dash/lampamberon",
-		"dialblank": "wright:dash/blank",
+		"dialvario": "wright:dash/vario",
 		"dialcompass": "wright:dash/compass",
-		"needlered": "wright:dash/needlered"
+		"needlered": "wright:dash/needlered",
+		"ceramic": "game:block/clay/hardened/brown",
+		"pelt": "game:block/cloth/pelt",
+		"leather": "game:block/cloth/leather/smallstiches",
+		"blanket": "game:block/cloth/wool/green2"
 	},
 	"elements": [
 		{
@@ -8371,8 +8372,8 @@
 						{
 							"name": "LowerRib0",
 							"from": [
-								-2.4,
-								11.616,
+								-2.592,
+								12,
 								-66.8
 							],
 							"to": [
@@ -11134,7 +11135,7 @@
 						{
 							"name": "LowerTip0",
 							"from": [
-								-2.592,
+								-2.4,
 								12.4,
 								-68.32
 							],
@@ -22282,7 +22283,7 @@
 					]
 				},
 				{
-					"name": "S8Seat",
+					"name": "S8Dash",
 					"from": [
 						0,
 						0,
@@ -22295,1236 +22296,6 @@
 					],
 					"faces": {},
 					"children": [
-						{
-							"name": "PilotPan",
-							"from": [
-								2.4,
-								15.84,
-								-4
-							],
-							"to": [
-								10.4,
-								16.8,
-								4.192
-							],
-							"faces": {
-								"north": {
-									"texture": "#planks",
-									"uv": [
-										0,
-										0,
-										8,
-										0.96
-									]
-								},
-								"east": {
-									"texture": "#planks",
-									"uv": [
-										0,
-										0,
-										8,
-										0.96
-									]
-								},
-								"south": {
-									"texture": "#planks",
-									"uv": [
-										0,
-										0,
-										8,
-										0.96
-									]
-								},
-								"west": {
-									"texture": "#planks",
-									"uv": [
-										0,
-										0,
-										8,
-										0.96
-									]
-								},
-								"up": {
-									"texture": "#planks",
-									"uv": [
-										0,
-										0,
-										8,
-										8
-									]
-								},
-								"down": {
-									"texture": "#planks",
-									"uv": [
-										0,
-										0,
-										8,
-										8
-									]
-								}
-							}
-						},
-						{
-							"name": "PilotCushion",
-							"from": [
-								2.88,
-								16.8,
-								-3.52
-							],
-							"to": [
-								9.6,
-								17.6,
-								3.52
-							],
-							"faces": {
-								"north": {
-									"texture": "#pelt",
-									"uv": [
-										0,
-										0,
-										6.72,
-										0.8
-									]
-								},
-								"east": {
-									"texture": "#pelt",
-									"uv": [
-										0,
-										0,
-										7.04,
-										0.8
-									]
-								},
-								"south": {
-									"texture": "#pelt",
-									"uv": [
-										0,
-										0,
-										6.72,
-										0.8
-									]
-								},
-								"west": {
-									"texture": "#pelt",
-									"uv": [
-										0,
-										0,
-										7.04,
-										0.8
-									]
-								},
-								"up": {
-									"texture": "#pelt",
-									"uv": [
-										0,
-										0,
-										6.72,
-										7.04
-									]
-								},
-								"down": {
-									"texture": "#pelt",
-									"uv": [
-										0,
-										0,
-										6.72,
-										7.04
-									]
-								}
-							}
-						},
-						{
-							"name": "PilotBack",
-							"from": [
-								1.6,
-								15.648,
-								-4.192
-							],
-							"to": [
-								2.56,
-								25.6,
-								4
-							],
-							"faces": {
-								"north": {
-									"texture": "#planks",
-									"uv": [
-										0,
-										0,
-										0.96,
-										9.76
-									]
-								},
-								"east": {
-									"texture": "#planks",
-									"uv": [
-										0,
-										0,
-										8,
-										9.76
-									]
-								},
-								"south": {
-									"texture": "#planks",
-									"uv": [
-										0,
-										0,
-										0.96,
-										9.76
-									]
-								},
-								"west": {
-									"texture": "#planks",
-									"uv": [
-										0,
-										0,
-										8,
-										9.76
-									]
-								},
-								"up": {
-									"texture": "#planks",
-									"uv": [
-										0,
-										0,
-										0.96,
-										8
-									]
-								},
-								"down": {
-									"texture": "#planks",
-									"uv": [
-										0,
-										0,
-										0.96,
-										8
-									]
-								}
-							}
-						},
-						{
-							"name": "PilotBackPad",
-							"from": [
-								2.176,
-								18.72,
-								-3.2
-							],
-							"to": [
-								3.2,
-								24.48,
-								3.2
-							],
-							"faces": {
-								"north": {
-									"texture": "#leather",
-									"uv": [
-										0,
-										0,
-										0.64,
-										5.76
-									]
-								},
-								"east": {
-									"texture": "#leather",
-									"uv": [
-										0,
-										0,
-										6.4,
-										5.76
-									]
-								},
-								"south": {
-									"texture": "#leather",
-									"uv": [
-										0,
-										0,
-										0.64,
-										5.76
-									]
-								},
-								"west": {
-									"texture": "#leather",
-									"uv": [
-										0,
-										0,
-										6.4,
-										5.76
-									]
-								},
-								"up": {
-									"texture": "#leather",
-									"uv": [
-										0,
-										0,
-										0.64,
-										6.4
-									]
-								},
-								"down": {
-									"texture": "#leather",
-									"uv": [
-										0,
-										0,
-										0.64,
-										6.4
-									]
-								}
-							}
-						},
-						{
-							"name": "PilotLeg0",
-							"from": [
-								5.76,
-								13.12,
-								-3.36
-							],
-							"to": [
-								7.04,
-								15.84,
-								-2.4
-							],
-							"faces": {
-								"north": {
-									"texture": "#wood",
-									"uv": [
-										0,
-										0,
-										1.28,
-										2.72
-									]
-								},
-								"east": {
-									"texture": "#wood",
-									"uv": [
-										0,
-										0,
-										0.96,
-										2.72
-									]
-								},
-								"south": {
-									"texture": "#wood",
-									"uv": [
-										0,
-										0,
-										1.28,
-										2.72
-									]
-								},
-								"west": {
-									"texture": "#wood",
-									"uv": [
-										0,
-										0,
-										0.96,
-										2.72
-									]
-								},
-								"up": {
-									"texture": "#wood",
-									"uv": [
-										0,
-										0,
-										1.28,
-										0.96
-									]
-								},
-								"down": {
-									"texture": "#wood",
-									"uv": [
-										0,
-										0,
-										1.28,
-										0.96
-									]
-								}
-							}
-						},
-						{
-							"name": "PilotLeg1",
-							"from": [
-								5.76,
-								13.12,
-								2.4
-							],
-							"to": [
-								7.04,
-								15.84,
-								3.36
-							],
-							"faces": {
-								"north": {
-									"texture": "#wood",
-									"uv": [
-										0,
-										0,
-										1.28,
-										2.72
-									]
-								},
-								"east": {
-									"texture": "#wood",
-									"uv": [
-										0,
-										0,
-										0.96,
-										2.72
-									]
-								},
-								"south": {
-									"texture": "#wood",
-									"uv": [
-										0,
-										0,
-										1.28,
-										2.72
-									]
-								},
-								"west": {
-									"texture": "#wood",
-									"uv": [
-										0,
-										0,
-										0.96,
-										2.72
-									]
-								},
-								"up": {
-									"texture": "#wood",
-									"uv": [
-										0,
-										0,
-										1.28,
-										0.96
-									]
-								},
-								"down": {
-									"texture": "#wood",
-									"uv": [
-										0,
-										0,
-										1.28,
-										0.96
-									]
-								}
-							}
-						},
-						{
-							"name": "PassengerPan",
-							"from": [
-								-18.4,
-								15.84,
-								-4
-							],
-							"to": [
-								-10.4,
-								16.8,
-								4.192
-							],
-							"faces": {
-								"north": {
-									"texture": "#planks",
-									"uv": [
-										0,
-										0,
-										8,
-										0.96
-									]
-								},
-								"east": {
-									"texture": "#planks",
-									"uv": [
-										0,
-										0,
-										8,
-										0.96
-									]
-								},
-								"south": {
-									"texture": "#planks",
-									"uv": [
-										0,
-										0,
-										8,
-										0.96
-									]
-								},
-								"west": {
-									"texture": "#planks",
-									"uv": [
-										0,
-										0,
-										8,
-										0.96
-									]
-								},
-								"up": {
-									"texture": "#planks",
-									"uv": [
-										0,
-										0,
-										8,
-										8
-									]
-								},
-								"down": {
-									"texture": "#planks",
-									"uv": [
-										0,
-										0,
-										8,
-										8
-									]
-								}
-							}
-						},
-						{
-							"name": "PassengerCushion",
-							"from": [
-								-17.92,
-								16.8,
-								-3.52
-							],
-							"to": [
-								-11.2,
-								17.6,
-								3.52
-							],
-							"faces": {
-								"north": {
-									"texture": "#leather",
-									"uv": [
-										0,
-										0,
-										6.72,
-										0.8
-									]
-								},
-								"east": {
-									"texture": "#leather",
-									"uv": [
-										0,
-										0,
-										7.04,
-										0.8
-									]
-								},
-								"south": {
-									"texture": "#leather",
-									"uv": [
-										0,
-										0,
-										6.72,
-										0.8
-									]
-								},
-								"west": {
-									"texture": "#leather",
-									"uv": [
-										0,
-										0,
-										7.04,
-										0.8
-									]
-								},
-								"up": {
-									"texture": "#leather",
-									"uv": [
-										0,
-										0,
-										6.72,
-										7.04
-									]
-								},
-								"down": {
-									"texture": "#leather",
-									"uv": [
-										0,
-										0,
-										6.72,
-										7.04
-									]
-								}
-							}
-						},
-						{
-							"name": "PassengerBack",
-							"from": [
-								-19.2,
-								15.648,
-								-4.192
-							],
-							"to": [
-								-18.24,
-								25.6,
-								4
-							],
-							"faces": {
-								"north": {
-									"texture": "#planks",
-									"uv": [
-										0,
-										0,
-										0.96,
-										9.76
-									]
-								},
-								"east": {
-									"texture": "#planks",
-									"uv": [
-										0,
-										0,
-										8,
-										9.76
-									]
-								},
-								"south": {
-									"texture": "#planks",
-									"uv": [
-										0,
-										0,
-										0.96,
-										9.76
-									]
-								},
-								"west": {
-									"texture": "#planks",
-									"uv": [
-										0,
-										0,
-										8,
-										9.76
-									]
-								},
-								"up": {
-									"texture": "#planks",
-									"uv": [
-										0,
-										0,
-										0.96,
-										8
-									]
-								},
-								"down": {
-									"texture": "#planks",
-									"uv": [
-										0,
-										0,
-										0.96,
-										8
-									]
-								}
-							}
-						},
-						{
-							"name": "PassengerBackPad",
-							"from": [
-								-18.24,
-								18.72,
-								-3.2
-							],
-							"to": [
-								-17.6,
-								24.48,
-								3.2
-							],
-							"faces": {
-								"north": {
-									"texture": "#leather",
-									"uv": [
-										0,
-										0,
-										0.64,
-										5.76
-									]
-								},
-								"east": {
-									"texture": "#leather",
-									"uv": [
-										0,
-										0,
-										6.4,
-										5.76
-									]
-								},
-								"south": {
-									"texture": "#leather",
-									"uv": [
-										0,
-										0,
-										0.64,
-										5.76
-									]
-								},
-								"west": {
-									"texture": "#leather",
-									"uv": [
-										0,
-										0,
-										6.4,
-										5.76
-									]
-								},
-								"up": {
-									"texture": "#leather",
-									"uv": [
-										0,
-										0,
-										0.64,
-										6.4
-									]
-								},
-								"down": {
-									"texture": "#leather",
-									"uv": [
-										0,
-										0,
-										0.64,
-										6.4
-									]
-								}
-							}
-						},
-						{
-							"name": "PassengerLeg0",
-							"from": [
-								-15.04,
-								13.12,
-								-3.36
-							],
-							"to": [
-								-13.76,
-								15.84,
-								-2.4
-							],
-							"faces": {
-								"north": {
-									"texture": "#wood",
-									"uv": [
-										0,
-										0,
-										1.28,
-										2.72
-									]
-								},
-								"east": {
-									"texture": "#wood",
-									"uv": [
-										0,
-										0,
-										0.96,
-										2.72
-									]
-								},
-								"south": {
-									"texture": "#wood",
-									"uv": [
-										0,
-										0,
-										1.28,
-										2.72
-									]
-								},
-								"west": {
-									"texture": "#wood",
-									"uv": [
-										0,
-										0,
-										0.96,
-										2.72
-									]
-								},
-								"up": {
-									"texture": "#wood",
-									"uv": [
-										0,
-										0,
-										1.28,
-										0.96
-									]
-								},
-								"down": {
-									"texture": "#wood",
-									"uv": [
-										0,
-										0,
-										1.28,
-										0.96
-									]
-								}
-							}
-						},
-						{
-							"name": "PassengerLeg1",
-							"from": [
-								-15.04,
-								13.12,
-								2.4
-							],
-							"to": [
-								-13.76,
-								15.84,
-								3.36
-							],
-							"faces": {
-								"north": {
-									"texture": "#wood",
-									"uv": [
-										0,
-										0,
-										1.28,
-										2.72
-									]
-								},
-								"east": {
-									"texture": "#wood",
-									"uv": [
-										0,
-										0,
-										0.96,
-										2.72
-									]
-								},
-								"south": {
-									"texture": "#wood",
-									"uv": [
-										0,
-										0,
-										1.28,
-										2.72
-									]
-								},
-								"west": {
-									"texture": "#wood",
-									"uv": [
-										0,
-										0,
-										0.96,
-										2.72
-									]
-								},
-								"up": {
-									"texture": "#wood",
-									"uv": [
-										0,
-										0,
-										1.28,
-										0.96
-									]
-								},
-								"down": {
-									"texture": "#wood",
-									"uv": [
-										0,
-										0,
-										1.28,
-										0.96
-									]
-								}
-							}
-						},
-						{
-							"name": "BlanketBack",
-							"from": [
-								-19.68,
-								21.6,
-								-3.36
-							],
-							"to": [
-								-19.2,
-								26.08,
-								3.36
-							],
-							"faces": {
-								"north": {
-									"texture": "#blanket",
-									"uv": [
-										0,
-										0,
-										0.5,
-										4.48
-									]
-								},
-								"east": {
-									"texture": "#blanket",
-									"uv": [
-										0,
-										0,
-										6.72,
-										4.48
-									]
-								},
-								"south": {
-									"texture": "#blanket",
-									"uv": [
-										0,
-										0,
-										0.5,
-										4.48
-									]
-								},
-								"west": {
-									"texture": "#blanket",
-									"uv": [
-										0,
-										0,
-										6.72,
-										4.48
-									]
-								},
-								"up": {
-									"texture": "#blanket",
-									"uv": [
-										0,
-										0,
-										0.5,
-										6.72
-									]
-								},
-								"down": {
-									"texture": "#blanket",
-									"uv": [
-										0,
-										0,
-										0.5,
-										6.72
-									]
-								}
-							}
-						},
-						{
-							"name": "BlanketTop",
-							"from": [
-								-19.84,
-								26.08,
-								-3.36
-							],
-							"to": [
-								-17.44,
-								26.72,
-								3.36
-							],
-							"faces": {
-								"north": {
-									"texture": "#blanket",
-									"uv": [
-										0,
-										0,
-										2.4,
-										0.64
-									]
-								},
-								"east": {
-									"texture": "#blanket",
-									"uv": [
-										0,
-										0,
-										6.72,
-										0.64
-									]
-								},
-								"south": {
-									"texture": "#blanket",
-									"uv": [
-										0,
-										0,
-										2.4,
-										0.64
-									]
-								},
-								"west": {
-									"texture": "#blanket",
-									"uv": [
-										0,
-										0,
-										6.72,
-										0.64
-									]
-								},
-								"up": {
-									"texture": "#blanket",
-									"uv": [
-										0,
-										0,
-										2.4,
-										6.72
-									]
-								},
-								"down": {
-									"texture": "#blanket",
-									"uv": [
-										0,
-										0,
-										2.4,
-										6.72
-									]
-								}
-							}
-						},
-						{
-							"name": "BlanketFront",
-							"from": [
-								-17.92,
-								22.24,
-								-3.36
-							],
-							"to": [
-								-17.44,
-								26.08,
-								3.36
-							],
-							"faces": {
-								"north": {
-									"texture": "#blanket",
-									"uv": [
-										0,
-										0,
-										0.5,
-										3.84
-									]
-								},
-								"east": {
-									"texture": "#blanket",
-									"uv": [
-										0,
-										0,
-										6.72,
-										3.84
-									]
-								},
-								"south": {
-									"texture": "#blanket",
-									"uv": [
-										0,
-										0,
-										0.5,
-										3.84
-									]
-								},
-								"west": {
-									"texture": "#blanket",
-									"uv": [
-										0,
-										0,
-										6.72,
-										3.84
-									]
-								},
-								"up": {
-									"texture": "#blanket",
-									"uv": [
-										0,
-										0,
-										0.5,
-										6.72
-									]
-								},
-								"down": {
-									"texture": "#blanket",
-									"uv": [
-										0,
-										0,
-										0.5,
-										6.72
-									]
-								}
-							}
-						},
-						{
-							"name": "Stick",
-							"from": [
-								13.6,
-								12.8,
-								-0.32
-							],
-							"to": [
-								22.914,
-								13.44,
-								0.32
-							],
-							"rotationOrigin": [
-								13.6,
-								13.12,
-								0
-							],
-							"faces": {
-								"north": {
-									"texture": "#wood",
-									"uv": [
-										0,
-										0,
-										9.314,
-										0.64
-									]
-								},
-								"east": {
-									"texture": "#wood",
-									"uv": [
-										0,
-										0,
-										0.64,
-										0.64
-									]
-								},
-								"south": {
-									"texture": "#wood",
-									"uv": [
-										0,
-										0,
-										9.314,
-										0.64
-									]
-								},
-								"west": {
-									"texture": "#wood",
-									"uv": [
-										0,
-										0,
-										0.64,
-										0.64
-									]
-								},
-								"up": {
-									"texture": "#wood",
-									"uv": [
-										0,
-										0,
-										9.314,
-										0.64
-									]
-								},
-								"down": {
-									"texture": "#wood",
-									"uv": [
-										0,
-										0,
-										9.314,
-										0.64
-									]
-								}
-							},
-							"rotationY": -180,
-							"rotationZ": 85.073
-						},
-						{
-							"name": "StickGrip",
-							"from": [
-								12.16,
-								21.92,
-								-0.56
-							],
-							"to": [
-								13.44,
-								23.52,
-								0.56
-							],
-							"faces": {
-								"north": {
-									"texture": "#twine",
-									"uv": [
-										0,
-										0,
-										1.28,
-										1.6
-									]
-								},
-								"east": {
-									"texture": "#twine",
-									"uv": [
-										0,
-										0,
-										1.12,
-										1.6
-									]
-								},
-								"south": {
-									"texture": "#twine",
-									"uv": [
-										0,
-										0,
-										1.28,
-										1.6
-									]
-								},
-								"west": {
-									"texture": "#twine",
-									"uv": [
-										0,
-										0,
-										1.12,
-										1.6
-									]
-								},
-								"up": {
-									"texture": "#twine",
-									"uv": [
-										0,
-										0,
-										1.28,
-										1.12
-									]
-								},
-								"down": {
-									"texture": "#twine",
-									"uv": [
-										0,
-										0,
-										1.28,
-										1.12
-									]
-								}
-							}
-						},
-						{
-							"name": "PilotSeat",
-							"from": [
-								2.4,
-								17.6,
-								-4
-							],
-							"to": [
-								10.4,
-								27.2,
-								4
-							],
-							"faces": {},
-							"attachmentpoints": [
-								{
-									"code": "PilotAP",
-									"posX": "4",
-									"posY": "0",
-									"posZ": "4",
-									"rotationX": "0",
-									"rotationY": "0",
-									"rotationZ": "0"
-								}
-							]
-						},
-						{
-							"name": "PassengerSeat",
-							"from": [
-								-18.4,
-								17.6,
-								-4
-							],
-							"to": [
-								-10.4,
-								27.2,
-								4
-							],
-							"faces": {},
-							"attachmentpoints": [
-								{
-									"code": "PassengerAP",
-									"posX": "4",
-									"posY": "0",
-									"posZ": "4",
-									"rotationX": "0",
-									"rotationY": "0",
-									"rotationZ": "0"
-								}
-							]
-						},
 						{
 							"name": "Dashboard",
 							"from": [
@@ -25049,7 +23820,7 @@
 									}
 								},
 								{
-									"name": "Blank1Mount",
+									"name": "VarioMount",
 									"from": [
 										17.312,
 										23.136,
@@ -25118,7 +23889,7 @@
 									}
 								},
 								{
-									"name": "Blank1Dial",
+									"name": "VarioDial",
 									"from": [
 										17.184,
 										23.2,
@@ -25131,12 +23902,171 @@
 									],
 									"faces": {
 										"west": {
-											"texture": "#dialblank",
+											"texture": "#dialvario",
 											"uv": [
 												0,
 												0,
 												16,
 												16
+											]
+										}
+									}
+								},
+								{
+									"name": "NeedleVario",
+									"from": [
+										0,
+										0,
+										0
+									],
+									"to": [
+										0,
+										0,
+										0
+									],
+									"faces": {},
+									"rotationOrigin": [
+										17.184,
+										24.8,
+										4.32
+									],
+									"children": [
+										{
+											"name": "NeedleVarioBar",
+											"from": [
+												17.056,
+												24.416,
+												4.264
+											],
+											"to": [
+												17.12,
+												26.048,
+												4.376
+											],
+											"faces": {
+												"north": {
+													"texture": "#needle",
+													"uv": [
+														0,
+														0,
+														0.5,
+														1.632
+													]
+												},
+												"east": {
+													"texture": "#needle",
+													"uv": [
+														0,
+														0,
+														0.5,
+														1.632
+													]
+												},
+												"south": {
+													"texture": "#needle",
+													"uv": [
+														0,
+														0,
+														0.5,
+														1.632
+													]
+												},
+												"west": {
+													"texture": "#needle",
+													"uv": [
+														0,
+														0,
+														0.5,
+														1.632
+													]
+												},
+												"up": {
+													"texture": "#needle",
+													"uv": [
+														0,
+														0,
+														0.5,
+														0.5
+													]
+												},
+												"down": {
+													"texture": "#needle",
+													"uv": [
+														0,
+														0,
+														0.5,
+														0.5
+													]
+												}
+											}
+										}
+									]
+								},
+								{
+									"name": "VarioHub",
+									"from": [
+										16.768,
+										24.592,
+										4.112
+									],
+									"to": [
+										17.152,
+										25.008,
+										4.528
+									],
+									"faces": {
+										"north": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.5
+											]
+										},
+										"east": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.5
+											]
+										},
+										"south": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.5
+											]
+										},
+										"west": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.5
+											]
+										},
+										"up": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.5
+											]
+										},
+										"down": {
+											"texture": "#brass",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.5
 											]
 										}
 									}
@@ -25323,6 +24253,1765 @@
 											]
 										}
 									}
+								}
+							]
+						},
+						{
+							"name": "Battery",
+							"from": [
+								0,
+								0,
+								0
+							],
+							"to": [
+								0,
+								0,
+								0
+							],
+							"faces": {},
+							"children": [
+								{
+									"name": "BatteryJar",
+									"from": [
+										13.088,
+										13.12,
+										2.88
+									],
+									"to": [
+										16.48,
+										16.64,
+										6.08
+									],
+									"faces": {
+										"north": {
+											"texture": "#ceramic",
+											"uv": [
+												0,
+												0,
+												3.2,
+												3.52
+											]
+										},
+										"east": {
+											"texture": "#ceramic",
+											"uv": [
+												0,
+												0,
+												3.2,
+												3.52
+											]
+										},
+										"south": {
+											"texture": "#ceramic",
+											"uv": [
+												0,
+												0,
+												3.2,
+												3.52
+											]
+										},
+										"west": {
+											"texture": "#ceramic",
+											"uv": [
+												0,
+												0,
+												3.2,
+												3.52
+											]
+										},
+										"up": {
+											"texture": "#ceramic",
+											"uv": [
+												0,
+												0,
+												3.2,
+												3.2
+											]
+										},
+										"down": {
+											"texture": "#ceramic",
+											"uv": [
+												0,
+												0,
+												3.2,
+												3.2
+											]
+										}
+									}
+								},
+								{
+									"name": "BatteryShoulder",
+									"from": [
+										13.68,
+										16.64,
+										3.28
+									],
+									"to": [
+										16.08,
+										17.28,
+										5.68
+									],
+									"faces": {
+										"north": {
+											"texture": "#ceramic",
+											"uv": [
+												0,
+												0,
+												2.4,
+												0.64
+											]
+										},
+										"east": {
+											"texture": "#ceramic",
+											"uv": [
+												0,
+												0,
+												2.4,
+												0.64
+											]
+										},
+										"south": {
+											"texture": "#ceramic",
+											"uv": [
+												0,
+												0,
+												2.4,
+												0.64
+											]
+										},
+										"west": {
+											"texture": "#ceramic",
+											"uv": [
+												0,
+												0,
+												2.4,
+												0.64
+											]
+										},
+										"up": {
+											"texture": "#ceramic",
+											"uv": [
+												0,
+												0,
+												2.4,
+												2.4
+											]
+										},
+										"down": {
+											"texture": "#ceramic",
+											"uv": [
+												0,
+												0,
+												2.4,
+												2.4
+											]
+										}
+									}
+								},
+								{
+									"name": "BatteryLid",
+									"from": [
+										14.16,
+										17.28,
+										3.76
+									],
+									"to": [
+										15.6,
+										17.68,
+										5.2
+									],
+									"faces": {
+										"north": {
+											"texture": "#aged",
+											"uv": [
+												0,
+												0,
+												1.44,
+												0.5
+											]
+										},
+										"east": {
+											"texture": "#aged",
+											"uv": [
+												0,
+												0,
+												1.44,
+												0.5
+											]
+										},
+										"south": {
+											"texture": "#aged",
+											"uv": [
+												0,
+												0,
+												1.44,
+												0.5
+											]
+										},
+										"west": {
+											"texture": "#aged",
+											"uv": [
+												0,
+												0,
+												1.44,
+												0.5
+											]
+										},
+										"up": {
+											"texture": "#aged",
+											"uv": [
+												0,
+												0,
+												1.44,
+												1.44
+											]
+										},
+										"down": {
+											"texture": "#aged",
+											"uv": [
+												0,
+												0,
+												1.44,
+												1.44
+											]
+										}
+									}
+								},
+								{
+									"name": "BatteryPostLead",
+									"from": [
+										14.688,
+										17.28,
+										3.28
+									],
+									"to": [
+										15.072,
+										18.24,
+										3.664
+									],
+									"faces": {
+										"north": {
+											"texture": "#soot",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.96
+											]
+										},
+										"east": {
+											"texture": "#soot",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.96
+											]
+										},
+										"south": {
+											"texture": "#soot",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.96
+											]
+										},
+										"west": {
+											"texture": "#soot",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.96
+											]
+										},
+										"up": {
+											"texture": "#soot",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.5
+											]
+										},
+										"down": {
+											"texture": "#soot",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.5
+											]
+										}
+									}
+								},
+								{
+									"name": "BatteryPostCopper",
+									"from": [
+										14.688,
+										17.28,
+										5.296
+									],
+									"to": [
+										15.072,
+										18.24,
+										5.68
+									],
+									"faces": {
+										"north": {
+											"texture": "#copper",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.96
+											]
+										},
+										"east": {
+											"texture": "#copper",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.96
+											]
+										},
+										"south": {
+											"texture": "#copper",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.96
+											]
+										},
+										"west": {
+											"texture": "#copper",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.96
+											]
+										},
+										"up": {
+											"texture": "#copper",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.5
+											]
+										},
+										"down": {
+											"texture": "#copper",
+											"uv": [
+												0,
+												0,
+												0.5,
+												0.5
+											]
+										}
+									}
+								}
+							]
+						},
+						{
+							"name": "BatteryWireA",
+							"from": [
+								14.88,
+								17.984,
+								3.376
+							],
+							"to": [
+								20.608,
+								18.176,
+								3.568
+							],
+							"rotationOrigin": [
+								14.88,
+								18.08,
+								3.472
+							],
+							"faces": {
+								"north": {
+									"texture": "#copper",
+									"uv": [
+										0,
+										0,
+										5.728,
+										0.5
+									]
+								},
+								"east": {
+									"texture": "#copper",
+									"uv": [
+										0,
+										0,
+										0.5,
+										0.5
+									]
+								},
+								"south": {
+									"texture": "#copper",
+									"uv": [
+										0,
+										0,
+										5.728,
+										0.5
+									]
+								},
+								"west": {
+									"texture": "#copper",
+									"uv": [
+										0,
+										0,
+										0.5,
+										0.5
+									]
+								},
+								"up": {
+									"texture": "#copper",
+									"uv": [
+										0,
+										0,
+										5.728,
+										0.5
+									]
+								},
+								"down": {
+									"texture": "#copper",
+									"uv": [
+										0,
+										0,
+										5.728,
+										0.5
+									]
+								}
+							},
+							"rotationY": 20.807,
+							"rotationZ": 63.368
+						},
+						{
+							"name": "BatteryWireB",
+							"from": [
+								14.88,
+								17.984,
+								5.392
+							],
+							"to": [
+								20.576,
+								18.176,
+								5.584
+							],
+							"rotationOrigin": [
+								14.88,
+								18.08,
+								5.488
+							],
+							"faces": {
+								"north": {
+									"texture": "#copper",
+									"uv": [
+										0,
+										0,
+										5.696,
+										0.5
+									]
+								},
+								"east": {
+									"texture": "#copper",
+									"uv": [
+										0,
+										0,
+										0.5,
+										0.5
+									]
+								},
+								"south": {
+									"texture": "#copper",
+									"uv": [
+										0,
+										0,
+										5.696,
+										0.5
+									]
+								},
+								"west": {
+									"texture": "#copper",
+									"uv": [
+										0,
+										0,
+										0.5,
+										0.5
+									]
+								},
+								"up": {
+									"texture": "#copper",
+									"uv": [
+										0,
+										0,
+										5.696,
+										0.5
+									]
+								},
+								"down": {
+									"texture": "#copper",
+									"uv": [
+										0,
+										0,
+										5.696,
+										0.5
+									]
+								}
+							},
+							"rotationY": 15.996,
+							"rotationZ": 64.005
+						}
+					]
+				},
+				{
+					"name": "S9Seat",
+					"from": [
+						0,
+						0,
+						0
+					],
+					"to": [
+						0,
+						0,
+						0
+					],
+					"faces": {},
+					"children": [
+						{
+							"name": "PilotPan",
+							"from": [
+								2.4,
+								15.84,
+								-4
+							],
+							"to": [
+								10.4,
+								16.8,
+								4.192
+							],
+							"faces": {
+								"north": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										8,
+										0.96
+									]
+								},
+								"east": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										8,
+										0.96
+									]
+								},
+								"south": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										8,
+										0.96
+									]
+								},
+								"west": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										8,
+										0.96
+									]
+								},
+								"up": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										8,
+										8
+									]
+								},
+								"down": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										8,
+										8
+									]
+								}
+							}
+						},
+						{
+							"name": "PilotCushion",
+							"from": [
+								2.88,
+								16.8,
+								-3.52
+							],
+							"to": [
+								9.6,
+								17.6,
+								3.52
+							],
+							"faces": {
+								"north": {
+									"texture": "#pelt",
+									"uv": [
+										0,
+										0,
+										6.72,
+										0.8
+									]
+								},
+								"east": {
+									"texture": "#pelt",
+									"uv": [
+										0,
+										0,
+										7.04,
+										0.8
+									]
+								},
+								"south": {
+									"texture": "#pelt",
+									"uv": [
+										0,
+										0,
+										6.72,
+										0.8
+									]
+								},
+								"west": {
+									"texture": "#pelt",
+									"uv": [
+										0,
+										0,
+										7.04,
+										0.8
+									]
+								},
+								"up": {
+									"texture": "#pelt",
+									"uv": [
+										0,
+										0,
+										6.72,
+										7.04
+									]
+								},
+								"down": {
+									"texture": "#pelt",
+									"uv": [
+										0,
+										0,
+										6.72,
+										7.04
+									]
+								}
+							}
+						},
+						{
+							"name": "PilotBack",
+							"from": [
+								1.6,
+								15.648,
+								-4.192
+							],
+							"to": [
+								2.56,
+								25.6,
+								4
+							],
+							"faces": {
+								"north": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										0.96,
+										9.76
+									]
+								},
+								"east": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										8,
+										9.76
+									]
+								},
+								"south": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										0.96,
+										9.76
+									]
+								},
+								"west": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										8,
+										9.76
+									]
+								},
+								"up": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										0.96,
+										8
+									]
+								},
+								"down": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										0.96,
+										8
+									]
+								}
+							}
+						},
+						{
+							"name": "PilotBackPad",
+							"from": [
+								2.176,
+								18.72,
+								-3.2
+							],
+							"to": [
+								3.2,
+								24.48,
+								3.2
+							],
+							"faces": {
+								"north": {
+									"texture": "#leather",
+									"uv": [
+										0,
+										0,
+										0.64,
+										5.76
+									]
+								},
+								"east": {
+									"texture": "#leather",
+									"uv": [
+										0,
+										0,
+										6.4,
+										5.76
+									]
+								},
+								"south": {
+									"texture": "#leather",
+									"uv": [
+										0,
+										0,
+										0.64,
+										5.76
+									]
+								},
+								"west": {
+									"texture": "#leather",
+									"uv": [
+										0,
+										0,
+										6.4,
+										5.76
+									]
+								},
+								"up": {
+									"texture": "#leather",
+									"uv": [
+										0,
+										0,
+										0.64,
+										6.4
+									]
+								},
+								"down": {
+									"texture": "#leather",
+									"uv": [
+										0,
+										0,
+										0.64,
+										6.4
+									]
+								}
+							}
+						},
+						{
+							"name": "PilotLeg0",
+							"from": [
+								5.76,
+								13.12,
+								-3.36
+							],
+							"to": [
+								7.04,
+								15.84,
+								-2.4
+							],
+							"faces": {
+								"north": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										1.28,
+										2.72
+									]
+								},
+								"east": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.96,
+										2.72
+									]
+								},
+								"south": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										1.28,
+										2.72
+									]
+								},
+								"west": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.96,
+										2.72
+									]
+								},
+								"up": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										1.28,
+										0.96
+									]
+								},
+								"down": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										1.28,
+										0.96
+									]
+								}
+							}
+						},
+						{
+							"name": "PilotLeg1",
+							"from": [
+								5.76,
+								13.12,
+								2.4
+							],
+							"to": [
+								7.04,
+								15.84,
+								3.36
+							],
+							"faces": {
+								"north": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										1.28,
+										2.72
+									]
+								},
+								"east": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.96,
+										2.72
+									]
+								},
+								"south": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										1.28,
+										2.72
+									]
+								},
+								"west": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.96,
+										2.72
+									]
+								},
+								"up": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										1.28,
+										0.96
+									]
+								},
+								"down": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										1.28,
+										0.96
+									]
+								}
+							}
+						},
+						{
+							"name": "PassengerPan",
+							"from": [
+								-18.4,
+								15.84,
+								-4
+							],
+							"to": [
+								-10.4,
+								16.8,
+								4.192
+							],
+							"faces": {
+								"north": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										8,
+										0.96
+									]
+								},
+								"east": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										8,
+										0.96
+									]
+								},
+								"south": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										8,
+										0.96
+									]
+								},
+								"west": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										8,
+										0.96
+									]
+								},
+								"up": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										8,
+										8
+									]
+								},
+								"down": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										8,
+										8
+									]
+								}
+							}
+						},
+						{
+							"name": "PassengerCushion",
+							"from": [
+								-17.92,
+								16.8,
+								-3.52
+							],
+							"to": [
+								-11.2,
+								17.6,
+								3.52
+							],
+							"faces": {
+								"north": {
+									"texture": "#leather",
+									"uv": [
+										0,
+										0,
+										6.72,
+										0.8
+									]
+								},
+								"east": {
+									"texture": "#leather",
+									"uv": [
+										0,
+										0,
+										7.04,
+										0.8
+									]
+								},
+								"south": {
+									"texture": "#leather",
+									"uv": [
+										0,
+										0,
+										6.72,
+										0.8
+									]
+								},
+								"west": {
+									"texture": "#leather",
+									"uv": [
+										0,
+										0,
+										7.04,
+										0.8
+									]
+								},
+								"up": {
+									"texture": "#leather",
+									"uv": [
+										0,
+										0,
+										6.72,
+										7.04
+									]
+								},
+								"down": {
+									"texture": "#leather",
+									"uv": [
+										0,
+										0,
+										6.72,
+										7.04
+									]
+								}
+							}
+						},
+						{
+							"name": "PassengerBack",
+							"from": [
+								-19.2,
+								15.648,
+								-4.192
+							],
+							"to": [
+								-18.24,
+								25.6,
+								4
+							],
+							"faces": {
+								"north": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										0.96,
+										9.76
+									]
+								},
+								"east": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										8,
+										9.76
+									]
+								},
+								"south": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										0.96,
+										9.76
+									]
+								},
+								"west": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										8,
+										9.76
+									]
+								},
+								"up": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										0.96,
+										8
+									]
+								},
+								"down": {
+									"texture": "#planks",
+									"uv": [
+										0,
+										0,
+										0.96,
+										8
+									]
+								}
+							}
+						},
+						{
+							"name": "PassengerBackPad",
+							"from": [
+								-18.24,
+								18.72,
+								-3.2
+							],
+							"to": [
+								-17.6,
+								24.48,
+								3.2
+							],
+							"faces": {
+								"north": {
+									"texture": "#leather",
+									"uv": [
+										0,
+										0,
+										0.64,
+										5.76
+									]
+								},
+								"east": {
+									"texture": "#leather",
+									"uv": [
+										0,
+										0,
+										6.4,
+										5.76
+									]
+								},
+								"south": {
+									"texture": "#leather",
+									"uv": [
+										0,
+										0,
+										0.64,
+										5.76
+									]
+								},
+								"west": {
+									"texture": "#leather",
+									"uv": [
+										0,
+										0,
+										6.4,
+										5.76
+									]
+								},
+								"up": {
+									"texture": "#leather",
+									"uv": [
+										0,
+										0,
+										0.64,
+										6.4
+									]
+								},
+								"down": {
+									"texture": "#leather",
+									"uv": [
+										0,
+										0,
+										0.64,
+										6.4
+									]
+								}
+							}
+						},
+						{
+							"name": "PassengerLeg0",
+							"from": [
+								-15.04,
+								13.12,
+								-3.36
+							],
+							"to": [
+								-13.76,
+								15.84,
+								-2.4
+							],
+							"faces": {
+								"north": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										1.28,
+										2.72
+									]
+								},
+								"east": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.96,
+										2.72
+									]
+								},
+								"south": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										1.28,
+										2.72
+									]
+								},
+								"west": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.96,
+										2.72
+									]
+								},
+								"up": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										1.28,
+										0.96
+									]
+								},
+								"down": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										1.28,
+										0.96
+									]
+								}
+							}
+						},
+						{
+							"name": "PassengerLeg1",
+							"from": [
+								-15.04,
+								13.12,
+								2.4
+							],
+							"to": [
+								-13.76,
+								15.84,
+								3.36
+							],
+							"faces": {
+								"north": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										1.28,
+										2.72
+									]
+								},
+								"east": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.96,
+										2.72
+									]
+								},
+								"south": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										1.28,
+										2.72
+									]
+								},
+								"west": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.96,
+										2.72
+									]
+								},
+								"up": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										1.28,
+										0.96
+									]
+								},
+								"down": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										1.28,
+										0.96
+									]
+								}
+							}
+						},
+						{
+							"name": "BlanketBack",
+							"from": [
+								-19.68,
+								21.6,
+								-3.36
+							],
+							"to": [
+								-19.2,
+								26.08,
+								3.36
+							],
+							"faces": {
+								"north": {
+									"texture": "#blanket",
+									"uv": [
+										0,
+										0,
+										0.5,
+										4.48
+									]
+								},
+								"east": {
+									"texture": "#blanket",
+									"uv": [
+										0,
+										0,
+										6.72,
+										4.48
+									]
+								},
+								"south": {
+									"texture": "#blanket",
+									"uv": [
+										0,
+										0,
+										0.5,
+										4.48
+									]
+								},
+								"west": {
+									"texture": "#blanket",
+									"uv": [
+										0,
+										0,
+										6.72,
+										4.48
+									]
+								},
+								"up": {
+									"texture": "#blanket",
+									"uv": [
+										0,
+										0,
+										0.5,
+										6.72
+									]
+								},
+								"down": {
+									"texture": "#blanket",
+									"uv": [
+										0,
+										0,
+										0.5,
+										6.72
+									]
+								}
+							}
+						},
+						{
+							"name": "BlanketTop",
+							"from": [
+								-19.84,
+								26.08,
+								-3.36
+							],
+							"to": [
+								-17.44,
+								26.72,
+								3.36
+							],
+							"faces": {
+								"north": {
+									"texture": "#blanket",
+									"uv": [
+										0,
+										0,
+										2.4,
+										0.64
+									]
+								},
+								"east": {
+									"texture": "#blanket",
+									"uv": [
+										0,
+										0,
+										6.72,
+										0.64
+									]
+								},
+								"south": {
+									"texture": "#blanket",
+									"uv": [
+										0,
+										0,
+										2.4,
+										0.64
+									]
+								},
+								"west": {
+									"texture": "#blanket",
+									"uv": [
+										0,
+										0,
+										6.72,
+										0.64
+									]
+								},
+								"up": {
+									"texture": "#blanket",
+									"uv": [
+										0,
+										0,
+										2.4,
+										6.72
+									]
+								},
+								"down": {
+									"texture": "#blanket",
+									"uv": [
+										0,
+										0,
+										2.4,
+										6.72
+									]
+								}
+							}
+						},
+						{
+							"name": "BlanketFront",
+							"from": [
+								-17.92,
+								22.24,
+								-3.36
+							],
+							"to": [
+								-17.44,
+								26.08,
+								3.36
+							],
+							"faces": {
+								"north": {
+									"texture": "#blanket",
+									"uv": [
+										0,
+										0,
+										0.5,
+										3.84
+									]
+								},
+								"east": {
+									"texture": "#blanket",
+									"uv": [
+										0,
+										0,
+										6.72,
+										3.84
+									]
+								},
+								"south": {
+									"texture": "#blanket",
+									"uv": [
+										0,
+										0,
+										0.5,
+										3.84
+									]
+								},
+								"west": {
+									"texture": "#blanket",
+									"uv": [
+										0,
+										0,
+										6.72,
+										3.84
+									]
+								},
+								"up": {
+									"texture": "#blanket",
+									"uv": [
+										0,
+										0,
+										0.5,
+										6.72
+									]
+								},
+								"down": {
+									"texture": "#blanket",
+									"uv": [
+										0,
+										0,
+										0.5,
+										6.72
+									]
+								}
+							}
+						},
+						{
+							"name": "Stick",
+							"from": [
+								13.6,
+								12.8,
+								-0.32
+							],
+							"to": [
+								22.914,
+								13.44,
+								0.32
+							],
+							"rotationOrigin": [
+								13.6,
+								13.12,
+								0
+							],
+							"faces": {
+								"north": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										9.314,
+										0.64
+									]
+								},
+								"east": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.64,
+										0.64
+									]
+								},
+								"south": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										9.314,
+										0.64
+									]
+								},
+								"west": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										0.64,
+										0.64
+									]
+								},
+								"up": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										9.314,
+										0.64
+									]
+								},
+								"down": {
+									"texture": "#wood",
+									"uv": [
+										0,
+										0,
+										9.314,
+										0.64
+									]
+								}
+							},
+							"rotationY": -180,
+							"rotationZ": 85.073
+						},
+						{
+							"name": "StickGrip",
+							"from": [
+								12.16,
+								21.92,
+								-0.56
+							],
+							"to": [
+								13.44,
+								23.52,
+								0.56
+							],
+							"faces": {
+								"north": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										1.28,
+										1.6
+									]
+								},
+								"east": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										1.12,
+										1.6
+									]
+								},
+								"south": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										1.28,
+										1.6
+									]
+								},
+								"west": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										1.12,
+										1.6
+									]
+								},
+								"up": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										1.28,
+										1.12
+									]
+								},
+								"down": {
+									"texture": "#twine",
+									"uv": [
+										0,
+										0,
+										1.28,
+										1.12
+									]
+								}
+							}
+						},
+						{
+							"name": "PilotSeat",
+							"from": [
+								2.4,
+								17.6,
+								-4
+							],
+							"to": [
+								10.4,
+								27.2,
+								4
+							],
+							"faces": {},
+							"attachmentpoints": [
+								{
+									"code": "PilotAP",
+									"posX": "4",
+									"posY": "0",
+									"posZ": "4",
+									"rotationX": "0",
+									"rotationY": "0",
+									"rotationZ": "0"
+								}
+							]
+						},
+						{
+							"name": "PassengerSeat",
+							"from": [
+								-18.4,
+								17.6,
+								-4
+							],
+							"to": [
+								-10.4,
+								27.2,
+								4
+							],
+							"faces": {},
+							"attachmentpoints": [
+								{
+									"code": "PassengerAP",
+									"posX": "4",
+									"posY": "0",
+									"posZ": "4",
+									"rotationX": "0",
+									"rotationY": "0",
+									"rotationZ": "0"
 								}
 							]
 						}

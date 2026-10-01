@@ -101,7 +101,9 @@ public class EntityWright : EntityBoat
     double speedDialMax = 25;     // blokker/s ved fullt utslag (270°)
     double lowFuelFraction = 0.15;
     double altLongPerTurn = 100, altShortPerTurn = 1000; // blokker over havnivå per runde
-    double gaugeSpeed, gaugeFuel;
+    // Variometer: ±varioMax blokker/s over ±varioSpan grader fra klokka 9, log-skala (varioCurve) — må stemme med dash_textures.js
+    double varioMax = 10, varioSpan = 175, varioCurve = 4, varioLag = 1.5;
+    double gaugeSpeed, gaugeFuel, gaugeVario;
     Vec3d? lastGaugePos;
     SimpleParticleProperties? smoke;
     WrightEngineSound? engineSound;
@@ -176,6 +178,10 @@ public class EntityWright : EntityBoat
             lowFuelFraction = ins["lowFuelFraction"].AsDouble(lowFuelFraction);
             altLongPerTurn = ins["altLongPerTurn"].AsDouble(altLongPerTurn);
             altShortPerTurn = ins["altShortPerTurn"].AsDouble(altShortPerTurn);
+            varioMax = ins["varioMax"].AsDouble(varioMax);
+            varioSpan = ins["varioSpan"].AsDouble(varioSpan);
+            varioCurve = ins["varioCurve"].AsDouble(varioCurve);
+            varioLag = ins["varioLag"].AsDouble(varioLag);
         }
 
         var f = properties.Attributes["flight"];
@@ -308,6 +314,20 @@ public class EntityWright : EntityBoat
         {
             if (Api is ICoreClientAPI capi && byEntity == capi.World.Player.Entity) OpenFuelDialog(capi);
             return; // ikke sett deg inn
+        }
+        // Kreativ snarvei: Shift + høyreklikk med tom hånd plukker opp flyet (vanilla rightClickPickup er av,
+        // ellers kunne man stappe et bygd fly i sekken i overlevelse)
+        if (mode == EnumInteractMode.Interact && byEntity.Controls.ShiftKey && itemslot?.Empty != false
+            && (byEntity as EntityPlayer)?.Player?.WorldData.CurrentGameMode == EnumGameMode.Creative
+            && DisassembleError() == null)
+        {
+            if (World.Side == EnumAppSide.Server)
+            {
+                var stack = new ItemStack(World.GetItem(Code));
+                if (!byEntity.TryGiveItemStack(stack)) World.SpawnItemEntity(stack, Pos.XYZ);
+                Die(EnumDespawnReason.Removed);
+            }
+            return;
         }
         base.OnInteract(byEntity, itemslot, hitPosition, mode);
     }
@@ -779,9 +799,14 @@ public class EntityWright : EntityBoat
             double moved = p.DistanceTo(lastGaugePos);
             double speed = moved < 2 ? moved / dt : 0; // teleport = 0
             gaugeSpeed += (speed - gaugeSpeed) * Math.Min(1, 3 * dt);
+            // Variometer: stige-/synkefart, treg som en ekte (trykkbeholder med lekkasje)
+            double climb = moved < 2 ? (p.Y - lastGaugePos.Y) / dt : 0;
+            gaugeVario += (climb - gaugeVario) * Math.Min(1, dt / Math.Max(0.01, varioLag));
         }
         lastGaugePos = p;
         SetSpinFrame(anim, "needlespeed", needleSign * (-135 + 270 * GameMath.Clamp(gaugeSpeed / speedDialMax, 0, 1)));
+        double varioFrac = Math.Log(1 + varioCurve * Math.Min(1, Math.Abs(gaugeVario) / varioMax)) / Math.Log(1 + varioCurve);
+        SetSpinFrame(anim, "needlevario", needleSign * (-90 + Math.Sign(gaugeVario) * varioSpan * varioFrac));
 
         // Drivstoff: E (−90°) til F (+90°), viseren siger rolig
         double fuel = fuelCapacity > 0 ? FuelLitres / fuelCapacity : 0;

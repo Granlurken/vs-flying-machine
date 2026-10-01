@@ -1,0 +1,389 @@
+{
+	"textureWidth": 16,
+	"textureHeight": 16,
+	"textures": {
+		"ceramic": "game:block/clay/hardened/brown",
+		"aged": "game:block/wood/debarked/aged",
+		"soot": "game:block/metal/sheet/lead1",
+		"copper": "game:block/metal/sheet/copper3"
+	},
+	"elements": [
+		{
+			"name": "Root",
+			"from": [
+				-6.784,
+				-7.68,
+				3.52
+			],
+			"to": [
+				-6.784,
+				-7.68,
+				3.52
+			],
+			"faces": {},
+			"children": [
+				{
+					"name": "Battery",
+					"from": [
+						0,
+						0,
+						0
+					],
+					"to": [
+						0,
+						0,
+						0
+					],
+					"faces": {},
+					"children": [
+						{
+							"name": "BatteryJar",
+							"from": [
+								13.088,
+								13.12,
+								2.88
+							],
+							"to": [
+								16.48,
+								16.64,
+								6.08
+							],
+							"faces": {
+								"north": {
+									"texture": "#ceramic",
+									"uv": [
+										0,
+										0,
+										3.2,
+										3.52
+									]
+								},
+								"east": {
+									"texture": "#ceramic",
+									"uv": [
+										0,
+										0,
+										3.2,
+										3.52
+									]
+								},
+								"south": {
+									"texture": "#ceramic",
+									"uv": [
+										0,
+										0,
+										3.2,
+										3.52
+									]
+								},
+								"west": {
+									"texture": "#ceramic",
+									"uv": [
+										0,
+										0,
+										3.2,
+										3.52
+									]
+								},
+								"up": {
+									"texture": "#ceramic",
+									"uv": [
+										0,
+										0,
+										3.2,
+										3.2
+									]
+								},
+								"down": {
+									"texture": "#ceramic",
+									"uv": [
+										0,
+										0,
+										3.2,
+										3.2
+									]
+								}
+							}
+						},
+						{
+							"name": "BatteryShoulder",
+							"from": [
+								13.68,
+								16.64,
+								3.28
+							],
+							"to": [
+								16.08,
+								17.28,
+								5.68
+							],
+							"faces": {
+								"north": {
+									"texture": "#ceramic",
+									"uv": [
+										0,
+										0,
+										2.4,
+										0.64
+									]
+								},
+								"east": {
+									"texture": "#ceramic",
+									"uv": [
+										0,
+										0,
+										2.4,
+										0.64
+									]
+								},
+								"south": {
+									"texture": "#ceramic",
+									"uv": [
+										0,
+										0,
+										2.4,
+										0.64
+									]
+								},
+								"west": {
+									"texture": "#ceramic",
+									"uv": [
+										0,
+										0,
+										2.4,
+										0.64
+									]
+								},
+								"up": {
+									"texture": "#ceramic",
+									"uv": [
+										0,
+										0,
+										2.4,
+										2.4
+									]
+								},
+								"down": {
+									"texture": "#ceramic",
+									"uv": [
+										0,
+										0,
+										2.4,
+										2.4
+									]
+								}
+							}
+						},
+						{
+							"name": "BatteryLid",
+							"from": [
+								14.16,
+								17.28,
+								3.76
+							],
+							"to": [
+								15.6,
+								17.68,
+								5.2
+							],
+							"faces": {
+								"north": {
+									"texture": "#aged",
+									"uv": [
+										0,
+										0,
+										1.44,
+										0.5
+									]
+								},
+								"east": {
+									"texture": "#aged",
+									"uv": [
+										0,
+										0,
+										1.44,
+										0.5
+									]
+								},
+								"south": {
+									"texture": "#aged",
+									"uv": [
+										0,
+										0,
+										1.44,
+										0.5
+									]
+								},
+								"west": {
+									"texture": "#aged",
+									"uv": [
+										0,
+										0,
+										1.44,
+										0.5
+									]
+								},
+								"up": {
+									"texture": "#aged",
+									"uv": [
+										0,
+										0,
+										1.44,
+										1.44
+									]
+								},
+								"down": {
+									"texture": "#aged",
+									"uv": [
+										0,
+										0,
+										1.44,
+										1.44
+									]
+								}
+							}
+						},
+						{
+							"name": "BatteryPostLead",
+							"from": [
+								14.688,
+								17.28,
+								3.28
+							],
+							"to": [
+								15.072,
+								18.24,
+								3.664
+							],
+							"faces": {
+								"north": {
+									"texture": "#soot",
+									"uv": [
+										0,
+										0,
+										0.5,
+										0.96
+									]
+								},
+								"east": {
+									"texture": "#soot",
+									"uv": [
+										0,
+										0,
+										0.5,
+										0.96
+									]
+								},
+								"south": {
+									"texture": "#soot",
+									"uv": [
+										0,
+										0,
+										0.5,
+										0.96
+									]
+								},
+								"west": {
+									"texture": "#soot",
+									"uv": [
+										0,
+										0,
+										0.5,
+										0.96
+									]
+								},
+								"up": {
+									"texture": "#soot",
+									"uv": [
+										0,
+										0,
+										0.5,
+										0.5
+									]
+								},
+								"down": {
+									"texture": "#soot",
+									"uv": [
+										0,
+										0,
+										0.5,
+										0.5
+									]
+								}
+							}
+						},
+						{
+							"name": "BatteryPostCopper",
+							"from": [
+								14.688,
+								17.28,
+								5.296
+							],
+							"to": [
+								15.072,
+								18.24,
+								5.68
+							],
+							"faces": {
+								"north": {
+									"texture": "#copper",
+									"uv": [
+										0,
+										0,
+										0.5,
+										0.96
+									]
+								},
+								"east": {
+									"texture": "#copper",
+									"uv": [
+										0,
+										0,
+										0.5,
+										0.96
+									]
+								},
+								"south": {
+									"texture": "#copper",
+									"uv": [
+										0,
+										0,
+										0.5,
+										0.96
+									]
+								},
+								"west": {
+									"texture": "#copper",
+									"uv": [
+										0,
+										0,
+										0.5,
+										0.96
+									]
+								},
+								"up": {
+									"texture": "#copper",
+									"uv": [
+										0,
+										0,
+										0.5,
+										0.5
+									]
+								},
+								"down": {
+									"texture": "#copper",
+									"uv": [
+										0,
+										0,
+										0.5,
+										0.5
+									]
+								}
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}

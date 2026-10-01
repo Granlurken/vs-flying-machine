@@ -63,6 +63,20 @@ function wingfabric() {
   return els;
 }
 
+// Kobbertråd: en kveil — tre firkantede vindinger lagt oppå hverandre, litt forskjøvet
+function copperwire() {
+  const els = [], t = 0.6, L = 8;
+  for (let i = 0; i < 3; i++) {
+    const o = i * 0.5, y = i * t;
+    els.push(box("CoilN" + i, [o, y, o], [o + L, y + t, o + t], "copper"));
+    els.push(box("CoilS" + i, [o, y, o + L - t], [o + L, y + t, o + L], "copper"));
+    els.push(box("CoilW" + i, [o, y, o + t], [o + t, y + t, o + L - t], "copper"));
+    els.push(box("CoilE" + i, [o + L - t, y, o + t], [o + L, y + t, o + L - t], "copper"));
+  }
+  els.push(box("Tail", [L + 1, 0, 3], [L + 4, t, 3 + t], "copper"));
+  return els;
+}
+
 // item → hvor delene kommer fra: grupper/elementer fra flyet (plane) eller byggeplassen (site), eller egne (build)
 const items = {
   propeller: { src: plane, names: ["Propeller"] },
@@ -76,8 +90,11 @@ const items = {
   chaindrive: { src: plane, names: ["CrankSprocketA", "CrankSprocketB", "PropSprocketA", "PropSprocketB", "ChainL", "ChainR"] },
   wing: { src: plane, names: ["S3LowerWing"] },
   trestles: { src: site, names: ["TrestleBar0", "TrestleLeg000", "TrestleLeg001", "TrestleLeg010", "TrestleLeg011"] },
-  wright: { src: plane, names: ["S1Frame", "S2Gear", "S3LowerWing", "S4UpperWing", "S5Engine", "S6Drive", "S7Tail", "S8Seat"] },
+  wright: { src: plane, names: ["S1Frame", "S2Gear", "S3LowerWing", "S4UpperWing", "S5Engine", "S6Drive", "S7Tail", "S8Dash", "S9Seat"] },
+  battery: { src: plane, names: ["Battery"] },
+  dashboard: { src: plane, names: ["Dashboard"] },
   crankshaft: { build: crankshaft },
+  copperwire: { build: copperwire },
   wingspar: { build: wingspar },
   wingfabric: { build: wingfabric }
 };

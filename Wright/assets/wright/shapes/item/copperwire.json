@@ -1,0 +1,922 @@
+{
+	"textureWidth": 16,
+	"textureHeight": 16,
+	"textures": {
+		"copper": "game:block/metal/sheet/copper3"
+	},
+	"elements": [
+		{
+			"name": "Root",
+			"from": [
+				2,
+				7.1,
+				3.5
+			],
+			"to": [
+				2,
+				7.1,
+				3.5
+			],
+			"faces": {},
+			"children": [
+				{
+					"name": "CoilN0",
+					"from": [
+						0,
+						0,
+						0
+					],
+					"to": [
+						8,
+						0.6,
+						0.6
+					],
+					"faces": {
+						"north": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								8,
+								0.6
+							]
+						},
+						"east": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								0.6,
+								0.6
+							]
+						},
+						"south": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								8,
+								0.6
+							]
+						},
+						"west": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								0.6,
+								0.6
+							]
+						},
+						"up": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								8,
+								0.6
+							]
+						},
+						"down": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								8,
+								0.6
+							]
+						}
+					}
+				},
+				{
+					"name": "CoilS0",
+					"from": [
+						0,
+						0,
+						7.4
+					],
+					"to": [
+						8,
+						0.6,
+						8
+					],
+					"faces": {
+						"north": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								8,
+								0.6
+							]
+						},
+						"east": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								0.6,
+								0.6
+							]
+						},
+						"south": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								8,
+								0.6
+							]
+						},
+						"west": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								0.6,
+								0.6
+							]
+						},
+						"up": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								8,
+								0.6
+							]
+						},
+						"down": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								8,
+								0.6
+							]
+						}
+					}
+				},
+				{
+					"name": "CoilW0",
+					"from": [
+						0,
+						0,
+						0.6
+					],
+					"to": [
+						0.6,
+						0.6,
+						7.4
+					],
+					"faces": {
+						"north": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								0.6,
+								0.6
+							]
+						},
+						"east": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								6.8,
+								0.6
+							]
+						},
+						"south": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								0.6,
+								0.6
+							]
+						},
+						"west": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								6.8,
+								0.6
+							]
+						},
+						"up": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								0.6,
+								6.8
+							]
+						},
+						"down": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								0.6,
+								6.8
+							]
+						}
+					}
+				},
+				{
+					"name": "CoilE0",
+					"from": [
+						7.4,
+						0,
+						0.6
+					],
+					"to": [
+						8,
+						0.6,
+						7.4
+					],
+					"faces": {
+						"north": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								0.6,
+								0.6
+							]
+						},
+						"east": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								6.8,
+								0.6
+							]
+						},
+						"south": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								0.6,
+								0.6
+							]
+						},
+						"west": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								6.8,
+								0.6
+							]
+						},
+						"up": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								0.6,
+								6.8
+							]
+						},
+						"down": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								0.6,
+								6.8
+							]
+						}
+					}
+				},
+				{
+					"name": "CoilN1",
+					"from": [
+						0.5,
+						0.6,
+						0.5
+					],
+					"to": [
+						8.5,
+						1.2,
+						1.1
+					],
+					"faces": {
+						"north": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								8,
+								0.6
+							]
+						},
+						"east": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								0.6,
+								0.6
+							]
+						},
+						"south": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								8,
+								0.6
+							]
+						},
+						"west": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								0.6,
+								0.6
+							]
+						},
+						"up": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								8,
+								0.6
+							]
+						},
+						"down": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								8,
+								0.6
+							]
+						}
+					}
+				},
+				{
+					"name": "CoilS1",
+					"from": [
+						0.5,
+						0.6,
+						7.9
+					],
+					"to": [
+						8.5,
+						1.2,
+						8.5
+					],
+					"faces": {
+						"north": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								8,
+								0.6
+							]
+						},
+						"east": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								0.6,
+								0.6
+							]
+						},
+						"south": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								8,
+								0.6
+							]
+						},
+						"west": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								0.6,
+								0.6
+							]
+						},
+						"up": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								8,
+								0.6
+							]
+						},
+						"down": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								8,
+								0.6
+							]
+						}
+					}
+				},
+				{
+					"name": "CoilW1",
+					"from": [
+						0.5,
+						0.6,
+						1.1
+					],
+					"to": [
+						1.1,
+						1.2,
+						7.9
+					],
+					"faces": {
+						"north": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								0.6,
+								0.6
+							]
+						},
+						"east": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								6.8,
+								0.6
+							]
+						},
+						"south": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								0.6,
+								0.6
+							]
+						},
+						"west": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								6.8,
+								0.6
+							]
+						},
+						"up": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								0.6,
+								6.8
+							]
+						},
+						"down": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								0.6,
+								6.8
+							]
+						}
+					}
+				},
+				{
+					"name": "CoilE1",
+					"from": [
+						7.9,
+						0.6,
+						1.1
+					],
+					"to": [
+						8.5,
+						1.2,
+						7.9
+					],
+					"faces": {
+						"north": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								0.6,
+								0.6
+							]
+						},
+						"east": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								6.8,
+								0.6
+							]
+						},
+						"south": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								0.6,
+								0.6
+							]
+						},
+						"west": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								6.8,
+								0.6
+							]
+						},
+						"up": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								0.6,
+								6.8
+							]
+						},
+						"down": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								0.6,
+								6.8
+							]
+						}
+					}
+				},
+				{
+					"name": "CoilN2",
+					"from": [
+						1,
+						1.2,
+						1
+					],
+					"to": [
+						9,
+						1.7999999999999998,
+						1.6
+					],
+					"faces": {
+						"north": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								8,
+								0.6
+							]
+						},
+						"east": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								0.6,
+								0.6
+							]
+						},
+						"south": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								8,
+								0.6
+							]
+						},
+						"west": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								0.6,
+								0.6
+							]
+						},
+						"up": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								8,
+								0.6
+							]
+						},
+						"down": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								8,
+								0.6
+							]
+						}
+					}
+				},
+				{
+					"name": "CoilS2",
+					"from": [
+						1,
+						1.2,
+						8.4
+					],
+					"to": [
+						9,
+						1.7999999999999998,
+						9
+					],
+					"faces": {
+						"north": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								8,
+								0.6
+							]
+						},
+						"east": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								0.6,
+								0.6
+							]
+						},
+						"south": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								8,
+								0.6
+							]
+						},
+						"west": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								0.6,
+								0.6
+							]
+						},
+						"up": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								8,
+								0.6
+							]
+						},
+						"down": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								8,
+								0.6
+							]
+						}
+					}
+				},
+				{
+					"name": "CoilW2",
+					"from": [
+						1,
+						1.2,
+						1.6
+					],
+					"to": [
+						1.6,
+						1.7999999999999998,
+						8.4
+					],
+					"faces": {
+						"north": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								0.6,
+								0.6
+							]
+						},
+						"east": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								6.8,
+								0.6
+							]
+						},
+						"south": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								0.6,
+								0.6
+							]
+						},
+						"west": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								6.8,
+								0.6
+							]
+						},
+						"up": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								0.6,
+								6.8
+							]
+						},
+						"down": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								0.6,
+								6.8
+							]
+						}
+					}
+				},
+				{
+					"name": "CoilE2",
+					"from": [
+						8.4,
+						1.2,
+						1.6
+					],
+					"to": [
+						9,
+						1.7999999999999998,
+						8.4
+					],
+					"faces": {
+						"north": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								0.6,
+								0.6
+							]
+						},
+						"east": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								6.8,
+								0.6
+							]
+						},
+						"south": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								0.6,
+								0.6
+							]
+						},
+						"west": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								6.8,
+								0.6
+							]
+						},
+						"up": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								0.6,
+								6.8
+							]
+						},
+						"down": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								0.6,
+								6.8
+							]
+						}
+					}
+				},
+				{
+					"name": "Tail",
+					"from": [
+						9,
+						0,
+						3
+					],
+					"to": [
+						12,
+						0.6,
+						3.6
+					],
+					"faces": {
+						"north": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								3,
+								0.6
+							]
+						},
+						"east": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								0.6,
+								0.6
+							]
+						},
+						"south": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								3,
+								0.6
+							]
+						},
+						"west": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								0.6,
+								0.6
+							]
+						},
+						"up": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								3,
+								0.6
+							]
+						},
+						"down": {
+							"texture": "#copper",
+							"uv": [
+								0,
+								0,
+								3,
+								0.6
+							]
+						}
+					}
+				}
+			]
+		}
+	]
+}
