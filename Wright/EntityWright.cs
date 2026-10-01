@@ -221,7 +221,20 @@ public class EntityWright : EntityBoat, ISeatInstSupplier
 
     // --- Fylling: høyreklikk med væskebeholder åpner fylle-vinduet (slot → pil → tank) ---
     const int PacketOpenFuel = 1001;
+    const int PacketCloseFuel = 1003; // server → klient: lukk vinduet (opptatt, gått for langt unna)
     const double PourLitresPerSecond = 1;
+    const double FuelReach = 8;
+    double fuelUserCheck;
+
+    /// <summary>
+    /// Spilleren som har fylle-vinduet åpent, eller null. Bare én om gangen: sloten er felles for alle,
+    /// så med to åpne kunne den ene lukke og få den andres bøtte.
+    /// </summary>
+    string? FuelUser
+    {
+        get { string? uid = WatchedAttributes.GetString("fuelUser"); return string.IsNullOrEmpty(uid) ? null : uid; }
+        set { if (value == null) WatchedAttributes.RemoveAttribute("fuelUser"); else WatchedAttributes.SetString("fuelUser", value); }
+    }
     InventoryGeneric? fuelInv;
     GuiDialogWrightFuel? fuelDialog;
     double pourCarry; // brøkdel av væske-item som ikke er helt ennå
@@ -234,7 +247,36 @@ public class EntityWright : EntityBoat, ISeatInstSupplier
         if (api.Side == EnumAppSide.Server)
         {
             // Lukker du vinduet, får du beholderen tilbake (sloten lagres ikke med flyet)
-            fuelInv.OnInventoryClosed += player => ReturnFuelSlot(player);
+            fuelInv.OnInventoryClosed += player =>
+            {
+                if (player?.PlayerUID != FuelUser) return;
+                ReturnFuelSlot(player);
+                FuelUser = null;
+            };
+        }
+    }
+
+    /// <summary>
+    /// Server, ca. hvert sekund: har fylleren logget ut, gått for langt unna eller lukket uten at vi fikk beskjed,
+    /// lukkes vinduet og beholderen går tilbake (eller ligger ved flyet hvis spilleren er borte).
+    /// </summary>
+    void CheckFuelUser(float dt)
+    {
+        if (FuelUser == null || (fuelUserCheck += dt) < 1) return;
+        fuelUserCheck = 0;
+        var player = World.PlayerByUid(FuelUser) as IServerPlayer;
+        bool online = player?.Entity != null && player.ConnectionState == EnumClientState.Playing;
+        if (online && fuelInv!.HasOpened(player) && player!.Entity.Pos.DistanceTo(Pos) < FuelReach) return;
+
+        if (online)
+        {
+            ((ICoreServerAPI)Api).Network.SendEntityPacket(player, EntityId, PacketCloseFuel, null);
+            player!.InventoryManager.CloseInventory(fuelInv); // → OnInventoryClosed gir beholderen tilbake
+        }
+        if (FuelUser != null)
+        {
+            ReturnFuelSlot(online ? player : null);
+            FuelUser = null;
         }
     }
 
@@ -285,7 +327,7 @@ public class EntityWright : EntityBoat, ISeatInstSupplier
     {
         base.OnGameTick(dt);
         if (Api.Side != EnumAppSide.Server) return;
-        if (fuelInv != null) PourTick(dt);
+        if (fuelInv != null) { CheckFuelUser(dt); PourTick(dt); }
         // Gassen synkes til klientene (propell + røyk hos tilskuere og passasjerer)
         float synced = WatchedAttributes.GetFloat("throttle", 0);
         if (Math.Abs(synced - Throttle) > 0.02 || (Throttle <= 0) != (synced <= 0))
@@ -417,6 +459,11 @@ public class EntityWright : EntityBoat, ISeatInstSupplier
     public void OpenFuelDialog(ICoreClientAPI capi)
     {
         if (fuelDialog?.IsOpened() == true) return;
+        if (FuelUser != null && FuelUser != capi.World.Player.PlayerUID)
+        {
+            capi.TriggerIngameError(this, "wright-fuelbusy", Lang.Get("wright:fuel-busy"));
+            return;
+        }
         capi.Network.SendEntityPacket(EntityId, PacketOpenFuel, null);
         fuelDialog = new GuiDialogWrightFuel(capi, this);
         fuelDialog.OnClosed += () => fuelDialog = null;
@@ -439,11 +486,19 @@ public class EntityWright : EntityBoat, ISeatInstSupplier
         if (fuelInv == null) return;
         if (packetid < 1000)
         {
-            fuelInv.InvNetworkUtil.HandleClientPacket(player, packetid, data);
+            // Bare den som har vinduet åpent får flytte ting i sloten
+            if (player.PlayerUID == FuelUser) fuelInv.InvNetworkUtil.HandleClientPacket(player, packetid, data);
             return;
         }
         if (packetid == PacketOpenFuel)
         {
+            // Noen andre fyller allerede (to klikket samtidig): lukk vinduet hos denne
+            if ((FuelUser != null && FuelUser != player.PlayerUID) || player.Entity.Pos.DistanceTo(Pos) >= FuelReach)
+            {
+                ((ICoreServerAPI)Api).Network.SendEntityPacket(player, EntityId, PacketCloseFuel, new byte[] { 1 });
+                return;
+            }
+            FuelUser = player.PlayerUID;
             player.InventoryManager.OpenInventory(fuelInv);
             // Beholderen i hånda hoppper rett i sloten
             var held = player.InventoryManager.ActiveHotbarSlot;
@@ -455,12 +510,21 @@ public class EntityWright : EntityBoat, ISeatInstSupplier
         }
     }
 
+    public override void OnReceivedServerPacket(int packetid, byte[] data)
+    {
+        base.OnReceivedServerPacket(packetid, data);
+        if (packetid != PacketCloseFuel || Api is not ICoreClientAPI capi) return;
+        fuelDialog?.TryClose();
+        if (data != null && data.Length > 0) capi.TriggerIngameError(this, "wright-fuelbusy", Lang.Get("wright:fuel-busy"));
+    }
+
     public override void OnEntityDespawn(EntityDespawnData despawn)
     {
         if (Api.Side == EnumAppSide.Server && fuelInv != null && !fuelInv[0].Empty)
         {
             World.SpawnItemEntity(fuelInv[0].TakeOutWhole(), Pos.XYZ);
         }
+        if (Api.Side == EnumAppSide.Server) FuelUser = null; // ellers lagres «opptatt» med flyet
         fuelDialog?.TryClose();
         engineSound?.Dispose();
         engineSound = null;

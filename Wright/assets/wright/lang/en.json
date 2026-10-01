@@ -42,6 +42,7 @@
     "fuel-insert": "Put in a container of Aqua Vitae",
     "fuel-empty": "The container is empty",
     "fuel-wrong": "Too weak to burn. The engine runs on Aqua Vitae",
+    "fuel-busy": "Someone else is filling the tank",
     "fuel-full": "The fuel tank is full",
     "fuel-pouring": "Pouring...",
     "disassemble": "Take apart",
