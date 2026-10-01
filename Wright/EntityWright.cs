@@ -24,13 +24,14 @@ namespace Wright;
 /// Flymodell: flyet går dit nesa peker. Tyngdekraften virker langs banen, så stigning spiser fart og
 /// dykk gir fart. Under stallfart bærer ikke vingene: flyet synker og nesa faller av seg selv.
 /// </summary>
-public class EntityWright : EntityBoat
+public class EntityWright : EntityBoat, ISeatInstSupplier
 {
     // Tuning — leses fra entity-JSON (attributes.flight), dette er fallbackene
     double maxSpeed = 0.28;       // toppfart ved full gass
     double stallSpeed = 0.15;     // under dette bærer ikke vingene flyet
     double thrustAccel = 0.018;   // fart/s ved full gass fra stillestående — lavt = lang rullebane. Luftmotstanden (∝ fart²) tar resten, så toppfarten blir maxSpeed
     double rollingFriction = 0.002; // fart/s tapt på bakken (hjul i gress)
+    int safeDismountHeight = 3;   // Shift stiger bare av når det er noe å stå på (fast mark eller vann) innen så mange blokker under
     double throttleRate = 0.4;    // gass-endring per sekund med W/S holdt inne
     double brakeRate = 0.6;       // ekstra retardasjon på bakken med S på tomgang
     double gravityAlongPath = 0.12; // fart tapt/vunnet per sekund per sin(banevinkel)
@@ -191,6 +192,7 @@ public class EntityWright : EntityBoat
         stallSpeed = f["stallSpeed"].AsDouble(stallSpeed);
         thrustAccel = f["thrustAccel"].AsDouble(thrustAccel);
         rollingFriction = f["rollingFriction"].AsDouble(rollingFriction);
+        safeDismountHeight = f["safeDismountHeight"].AsInt(safeDismountHeight);
         throttleRate = f["throttleRate"].AsDouble(throttleRate);
         brakeRate = f["brakeRate"].AsDouble(brakeRate);
         gravityAlongPath = f["gravityAlongPath"].AsDouble(gravityAlongPath);
@@ -532,6 +534,30 @@ public class EntityWright : EntityBoat
         return World.CollisionTester.IsColliding(World.BlockAccessor, groundProbe, Pos.XYZ, false);
     }
     readonly Cuboidf groundProbe = new();
+
+    // Egne seter: vanilla EntityBoat.CreateSeat er ikke virtual, så grensesnittet implementeres på nytt her
+    public new IMountableSeat CreateSeat(IMountable mountable, string seatId, SeatConfig config = null!)
+    {
+        return new EntityWrightSeat(mountable, seatId, config);
+    }
+
+    /// <summary>
+    /// Sant når flyet er så høyt oppe at det er livsfarlig å hoppe av: verken hjul i bakken eller noe å lande på
+    /// (fast blokk eller vann) innen safeDismountHeight blokker under. Ren geometri, så klient og server svarer likt.
+    /// </summary>
+    public bool DismountBlocked()
+    {
+        if (WheelsOnGround()) return false;
+        var ba = World.BlockAccessor;
+        var bp = Pos.AsBlockPos;
+        for (int i = 0; i <= safeDismountHeight; i++, bp.Y--)
+        {
+            if (ba.GetBlock(bp, BlockLayersAccess.Fluid).IsLiquid()) return false;
+            var boxes = ba.GetBlock(bp).GetCollisionBoxes(ba, bp);
+            if (boxes != null && boxes.Length > 0) return false;
+        }
+        return true;
+    }
 
     public double LiftRatio =>stallSpeed > 0 ? Math.Pow(ForwardSpeed / stallSpeed, 2) : 0;
 
