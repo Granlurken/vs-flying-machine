@@ -1,0 +1,44 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Atlas scenarios: boots a real headless Vintage Story server in-process with the mod loaded.
+       Needs VINTAGE_STORY pointing at a 1.22 install (the folder holding VintagestoryAPI.dll). -->
+
+  <PropertyGroup>
+    <VINTAGE_STORY Condition="'$(VINTAGE_STORY)' == ''">$(APPDATA)\Vintagestory</VINTAGE_STORY>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" />
+    <PackageReference Include="Pixnop.Atlas.XUnit" Version="0.15.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+    <Reference Include="VintagestoryAPI">
+      <HintPath>$(VINTAGE_STORY)/VintagestoryAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="VSSurvivalMod">
+      <HintPath>$(VINTAGE_STORY)/Mods/VSSurvivalMod.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="VSEssentials">
+      <HintPath>$(VINTAGE_STORY)/Mods/VSEssentials.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="0Harmony">
+      <HintPath>$(VINTAGE_STORY)/Lib/0Harmony.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <!-- Loaded as a mod (its output folder, with modinfo.json and assets) and referenced for its types. -->
+    <ProjectReference Include="../../FlyingMachine/FlyingMachine.csproj">
+      <AtlasMod>true</AtlasMod>
+    </ProjectReference>
+  </ItemGroup>
+
+</Project>

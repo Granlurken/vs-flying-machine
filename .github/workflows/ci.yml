@@ -1,0 +1,70 @@
+# Every push to main and every PR. Needs no secrets: the game server is downloaded from Anego's public CDN.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  VS_VERSION: "1.22.7"
+  DOTNET_CLI_TELEMETRY_OPTOUT: "1"
+  DOTNET_NOLOGO: "1"
+
+jobs:
+  generated:
+    name: Generated assets are up to date
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "22"
+      - run: node tools/check_generated.js
+
+  test:
+    name: Build, package and Atlas scenarios
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
+        with:
+          dotnet-version: "10.0.x"
+
+      - id: vs-cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/vs
+          key: vs-server-linux-x64-${{ env.VS_VERSION }}
+      - name: Download Vintage Story server
+        if: steps.vs-cache.outputs.cache-hit != 'true'
+        run: |
+          want=$(curl -fsSL --proto '=https' https://api.vintagestory.at/stable.json \
+            | jq -r --arg v "$VS_VERSION" '.[$v].linuxserver.md5')
+          curl -fsSL --proto '=https' --proto-redir '=https' -o vs_server.tar.gz \
+            "https://cdn.vintagestory.at/gamefiles/stable/vs_server_linux-x64_${VS_VERSION}.tar.gz"
+          echo "$want  vs_server.tar.gz" | md5sum -c -
+          mkdir -p ~/vs && tar -xzf vs_server.tar.gz -C ~/vs && rm vs_server.tar.gz
+      - run: echo "VINTAGE_STORY=$HOME/vs" >> "$GITHUB_ENV"
+
+      # CakeBuild: validates the asset JSON, builds and zips the release
+      - name: Package
+        run: ./build.sh
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: flyingmachine
+          path: Releases/*.zip
+          if-no-files-found: error
+
+      - name: Atlas scenarios
+        run: dotnet test tests/FlyingMachine.Tests --logger "console;verbosity=normal"
