@@ -178,4 +178,44 @@ public class PlaneScenarios : AtlasScenarioBase
         Assert.Equal(0, plane.LiftRatio, 6);
         plane.Die(EnumDespawnReason.Removed);
     }
+
+    // The pilot's propeller, smoke and engine/brake sounds follow their own controls straight away;
+    // everyone else (passenger included) follows what the server last synced
+    [AtlasScenario]
+    public async Task Only_the_pilot_sees_their_own_throttle_and_brake()
+    {
+        var pilot = await World.JoinPlayer("thrpilot");
+        var passenger = await World.JoinPlayer("thrpassenger");
+        var bystander = await World.JoinPlayer("thrbystander");
+        var pos = FreeSpot();
+        foreach (var p in new[] { pilot, passenger, bystander }) p.TeleportTo(pos);
+        var plane = (EntityFlyingMachine)World.SpawnEntity(Plane, pos);
+        var otherPlane = (EntityFlyingMachine)World.SpawnEntity(Plane, FreeSpot());
+        await World.Ticks(5);
+
+        var seats = plane.GetBehavior<EntityBehaviorSeatable>().Seats;
+        Assert.True(pilot.Entity.TryMount(seats.Single(s => s.Config.Controllable)), "pilot could not sit down");
+        Assert.True(passenger.Entity.TryMount(seats.Single(s => !s.Config.Controllable)), "passenger could not sit down");
+        await World.Ticks(2);
+
+        // The pilot has just opened the throttle and hit the brake; the last sync still says idle, no brake
+        plane.Throttle = 0.8;
+        AccessTools.Property(typeof(EntityFlyingMachine), nameof(EntityFlyingMachine.Braking)).SetValue(plane, true);
+        plane.WatchedAttributes.SetFloat("throttle", 0.1f);
+        plane.WatchedAttributes.SetBool("braking", false);
+
+        Assert.Equal(0.8, plane.ThrottleSeenBy(pilot.Entity), 3);
+        Assert.True(plane.BrakeSeenBy(pilot.Entity));
+
+        foreach (var other in new[] { passenger.Entity, bystander.Entity })
+        {
+            Assert.Equal(0.1, plane.ThrottleSeenBy(other), 3);
+            Assert.False(plane.BrakeSeenBy(other));
+        }
+
+        // Flying one plane doesn't make you the pilot of another
+        otherPlane.Throttle = 0.8;
+        otherPlane.WatchedAttributes.SetFloat("throttle", 0.1f);
+        Assert.Equal(0.1, otherPlane.ThrottleSeenBy(pilot.Entity), 3);
+    }
 }

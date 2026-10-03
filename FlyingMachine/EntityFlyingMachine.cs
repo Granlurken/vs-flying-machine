@@ -110,29 +110,22 @@ public class EntityFlyingMachine : EntityBoat, ISeatInstSupplier
     FlyingMachineEngineSound? engineSound;
 
     /// <summary>Gass slik alle klienter ser den: egen verdi for piloten, ellers synket fra serveren.</summary>
-    public double EngineThrottle
-    {
-        get
-        {
-            if (Api is ICoreClientAPI capi && capi.World.Player.Entity.MountedOn is IMountableSeat seat
-                && seat.Entity == this && seat.CanControl) return Throttle;
-            return WatchedAttributes.GetFloat("throttle", 0);
-        }
-    }
+    public double EngineThrottle => ThrottleSeenBy((Api as ICoreClientAPI)?.World.Player.Entity);
+
+    public double ThrottleSeenBy(EntityAgent? viewer) => IsPilot(viewer) ? Throttle : WatchedAttributes.GetFloat("throttle", 0);
+
+    /// <summary>Sitter i førersetet i dette flyet. MountedOn er setet, og MountSupplier sete-behavioren, så sammenlign setets Entity.</summary>
+    bool IsPilot(EntityAgent? viewer) => viewer?.MountedOn is IMountableSeat seat && seat.Entity == this && seat.CanControl;
+
     public bool Flying { get; private set; }
     /// <summary>Hjulbremsen er på (S holdt på tomgang, på bakken, flyet ruller).</summary>
     public bool Braking { get; private set; }
 
     /// <summary>Bremsen slik alle klienter ser den: egen verdi for piloten, ellers synket fra serveren.</summary>
-    public bool BrakeActive
-    {
-        get
-        {
-            if (Api is ICoreClientAPI capi && capi.World.Player.Entity.MountedOn is IMountableSeat seat
-                && seat.Entity == this && seat.CanControl) return Braking;
-            return WatchedAttributes.GetBool("braking", false);
-        }
-    }
+    public bool BrakeActive => BrakeSeenBy((Api as ICoreClientAPI)?.World.Player.Entity);
+
+    public bool BrakeSeenBy(EntityAgent? viewer) => IsPilot(viewer) ? Braking : WatchedAttributes.GetBool("braking", false);
+
     /// <summary>Nesevinkel, positiv = nesa opp.</summary>
     public double PitchAngle { get; private set; }
     /// <summary>Krengning, positiv = venstre vinge ned.</summary>
