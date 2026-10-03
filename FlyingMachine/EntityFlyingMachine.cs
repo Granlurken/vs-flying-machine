@@ -553,8 +553,13 @@ public class EntityFlyingMachine : EntityBoat, ISeatInstSupplier
 
     public override WorldInteraction[] GetInteractionHelp(IClientWorldAccessor world, EntitySelection es, IClientPlayer player)
     {
-        var help = base.GetInteractionHelp(world, es, player);
-        if (IsAboard(player.Entity)) return help;
+        return InteractionHelp(world, es.SelectionBoxIndex, player.Entity, base.GetInteractionHelp(world, es, player))!;
+    }
+
+    /// <summary>Hjelpen ved musepekeren for den som ser på flyet: <paramref name="help"/> pluss demontering og fylling.</summary>
+    public WorldInteraction[]? InteractionHelp(IWorldAccessor world, int selectionBoxIndex, EntityAgent viewer, WorldInteraction[]? help)
+    {
+        if (IsAboard(viewer)) return help;
 
         disassembleHelp ??= new[]
         {
@@ -567,7 +572,7 @@ public class EntityFlyingMachine : EntityBoat, ISeatInstSupplier
             }
         };
         help = help == null ? disassembleHelp : help.Append(disassembleHelp);
-        if (!IsFuelBox(es.SelectionBoxIndex)) return help;
+        if (!IsFuelBox(selectionBoxIndex)) return help;
 
         fuelHelp ??= new[]
         {

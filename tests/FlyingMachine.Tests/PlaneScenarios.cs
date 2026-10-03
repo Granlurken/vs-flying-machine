@@ -179,26 +179,45 @@ public class PlaneScenarios : AtlasScenarioBase
         plane.Die(EnumDespawnReason.Removed);
     }
 
-    // MountedOn is the seat, not the plane: comparing it with the plane hid nothing from a seated pilot
-    [AtlasScenario]
-    public async Task Only_someone_in_a_seat_is_aboard()
-    {
-        var pos = FreeSpot();
-        var pilot = await World.JoinPlayer("pilot");
-        pilot.TeleportTo(pos);
-        var plane = (EntityFlyingMachine)World.SpawnEntity(Plane, pos);
-        var other = (EntityFlyingMachine)World.SpawnEntity(Plane, FreeSpot());
-        await World.Ticks(5);
-        Assert.False(plane.IsAboard(pilot.Entity));
+    private static string[] Prompts(EntityFlyingMachine plane, EntityAgent viewer, int selectionBox) =>
+        plane.InteractionHelp(plane.World, selectionBox, viewer, null)?.Select(h => h.ActionLangCode).ToArray() ?? [];
 
-        var seat = plane.GetBehavior<EntityBehaviorSeatable>().Seats[0];
-        Assert.True(pilot.Entity.TryMount(seat), "pilot could not sit down");
+    private static int FuelCap(EntityFlyingMachine plane) =>
+        Enumerable.Range(0, 32).Single(plane.IsFuelBox);
+
+    private static void SitInPilotSeat(EntityAgent player, EntityFlyingMachine plane)
+    {
+        var seat = plane.GetBehavior<EntityBehaviorSeatable>().Seats.Single(s => s.Config.Controllable);
+        Assert.True(player.TryMount(seat), "could not sit down");
+    }
+
+    [AtlasScenario]
+    public async Task Take_apart_and_fuel_prompts_show_from_the_ground_but_not_from_the_seat()
+    {
+        var pilot = await World.JoinPlayer("helppilot");
+        var bystander = await World.JoinPlayer("helpbystander");
+        var pos = FreeSpot();
+        pilot.TeleportTo(pos);
+        bystander.TeleportTo(pos);
+        var plane = (EntityFlyingMachine)World.SpawnEntity(Plane, pos);
+        var otherPlane = (EntityFlyingMachine)World.SpawnEntity(Plane, FreeSpot());
+        await World.Ticks(5);
+        int fuelCap = FuelCap(plane);
+
+        Assert.Equal(["flyingmachine:disassemble"], Prompts(plane, bystander.Entity, 0));
+        Assert.Equal(["flyingmachine:disassemble", "flyingmachine:fillfuel"], Prompts(plane, bystander.Entity, fuelCap));
+
+        SitInPilotSeat(pilot.Entity, plane);
         await World.Ticks(2);
-        Assert.True(plane.IsAboard(pilot.Entity));
-        Assert.False(other.IsAboard(pilot.Entity));
+        Assert.Empty(Prompts(plane, pilot.Entity, 0));
+        Assert.Empty(Prompts(plane, pilot.Entity, fuelCap));
+        // Sitting in one plane doesn't hide the prompts on another
+        Assert.Equal(["flyingmachine:disassemble", "flyingmachine:fillfuel"], Prompts(otherPlane, pilot.Entity, FuelCap(otherPlane)));
+        // Someone else in the seat doesn't hide them for the bystander
+        Assert.Equal(["flyingmachine:disassemble", "flyingmachine:fillfuel"], Prompts(plane, bystander.Entity, fuelCap));
 
         pilot.Entity.TryUnmount();
         await World.Ticks(2);
-        Assert.False(plane.IsAboard(pilot.Entity));
+        Assert.Equal(["flyingmachine:disassemble", "flyingmachine:fillfuel"], Prompts(plane, pilot.Entity, fuelCap));
     }
 }
