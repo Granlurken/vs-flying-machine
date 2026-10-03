@@ -115,7 +115,7 @@ public class EntityFlyingMachine : EntityBoat, ISeatInstSupplier
         get
         {
             if (Api is ICoreClientAPI capi && capi.World.Player.Entity.MountedOn is IMountableSeat seat
-                && seat.MountSupplier == this && seat.CanControl) return Throttle;
+                && seat.Entity == this && seat.CanControl) return Throttle;
             return WatchedAttributes.GetFloat("throttle", 0);
         }
     }
@@ -129,7 +129,7 @@ public class EntityFlyingMachine : EntityBoat, ISeatInstSupplier
         get
         {
             if (Api is ICoreClientAPI capi && capi.World.Player.Entity.MountedOn is IMountableSeat seat
-                && seat.MountSupplier == this && seat.CanControl) return Braking;
+                && seat.Entity == this && seat.CanControl) return Braking;
             return WatchedAttributes.GetBool("braking", false);
         }
     }
