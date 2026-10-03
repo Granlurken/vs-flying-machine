@@ -178,4 +178,27 @@ public class PlaneScenarios : AtlasScenarioBase
         Assert.Equal(0, plane.LiftRatio, 6);
         plane.Die(EnumDespawnReason.Removed);
     }
+
+    // MountedOn is the seat, not the plane: comparing it with the plane hid nothing from a seated pilot
+    [AtlasScenario]
+    public async Task Only_someone_in_a_seat_is_aboard()
+    {
+        var pos = FreeSpot();
+        var pilot = await World.JoinPlayer("pilot");
+        pilot.TeleportTo(pos);
+        var plane = (EntityFlyingMachine)World.SpawnEntity(Plane, pos);
+        var other = (EntityFlyingMachine)World.SpawnEntity(Plane, FreeSpot());
+        await World.Ticks(5);
+        Assert.False(plane.IsAboard(pilot.Entity));
+
+        var seat = plane.GetBehavior<EntityBehaviorSeatable>().Seats[0];
+        Assert.True(pilot.Entity.TryMount(seat), "pilot could not sit down");
+        await World.Ticks(2);
+        Assert.True(plane.IsAboard(pilot.Entity));
+        Assert.False(other.IsAboard(pilot.Entity));
+
+        pilot.Entity.TryUnmount();
+        await World.Ticks(2);
+        Assert.False(plane.IsAboard(pilot.Entity));
+    }
 }

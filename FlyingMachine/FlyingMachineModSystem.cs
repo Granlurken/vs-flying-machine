@@ -36,7 +36,7 @@ public class FlyingMachineModSystem : ModSystem
             var player = api.World.Player;
             if (player.CurrentEntitySelection?.Entity is not EntityFlyingMachine plane) return;
             if (!plane.IsFuelBox(player.CurrentEntitySelection.SelectionBoxIndex)) return;
-            if (player.Entity.MountedOn == plane || player.Entity.Controls.ShiftKey) return;
+            if (plane.IsAboard(player.Entity) || player.Entity.Controls.ShiftKey) return;
             if (player.InventoryManager.ActiveHotbarSlot?.Itemstack?.Collectible is not ILiquidSource) return;
 
             plane.OpenFuelDialog(api);
