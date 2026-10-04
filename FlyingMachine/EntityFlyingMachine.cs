@@ -142,6 +142,12 @@ public class EntityFlyingMachine : EntityBoat, ISeatInstSupplier
     public override bool ApplyGravity => !Flying;
 
     /// <summary>
+    /// Over kartet (y ≥ MapSizeY, 256 som standard) finnes ingen chunk. Klienten tegner bare enheter som står i en
+    /// tegnet chunk, så uten dette forsvant flyet fra skjermen over ~256. Samme grep som vanilla-erelen.
+    /// </summary>
+    public override bool AllowOutsideLoadedRange => true;
+
+    /// <summary>
     /// Kun ved nyfødsel (ikke ved lasting). Fly fra byggeplassen starter tomme; satt ut med kreativ-itemet
     /// (eller /entity spawn) får de full tank, så man kan prøvefly uten å destillere først.
     /// </summary>
@@ -338,6 +344,7 @@ public class EntityFlyingMachine : EntityBoat, ISeatInstSupplier
     public override void OnGameTick(float dt)
     {
         base.OnGameTick(dt);
+        KeepInChunkColumn();
         if (Api.Side != EnumAppSide.Server) return;
         if (fuelInv != null) { CheckFuelUser(dt); PourTick(dt); }
         // Gassen synkes til klientene (propell + røyk hos tilskuere og passasjerer)
@@ -348,6 +355,21 @@ public class EntityFlyingMachine : EntityBoat, ISeatInstSupplier
         }
         if (WatchedAttributes.GetBool("braking", false) != Braking) WatchedAttributes.SetBool("braking", Braking);
     }
+
+    /// <summary>
+    /// Over kartet flytter ikke spillet flyet til ny chunk (det finnes ingen), så det ble liggende i chunken der det
+    /// steg over toppen. Når den ble lastet ut (piloten fløy videre), forsvant flyet med den, midt i lufta.
+    /// Her legges det i øverste chunk i kolonnen under seg i stedet. Begge sider: klienten laster også ut chunker.
+    /// </summary>
+    void KeepInChunkColumn()
+    {
+        if (Pos.Y < World.BlockAccessor.MapSizeY) return;
+        chunkPos.SetFrom(Pos);
+        chunkPos.Y = World.BlockAccessor.MapSizeY - 1;
+        long index = World.ChunkProvider.ChunkIndex3D(chunkPos);
+        if (index != InChunkIndex3d) World.UpdateEntityChunk(this, index); // gjør ingenting hvis kolonnen ikke er lastet
+    }
+    readonly EntityPos chunkPos = new();
 
     public override void OnInteract(EntityAgent byEntity, ItemSlot itemslot, Vec3d hitPosition, EnumInteractMode mode)
     {
