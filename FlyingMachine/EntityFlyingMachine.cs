@@ -143,9 +143,10 @@ public class EntityFlyingMachine : EntityBoat, ISeatInstSupplier
 
     /// <summary>
     /// Over kartet (y ≥ MapSizeY, 256 som standard) finnes ingen chunk. Klienten tegner bare enheter som står i en
-    /// tegnet chunk, så uten dette forsvant flyet fra skjermen over ~256. Samme grep som vanilla-erelen.
+    /// tegnet chunk, så uten dette forsvant flyet fra skjermen over ~256. Samme grep som vanilla-erelen, men kun
+    /// over kartet: lenger nede skal flyet følge chunken sin som alt annet (ikke tegnes før bakken under det).
     /// </summary>
-    public override bool AllowOutsideLoadedRange => true;
+    public override bool AllowOutsideLoadedRange => Api != null && Pos.Y >= Api.World.BlockAccessor.MapSizeY;
 
     /// <summary>
     /// Kun ved nyfødsel (ikke ved lasting). Fly fra byggeplassen starter tomme; satt ut med kreativ-itemet
