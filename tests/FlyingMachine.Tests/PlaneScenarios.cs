@@ -260,4 +260,36 @@ public class PlaneScenarios : AtlasScenarioBase
         otherPlane.WatchedAttributes.SetFloat("throttle", 0.1f);
         Assert.Equal(0.1, otherPlane.ThrottleSeenBy(pilot.Entity), 3);
     }
+
+    // Holding W (throttle up) must not knock the pilot out of the seated pose: without it the
+    // first-person arms and shoulders swing up into the view
+    [AtlasScenario]
+    public async Task The_pilot_stays_seated_while_holding_the_throttle()
+    {
+        var pilot = await World.JoinPlayer("armspilot");
+        var pos = FreeSpot();
+        pilot.TeleportTo(pos);
+        var plane = (EntityFlyingMachine)World.SpawnEntity(Plane, pos);
+        await World.Ticks(5);
+
+        var seat = plane.GetBehavior<EntityBehaviorSeatable>().Seats.Single(s => s.Config.Controllable);
+        Assert.True(pilot.Entity.TryMount(seat), "pilot could not sit down");
+        await World.Ticks(5);
+
+        var anims = pilot.Entity.AnimManager.ActiveAnimationsByAnimCode;
+        Assert.True(anims.ContainsKey("sitboatidle"), "not seated after mounting");
+
+        seat.Controls.Forward = true;
+        for (int i = 0; i < 40; i++)
+        {
+            await World.Ticks(1);
+            Assert.True(anims.ContainsKey("sitboatidle"),
+                $"lost the seated pose after {i + 1} ticks of throttle; active: {string.Join(", ", anims.Keys)}");
+        }
+        Assert.True(plane.Throttle > 0, "the throttle never opened");
+
+        seat.Controls.Forward = false;
+        pilot.Entity.TryUnmount();
+        plane.Die(EnumDespawnReason.Removed);
+    }
 }

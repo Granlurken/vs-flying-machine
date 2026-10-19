@@ -107,11 +107,13 @@
 		requiresPaddlingTool: false,
 		// Av: i overlevelse tas flyet fra hverandre med skiftenøkkel. Kreativ: Shift + høyreklikk med tom hånd (EntityFlyingMachine.OnInteract)
 		rightClickPickup: false,
+		// Bare idle, resten tomme (som vanilla-seilbåten). Vanilla EntityBoat stopper «ready» hver tick gassen holdes,
+		// og samme animasjon som forwards startes ikke igjen — da mistet piloten sittestillingen og armene kom opp i bildet
 		mountAnimations: {
 			idle: "sitboatidle",
-			ready: "sitboatidle",
-			forwards: "sitboatidle",
-			backwards: "sitboatidle"
+			ready: "",
+			forwards: "",
+			backwards: ""
 		}
 	},
 	hitboxSize: { x: 2, y: 1.2, z: 2 },
