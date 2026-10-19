@@ -365,7 +365,7 @@ public class EntityFlyingMachine : EntityBoat, ISeatInstSupplier
             return;
         }
         if (mode == EnumInteractMode.Interact && !byEntity.Controls.ShiftKey
-            && itemslot?.Itemstack?.Collectible is ILiquidSource
+            && itemslot?.Itemstack?.Collectible is ILiquidSource && !IsAboard(byEntity)
             && byEntity is EntityPlayer ep && IsFuelBox(ep.EntitySelection?.SelectionBoxIndex ?? -1))
         {
             if (Api is ICoreClientAPI capi && byEntity == capi.World.Player.Entity) OpenFuelDialog(capi);
@@ -460,6 +460,9 @@ public class EntityFlyingMachine : EntityBoat, ISeatInstSupplier
         return Lang.HasTranslation("flyingmachine:part-" + code) ? code : null;
     }
 
+    /// <summary>Sitter i et av setene. MountedOn er setet (og MountSupplier sete-behavioren), så sammenlign setets Entity.</summary>
+    public bool IsAboard(EntityAgent entity) => entity.MountedOn?.Entity == this;
+
     /// <summary>Sant når klikkboksen er tanklokket (FuelAP). Indeks 0 = hovedhitboksen, AP-boksene starter på 1.</summary>
     public bool IsFuelBox(int selectionBoxIndex)
     {
@@ -550,8 +553,13 @@ public class EntityFlyingMachine : EntityBoat, ISeatInstSupplier
 
     public override WorldInteraction[] GetInteractionHelp(IClientWorldAccessor world, EntitySelection es, IClientPlayer player)
     {
-        var help = base.GetInteractionHelp(world, es, player);
-        if (player.Entity.MountedOn == this) return help;
+        return InteractionHelp(world, es.SelectionBoxIndex, player.Entity, base.GetInteractionHelp(world, es, player))!;
+    }
+
+    /// <summary>Hjelpen ved musepekeren for den som ser på flyet: <paramref name="help"/> pluss demontering og fylling.</summary>
+    public WorldInteraction[]? InteractionHelp(IWorldAccessor world, int selectionBoxIndex, EntityAgent viewer, WorldInteraction[]? help)
+    {
+        if (IsAboard(viewer)) return help;
 
         disassembleHelp ??= new[]
         {
@@ -564,7 +572,7 @@ public class EntityFlyingMachine : EntityBoat, ISeatInstSupplier
             }
         };
         help = help == null ? disassembleHelp : help.Append(disassembleHelp);
-        if (!IsFuelBox(es.SelectionBoxIndex)) return help;
+        if (!IsFuelBox(selectionBoxIndex)) return help;
 
         fuelHelp ??= new[]
         {

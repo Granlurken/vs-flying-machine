@@ -35,6 +35,25 @@ Requires the .NET 10 SDK and a Vintage Story install. The build looks for the ga
 
 `tools/` holds the Node scripts that generate the model, item shapes and gauge textures.
 
+## Testing
+
+```sh
+VINTAGE_STORY=~/path/to/vintagestory ./test.sh
+```
+
+This runs two checks:
+
+- `node tools/check_generated.js` runs the generators in a temporary copy and fails if the
+  committed shapes or textures differ from what they produce.
+- `dotnet test tests/FlyingMachine.Tests` runs [Atlas](https://github.com/Pixnop/Atlas)
+  scenarios. Atlas boots a headless Vintage Story server in-process with the mod loaded.
+  The scenarios cover registration, recipes, lang, fuel and refuelling, the building
+  site's ground check, ownership, and build materials.
+
+Extra arguments go to `dotnet test`, for example
+`./test.sh --filter "FullyQualifiedName~PlaneScenarios"`. CI (`.github/workflows/ci.yml`)
+runs both checks against the 1.22.7 dedicated server and uploads the packaged zip.
+
 ## License
 
 Code and assets are under the [MIT License](LICENSE): do what you like with them, just
