@@ -51,7 +51,8 @@ function* walk(dir) {
 
 function same(a, b, name) {
   if (a.equals(b)) return true;
-  if (!name.endsWith(".png")) return false;
+  // Windows-checkout med core.autocrlf gir CRLF i arbeidskopien; generatorene skriver LF
+  if (!name.endsWith(".png")) return a.toString("utf8").replace(/\r\n/g, "\n") === b.toString("utf8").replace(/\r\n/g, "\n");
   const pa = pixels(a), pb = pixels(b);
   return pa.header.equals(pb.header) && pa.data.equals(pb.data);
 }
