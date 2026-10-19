@@ -5,7 +5,7 @@
     "name": "Flying Machine",
     "authors": [ "Eirik" ],
     "description": "An early propeller aircraft. Needs a runway, runs on alcohol.",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "dependencies": {
         "game": "1.22.0",
         "survival": ""
