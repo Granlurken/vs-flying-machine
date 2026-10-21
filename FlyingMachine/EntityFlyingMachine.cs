@@ -66,8 +66,13 @@ public class EntityFlyingMachine : EntityBoat, ISeatInstSupplier
     float visualPitchSign = -1;
     float visualRollSign = 1;
 
-    // Drivstoff — Aqua Vitae (vanilla alcoholportion). Mengden bor i WatchedAttributes (server → klient, lagres med flyet)
-    string fuelCode = "game:alcoholportion";
+    // Drivstoff — Aqua Vitae (vanilla alcoholportion) + valgfrie andre (f.eks. Hex's Mechworks). Mengden bor i WatchedAttributes
+    // (server → klient, lagres med flyet) og telles i «Aqua Vitae-liter»: 1 L med efficiency 2 fyller 2 L i tanken.
+    // Koder fra mods som ikke er installert finnes bare ikke, og ignoreres.
+    readonly System.Collections.Generic.Dictionary<AssetLocation, double> fuelEfficiency = new()
+    {
+        [new AssetLocation("game:alcoholportion")] = 1
+    };
     double fuelCapacity = 10;     // liter
     double fuelBurnRate = 1.0 / 60; // liter per sekund ved full gass (1 L/min)
 
@@ -166,7 +171,14 @@ public class EntityFlyingMachine : EntityBoat, ISeatInstSupplier
         var fuel = properties.Attributes["fuel"];
         if (fuel.Exists)
         {
-            fuelCode = fuel["code"].AsString(fuelCode);
+            if (fuel["types"].Exists)
+            {
+                fuelEfficiency.Clear();
+                foreach (var type in fuel["types"].AsArray())
+                {
+                    fuelEfficiency[new AssetLocation(type["code"].AsString())] = type["efficiency"].AsDouble(1);
+                }
+            }
             fuelCapacity = fuel["capacityLitres"].AsDouble(fuelCapacity);
             fuelBurnRate = fuel["litresPerMinuteFullThrottle"].AsDouble(fuelBurnRate * 60) / 60;
         }
@@ -311,9 +323,15 @@ public class EntityFlyingMachine : EntityBoat, ISeatInstSupplier
         if (stack?.Collectible is not ILiquidSource source) return "fuel-insert";
         var content = source.GetContent(stack);
         if (content == null || source.GetContentProps(stack) == null) return "fuel-empty";
-        if (!content.Collectible.Code.Equals(new AssetLocation(fuelCode))) return "fuel-wrong";
+        if (FuelEfficiency(content) <= 0) return "fuel-wrong";
         if (FuelLitres >= fuelCapacity - 0.01) return "fuel-full";
         return "fuel-pouring";
+    }
+
+    /// <summary>Hvor mange tank-liter én liter av væsken gir; 0 = brenner ikke.</summary>
+    double FuelEfficiency(ItemStack? content)
+    {
+        return content != null && fuelEfficiency.TryGetValue(content.Collectible.Code, out double e) ? e : 0;
     }
 
     void PourTick(float dt)
@@ -322,16 +340,17 @@ public class EntityFlyingMachine : EntityBoat, ISeatInstSupplier
         var slot = fuelInv![0];
         var source = (ILiquidSource)slot.Itemstack!.Collectible;
         var props = source.GetContentProps(slot.Itemstack)!;
+        double efficiency = FuelEfficiency(source.GetContent(slot.Itemstack));
 
         pourCarry += PourLitresPerSecond * dt * props.ItemsPerLitre;
-        double room = (fuelCapacity - FuelLitres) * props.ItemsPerLitre;
+        double room = (fuelCapacity - FuelLitres) / efficiency * props.ItemsPerLitre;
         int items = (int)Math.Min(Math.Floor(pourCarry), Math.Ceiling(room));
         if (items <= 0) return;
         pourCarry -= items;
 
         var taken = source.TryTakeContent(slot.Itemstack, items);
         if (taken == null || taken.StackSize <= 0) return;
-        FuelLitres += taken.StackSize / (double)props.ItemsPerLitre;
+        FuelLitres += taken.StackSize / (double)props.ItemsPerLitre * efficiency;
         slot.MarkDirty();
     }
 
@@ -604,14 +623,18 @@ public class EntityFlyingMachine : EntityBoat, ISeatInstSupplier
 
     ItemStack[] FuelHelpStacks(IWorldAccessor world)
     {
-        var fuel = world.GetItem(new AssetLocation(fuelCode));
         var list = new System.Collections.Generic.List<ItemStack>();
-        foreach (var code in new[] { "game:woodbucket", "game:jug-blue-fired" })
+        foreach (var fuelCode in fuelEfficiency.Keys)
         {
-            if (fuel == null || world.GetBlock(new AssetLocation(code)) is not BlockLiquidContainerBase block) continue;
-            var stack = new ItemStack(block);
-            block.SetContent(stack, new ItemStack(fuel, (int)(block.CapacityLitres * 100)));
-            list.Add(stack);
+            var fuel = world.GetItem(fuelCode);
+            if (fuel == null) continue; // moden er ikke installert
+            foreach (var code in new[] { "game:woodbucket", "game:jug-blue-fired" })
+            {
+                if (world.GetBlock(new AssetLocation(code)) is not BlockLiquidContainerBase block) continue;
+                var stack = new ItemStack(block);
+                block.SetContent(stack, new ItemStack(fuel, (int)(block.CapacityLitres * 100)));
+                list.Add(stack);
+            }
         }
         return list.ToArray();
     }

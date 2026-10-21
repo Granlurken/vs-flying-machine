@@ -1,18 +1,17 @@
 [
 	{
-		// Krukka med 2 L vann blir selve batterikassa: consumeContainer bruker opp krukka (vanilla inkandquill.json)
-		ingredientPattern: "SRS,_J_,_L_",
+		// Krukka med 2 L svovelsyre blir selve batterikassa: consumeContainer bruker opp krukka (vanilla inkandquill.json)
+		ingredientPattern: "R,J,L",
 		ingredients: {
-			"S": { type: "item", code: "game:powder-sulfur", quantity: 1 },
 			"R": { type: "item", code: "game:rod-copper", quantity: 1 },
 			"J": { type: "block", code: "game:jug-*-fired", quantity: 1 },
 			"L": { type: "item", code: "game:metalplate-lead", quantity: 1 }
 		},
-		width: 3,
+		width: 1,
 		height: 3,
 		attributes: {
 			liquidContainerProps: {
-				requiresContent: { type: "item", code: "game:waterportion" },
+				requiresContent: { type: "item", code: "game:acid-full-sulfuric" },
 				requiresLitres: 2,
 				consumeContainer: true
 			}

@@ -13,9 +13,19 @@
 		speedMultiplier: 1,
 		// Drivstoff: høyreklikk flyet med Aqua Vitae i bøtte/krukke/flaske. Tom tank = glideflukt
 		fuel: {
-			code: "game:alcoholportion",
+			// efficiency = tank-liter per liter helt på (tanken teller i Aqua Vitae-liter). hexsmech-koder ignoreres uten Hex's Mechworks
+			types: [
+				{ code: "game:alcoholportion", efficiency: 1 },
+				{ code: "hexsmech:methanolportion", efficiency: 1 },
+				{ code: "hexsmech:keroseneportion", efficiency: 2 },
+				{ code: "hexsmech:dieselportion", efficiency: 2 },
+				{ code: "hexsmech:gasolineportion", efficiency: 2.5 },
+				{ code: "hexsmech:alkylateportion", efficiency: 3 },
+				{ code: "hexsmech:trimethylpentaneportion", efficiency: 3 },
+				{ code: "hexsmech:avgasportion", efficiency: 4 }
+			],
 			capacityLitres: 10,
-			litresPerMinuteFullThrottle: 1
+			litresPerMinuteFullThrottle: 0.33 // ~30 min per tank ved full gass
 		},
 		// Flymodell — fart i blokker per 1/60 s (0.34 = ~20 blokker/s). Se EntityFlyingMachine.cs
 		flight: {
